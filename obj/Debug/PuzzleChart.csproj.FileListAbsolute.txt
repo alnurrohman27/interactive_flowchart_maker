@@ -1,0 +1,9 @@
+c:\users\lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\bin\Debug\PuzzleChart.exe.config
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\bin\Debug\PuzzleChart.exe
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\bin\Debug\PuzzleChart.pdb
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.exe
+C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.pdb
