@@ -48,7 +48,8 @@ namespace PuzzleChart
             fileMenuItem.AddSeparator();
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
-
+            exitMenuItem.Click += new System.EventHandler(this.OnexitMenuItemClick);
+             
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
@@ -65,6 +66,7 @@ namespace PuzzleChart
 
             DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
             helpMenuItem.AddMenuItem(aboutMenuItem);
+            helpMenuItem.Click += new System.EventHandler(this.OnaboutMenuItemClick);
 
             #endregion
 
@@ -126,6 +128,16 @@ namespace PuzzleChart
         private void toolStripContainer1_TopToolStripPanel_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void OnexitMenuItemClick(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void OnaboutMenuItemClick(object sender, EventArgs e)
+        {
+            MessageBox.Show("Interactive Flow Chart Maker\n byKPL Kel 1");
         }
     }
 }
