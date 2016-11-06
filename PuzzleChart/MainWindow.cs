@@ -55,8 +55,11 @@ namespace PuzzleChart
 
             DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
             editMenuItem.AddMenuItem(undoMenuItem);
+            undoMenuItem.Click += new System.EventHandler(this.OnundoMenuItemClick);
+
             DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
             editMenuItem.AddMenuItem(redoMenuItem);
+            redoMenuItem.Click += new System.EventHandler(this.OnredoMenuItemClick);
 
             DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
             this.menubar.AddMenuItem(viewMenuItem);
@@ -110,6 +113,8 @@ namespace PuzzleChart
             */
             #endregion
         }
+
+        #region Method
         private void Toolbox_ToolSelected(ITool tool)
         {
             if (this.canvas != null)
@@ -139,5 +144,17 @@ namespace PuzzleChart
         {
             MessageBox.Show("Interactive Flow Chart Maker\n byKPL Kel 1");
         }
+
+        private void OnundoMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Undo();
+        }
+
+        private void OnredoMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Redo();
+        }
+
+        #endregion
     }
 }

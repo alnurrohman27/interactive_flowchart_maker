@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PuzzleChart
 {
@@ -12,10 +13,13 @@ namespace PuzzleChart
     {
         private ITool activeTool;
         private List<PuzzleObject> puzzle_objects;
+        private List<PuzzleObject> memory_stack;
+        private PuzzleObject temp;
 
         public DefaultCanvas()
         {
             this.puzzle_objects = new List<PuzzleObject>();
+            this.memory_stack = new List<PuzzleObject>();
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -82,6 +86,33 @@ namespace PuzzleChart
         public void AddPuzzleObject(PuzzleObject puzzle_object)
         {
             this.puzzle_objects.Add(puzzle_object);
+        }
+
+        public void Undo()
+        {
+            var last = puzzle_objects.Count - 1;
+            if(last >= 0)
+            {
+                this.temp = puzzle_objects[puzzle_objects.Count - 1];
+                puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
+                memory_stack.Add(temp);
+                Debug.WriteLine("Undo is selected");
+                this.Repaint();
+            }        
+           
+        }
+
+        public void Redo()
+        {
+            var last = memory_stack.Count - 1;
+            if(last >= 0)
+            {
+                this.temp = memory_stack[memory_stack.Count - 1];
+                memory_stack.RemoveAt(memory_stack.Count - 1);
+                puzzle_objects.Add(temp);
+                Debug.WriteLine("Redo is selected");
+                this.Repaint();
+            }
         }
     }
 }
