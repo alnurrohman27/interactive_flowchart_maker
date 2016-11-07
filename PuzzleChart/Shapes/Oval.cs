@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Rectangle : PuzzleObject
+    public class Oval : PuzzleObject
     {
+        
         public int x { get; set; }
         public int y { get; set; }
         public int width { get; set; }
@@ -16,19 +17,19 @@ namespace PuzzleChart.Shapes
 
         private Pen pen;
 
-        public Rectangle()
+        public Oval()
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
         }
 
-        public Rectangle(int x, int y) : this()
+        public Oval(int x, int y) : this()
         {
             this.x = x;
             this.y = y;
         }
 
-        public Rectangle(int x, int y, int width, int Height) : this(x, y)
+        public Oval(int x, int y, int width, int Height) : this(x, y)
         {
             this.width = width;
             this.height = Height;
@@ -36,7 +37,8 @@ namespace PuzzleChart.Shapes
 
         public override void Draw()
         {
-            this.graphics.DrawRectangle(pen, x, y, width, height);
+            this.graphics.DrawEllipse(pen, x, y, width, height);
         }
     }
 }
+

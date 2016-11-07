@@ -8,10 +8,10 @@ using PuzzleChart.Shapes;
 
 namespace PuzzleChart.Tools
 {
-    public class DiamondTool : ToolStripButton, ITool 
+    public class ParallelogramTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private Diamond diamond;
+        private Parallelogram parallelogram;
 
         public Cursor cursor
         {
@@ -34,10 +34,10 @@ namespace PuzzleChart.Tools
             }
         }
 
-        public DiamondTool()
+        public ParallelogramTool()
         {
-            this.Name = "Diamond tool";
-            this.ToolTipText = "Diamond tool";
+            this.Name = "Parallelogram tool";
+            this.ToolTipText = "Parallelogram tool";
             //this.Image = IconSet.bounding_box;
             //Author: Agung 108
             //Class: Linetool
@@ -51,7 +51,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.diamond = new Diamond(e.X, e.Y);
+                this.parallelogram = new Parallelogram(e.X, e.Y);
             }
         }
 
@@ -59,15 +59,15 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.diamond != null)
+                if (this.parallelogram != null)
                 {
-                    int width = e.X - this.diamond.x;
-                    int height = e.Y - this.diamond.y;
+                    int width = e.X - this.parallelogram.x;
+                    int height = e.Y - this.parallelogram.y;
 
                     if (width > 0 && height > 0)
                     {
-                        this.diamond.width = width;
-                        this.diamond.height = height;
+                        this.parallelogram.width = width;
+                        this.parallelogram.height = height;
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.diamond);
+                this.canvas.AddPuzzleObject(this.parallelogram);
             }
         }
     }

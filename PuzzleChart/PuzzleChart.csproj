@@ -80,6 +80,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Diamond.cs" />
+    <Compile Include="Shapes\Oval.cs" />
+    <Compile Include="Shapes\Parallelogram.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="StatefulPuzzleObject.cs" />
@@ -93,6 +95,15 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\LineTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\OvalTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\ParallelogramTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\RectangleTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">

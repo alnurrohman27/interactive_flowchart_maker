@@ -8,10 +8,10 @@ using PuzzleChart.Shapes;
 
 namespace PuzzleChart.Tools
 {
-    public class DiamondTool : ToolStripButton, ITool 
+    public class OvalTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private Diamond diamond;
+        private Oval oval;
 
         public Cursor cursor
         {
@@ -34,10 +34,10 @@ namespace PuzzleChart.Tools
             }
         }
 
-        public DiamondTool()
+        public OvalTool()
         {
-            this.Name = "Diamond tool";
-            this.ToolTipText = "Diamond tool";
+            this.Name = "Oval tool";
+            this.ToolTipText = "Oval tool";
             //this.Image = IconSet.bounding_box;
             //Author: Agung 108
             //Class: Linetool
@@ -51,7 +51,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.diamond = new Diamond(e.X, e.Y);
+                this.oval = new Oval(e.X, e.Y);
             }
         }
 
@@ -59,15 +59,15 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.diamond != null)
+                if (this.oval != null)
                 {
-                    int width = e.X - this.diamond.x;
-                    int height = e.Y - this.diamond.y;
+                    int width = e.X - this.oval.x;
+                    int height = e.Y - this.oval.y;
 
                     if (width > 0 && height > 0)
                     {
-                        this.diamond.width = width;
-                        this.diamond.height = height;
+                        this.oval.width = width;
+                        this.oval.height = height;
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.diamond);
+                this.canvas.AddPuzzleObject(this.oval);
             }
         }
     }

@@ -8,10 +8,10 @@ using PuzzleChart.Shapes;
 
 namespace PuzzleChart.Tools
 {
-    public class DiamondTool : ToolStripButton, ITool 
+    public class RectangleTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private Diamond diamond;
+        private Rectangle rectangle;
 
         public Cursor cursor
         {
@@ -34,16 +34,15 @@ namespace PuzzleChart.Tools
             }
         }
 
-        public DiamondTool()
+        public RectangleTool()
         {
-            this.Name = "Diamond tool";
-            this.ToolTipText = "Diamond tool";
+            this.Name = "Rectangle tool";
+            this.ToolTipText = "Rectangle tool";
             //this.Image = IconSet.bounding_box;
             //Author: Agung 108
             //Class: Linetool
             //Date : 10/31/2016
             //Image still null
-            this.Image = null;
             this.CheckOnClick = true;
         }
 
@@ -51,7 +50,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.diamond = new Diamond(e.X, e.Y);
+                this.rectangle = new Rectangle(e.X, e.Y);
             }
         }
 
@@ -59,15 +58,15 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.diamond != null)
+                if (this.rectangle != null)
                 {
-                    int width = e.X - this.diamond.x;
-                    int height = e.Y - this.diamond.y;
+                    int width = e.X - this.rectangle.x;
+                    int height = e.Y - this.rectangle.y;
 
                     if (width > 0 && height > 0)
                     {
-                        this.diamond.width = width;
-                        this.diamond.height = height;
+                        this.rectangle.width = width;
+                        this.rectangle.height = height;
                     }
                 }
             }
@@ -77,7 +76,7 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.diamond);
+                this.canvas.AddPuzzleObject(this.rectangle);
             }
         }
     }
