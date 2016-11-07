@@ -7,6 +7,7 @@ C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\bi
 C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\bin\Debug\PuzzleChart.pdb
 C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.exe
 C:\Users\Lenovo\documents\visual studio 2015\Projects\PuzzleChart\PuzzleChart\obj\Debug\PuzzleChart.pdb
+<<<<<<< HEAD
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe.config
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.exe
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.pdb
@@ -16,3 +17,14 @@ C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleC
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+=======
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe.config
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.exe
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.pdb
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.pdb
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
+C:\Users\user\Documents\GitHub\interactive_flowchart_maker\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+>>>>>>> 18c361dfde1ab3fa37b42f36a490425fcc011cfe

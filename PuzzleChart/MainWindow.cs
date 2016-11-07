@@ -48,14 +48,18 @@ namespace PuzzleChart
             fileMenuItem.AddSeparator();
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
-
+            exitMenuItem.Click += new System.EventHandler(this.OnexitMenuItemClick);
+             
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
             DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
             editMenuItem.AddMenuItem(undoMenuItem);
+            undoMenuItem.Click += new System.EventHandler(this.OnundoMenuItemClick);
+
             DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
             editMenuItem.AddMenuItem(redoMenuItem);
+            redoMenuItem.Click += new System.EventHandler(this.OnredoMenuItemClick);
 
             DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
             this.menubar.AddMenuItem(viewMenuItem);
@@ -65,6 +69,7 @@ namespace PuzzleChart
 
             DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
             helpMenuItem.AddMenuItem(aboutMenuItem);
+            helpMenuItem.Click += new System.EventHandler(this.OnaboutMenuItemClick);
 
             #endregion
 
@@ -109,6 +114,8 @@ namespace PuzzleChart
             */
             #endregion
         }
+
+        #region Method
         private void Toolbox_ToolSelected(ITool tool)
         {
             if (this.canvas != null)
@@ -128,10 +135,31 @@ namespace PuzzleChart
         {
 
         }
-
+        
         private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
         {
 
         }
+        private void OnexitMenuItemClick(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void OnaboutMenuItemClick(object sender, EventArgs e)
+        {
+            MessageBox.Show("Interactive Flow Chart Maker\n byKPL Kel 1");
+        }
+
+        private void OnundoMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Undo();
+        }
+
+        private void OnredoMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Redo();
+        }
+
+        #endregion
     }
 }
