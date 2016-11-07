@@ -84,6 +84,7 @@ namespace PuzzleChart
             //this.tool_box.AddTool(new SelectionTool());
             this.tool_box.AddSeparator();
             this.tool_box.AddTool(new LineTool());
+            this.tool_box.AddTool(new DiamondTool());
             //this.tool_box.AddTool(new StatefulLineTool());
             //this.tool_box.AddTool(new RectangleTool());
             this.tool_box.tool_selected += Toolbox_ToolSelected;
@@ -124,6 +125,11 @@ namespace PuzzleChart
         }
 
         private void toolStripContainer1_TopToolStripPanel_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
         {
 
         }

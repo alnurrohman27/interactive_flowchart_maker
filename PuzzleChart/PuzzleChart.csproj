@@ -79,12 +79,17 @@
     <Compile Include="IToolBox.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shapes\Diamond.cs" />
+    <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Shapes\Line.cs" />
     <Compile Include="StatefulPuzzleObject.cs" />
     <Compile Include="State\EditState.cs" />
     <Compile Include="State\PreviewState.cs" />
     <Compile Include="State\StaticState.cs" />
     <Compile Include="ToolbarItems\ExampleToolbarItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\DiamondTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\LineTool.cs">
