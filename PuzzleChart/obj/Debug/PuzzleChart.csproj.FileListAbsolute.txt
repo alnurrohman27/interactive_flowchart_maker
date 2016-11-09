@@ -7,3 +7,12 @@ C:\Users\rezaandriyunanto\Documents\GitHub\interactive_flowchart_maker\PuzzleCha
 C:\Users\rezaandriyunanto\Documents\GitHub\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
 C:\Users\rezaandriyunanto\Documents\GitHub\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.exe
 C:\Users\rezaandriyunanto\Documents\GitHub\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\bin\Debug\PuzzleChart.exe.config
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.exe
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\bin\Debug\PuzzleChart.exe
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\bin\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.IconSet.resources
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
