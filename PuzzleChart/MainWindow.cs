@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PuzzleChart.ToolbarItems;
 using PuzzleChart.Tools;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart
 {
@@ -102,19 +103,21 @@ namespace PuzzleChart
             #region Toolbar
 
             // Initializing toolbar
-            /*Debug.WriteLine("Loading toolbar...");
-            this.toolbar = ne-w DefaultToolbar();
+            Debug.WriteLine("Loading toolbar...");
+            this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
-            ExampleToolbarItem toolItem1 = new ExampleToolbarItem();
-            toolItem1.SetCommand(whiteCanvasBgCmd);
-            ExampleToolbarItem toolItem2 = new ExampleToolbarItem();
-            toolItem2.SetCommand(blackCanvasBgCmd);
+            UndoCommand undoCmd = new UndoCommand(this.canvas);
+            RedoCommand redoCmd = new RedoCommand(this.canvas);
 
-            this.toolbar.AddToolbarItem(toolItem1);
+            Undo toolItemUndo = new Undo();
+            toolItemUndo.SetCommand(undoCmd);
+            Redo toolItemRedo = new Redo();
+            toolItemRedo.SetCommand(redoCmd);
+
+            this.toolbar.AddToolbarItem(toolItemUndo);
             this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(toolItem2);
-            */
+            this.toolbar.AddToolbarItem(toolItemRedo);
             #endregion
         }
 

@@ -42,7 +42,12 @@ namespace PuzzleChart.Tools
             //Class: Linetool
             //Date : 10/31/2016
             //Image still null
-            this.Image = null; 
+
+            //Author: Reza 140
+            //Class: Linetool
+            //Date : 11/9/2016
+            //Add Icom line
+            this.Image = IconSet.line;
             this.CheckOnClick = true;
         }
 

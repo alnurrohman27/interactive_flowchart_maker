@@ -7,15 +7,19 @@ using System.Windows.Forms;
 
 namespace PuzzleChart.ToolbarItems
 {
-    public class ExampleToolbarItem : ToolStripButton, IToolbarItem
+    public class Redo : ToolStripButton, IToolbarItem
     {
         private ICommand command;
 
-        public ExampleToolbarItem()
+        public Redo()
         {
-            this.Name = "Example";
-            this.ToolTipText = "Example toolbaritem";
-            this.Image = null;
+            //Author: Reza 140
+            //Class: Redo
+            //Date : 11/9/2016
+            //Adding Icon Redo and show in toolbox
+            this.Name = "Redo";
+            this.ToolTipText = "Redo";
+            this.Image = IconSet.next_1;
             this.DisplayStyle = ToolStripItemDisplayStyle.Image;
 
             this.Click += ExampleToolbarItem_Click;
