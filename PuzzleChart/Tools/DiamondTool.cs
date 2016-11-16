@@ -51,7 +51,10 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.diamond = new Diamond(e.X, e.Y);
+                diamond = new Diamond(e.X, e.Y);
+                diamond.width = 0;
+                diamond.height = 0;
+                canvas.AddPuzzleObject(diamond);
             }
         }
 
@@ -77,7 +80,9 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.diamond);
+                diamond.width = e.X - this.diamond.x;
+                diamond.height = e.Y - this.diamond.y;
+                diamond.Select();
             }
         }
     }

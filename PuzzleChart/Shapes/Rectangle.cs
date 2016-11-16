@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Rectangle : PuzzleObject
+    public class Rectangle : StatefulPuzzleObject
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -34,9 +35,34 @@ namespace PuzzleChart.Shapes
             this.height = Height;
         }
 
-        public override void Draw()
+        public override void RenderOnStaticView()
         {
-            this.graphics.DrawRectangle(pen, x, y, width, height);
+            this.pen = new Pen(Color.Black);
+            pen.Width = 1.5f;
+
+            if (this.graphics != null)
+            {
+                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                this.graphics.DrawRectangle(pen, x, y, width, height);
+            }
+        }
+
+        public override void RenderOnEditingView()
+        {
+            RenderOnStaticView();
+        }
+
+        public override void RenderOnPreview()
+        {
+            this.pen = new Pen(Color.Red);
+            pen.Width = 1.5f;
+            pen.DashStyle = DashStyle.DashDotDot;
+
+            if (this.graphics != null)
+            {
+                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                this.graphics.DrawRectangle(pen, x, y, width, height);
+            }
         }
     }
 }

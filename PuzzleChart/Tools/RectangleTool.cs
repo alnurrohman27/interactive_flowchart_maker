@@ -51,7 +51,10 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.rectangle = new Rectangle(e.X, e.Y);
+                rectangle = new Rectangle(e.X, e.Y);
+                rectangle.width = 0;
+                rectangle.height = 0;
+                canvas.AddPuzzleObject(rectangle);
             }
         }
 
@@ -77,7 +80,9 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.rectangle);
+                rectangle.width = e.X - this.rectangle.x;
+                rectangle.height = e.Y - this.rectangle.y;
+                rectangle.Select();
             }
         }
     }

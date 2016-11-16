@@ -51,7 +51,10 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.parallelogram = new Parallelogram(e.X, e.Y);
+                parallelogram = new Parallelogram(e.X, e.Y);
+                parallelogram.width = 0;
+                parallelogram.height = 0;
+                canvas.AddPuzzleObject(parallelogram);
             }
         }
 
@@ -77,7 +80,9 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.canvas.AddPuzzleObject(this.parallelogram);
+                parallelogram.width = e.X - this.parallelogram.x;
+                parallelogram.height = e.Y - this.parallelogram.y;
+                parallelogram.Select();
             }
         }
     }

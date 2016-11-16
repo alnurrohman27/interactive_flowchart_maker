@@ -53,18 +53,35 @@ namespace PuzzleChart.Tools
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
-            line_segment = new Line(new System.Drawing.Point(e.X, e.Y));
+            if (e.Button == MouseButtons.Left)
+            {
+                line_segment = new Line(new System.Drawing.Point(e.X, e.Y));
+                line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
+                canvas.AddPuzzleObject(line_segment);
+            }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-            //to be implemented
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.line_segment != null)
+                {
+                    line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
+                }
+            }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
-            canvas.AddPuzzleObject(line_segment);
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.line_segment != null)
+                {
+                    line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
+                    line_segment.Select();
+                }
+            }
         }
     }
 }
