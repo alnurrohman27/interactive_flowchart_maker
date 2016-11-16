@@ -43,7 +43,7 @@ namespace PuzzleChart.Tools
             //Class: Linetool
             //Date : 10/31/2016
             //Image still null
-            this.Image = IconSet.Input;
+            this.Image = null;
             this.CheckOnClick = true;
         }
 

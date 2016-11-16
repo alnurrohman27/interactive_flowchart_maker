@@ -16,3 +16,4 @@ D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.IconSet.resources
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+C:\Users\rezaandriyunanto\Documents\GitHub\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache

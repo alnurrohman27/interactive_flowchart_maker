@@ -22,10 +22,10 @@ namespace PuzzleChart.ToolbarItems
             this.Image = IconSet.next_1;
             this.DisplayStyle = ToolStripItemDisplayStyle.Image;
 
-            this.Click += ExampleToolbarItem_Click;
+            this.Click += RedoClick;
         }
 
-        private void ExampleToolbarItem_Click(object sender, EventArgs e)
+        private void RedoClick(object sender, EventArgs e)
         {
             if (command != null)
             {

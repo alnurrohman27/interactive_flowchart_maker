@@ -22,7 +22,7 @@ namespace PuzzleChart.Commands
 
         public void Execute()
         {
-
+            canvas.Undo();
         }
     }
 }

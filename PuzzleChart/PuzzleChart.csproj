@@ -157,30 +157,6 @@
   <ItemGroup>
     <None Include="Resources\next-1.png" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Process.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Oval.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Decision.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Input.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Decision.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Input.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Process.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Oval.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
