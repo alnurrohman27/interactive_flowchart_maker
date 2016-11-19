@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Rectangle : StatefulPuzzleObject
+    public class Rectangle : PuzzleObject
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -35,6 +36,12 @@ namespace PuzzleChart.Shapes
             this.height = Height;
         }
 
+        public override void Translate(int x, int y, int xAmount, int yAmount)
+        {
+            this.x += xAmount;
+            this.y += yAmount;
+        }
+
         public override void RenderOnStaticView()
         {
             this.pen = new Pen(Color.Black);
@@ -49,7 +56,10 @@ namespace PuzzleChart.Shapes
 
         public override void RenderOnEditingView()
         {
-            RenderOnStaticView();
+            this.pen.Color = Color.Black;
+            this.pen.Color = Color.Blue;
+            this.pen.DashStyle = DashStyle.Solid;
+            graphics.DrawRectangle(this.pen, x, y, width, height);
         }
 
         public override void RenderOnPreview()
@@ -63,6 +73,16 @@ namespace PuzzleChart.Shapes
                 this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 this.graphics.DrawRectangle(pen, x, y, width, height);
             }
+        }
+
+        public override bool Intersect(int xTest, int yTest)
+        {
+            if ((xTest >= x && xTest <= x + width) && (yTest >= y && yTest <= y + height))
+            {
+                Debug.WriteLine("Object " + ID + " is selected.");
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -91,7 +91,6 @@
     <Compile Include="Shapes\Parallelogram.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="Shapes\Line.cs" />
-    <Compile Include="StatefulPuzzleObject.cs" />
     <Compile Include="State\EditState.cs" />
     <Compile Include="State\PreviewState.cs" />
     <Compile Include="State\StaticState.cs" />
@@ -114,6 +113,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\RectangleTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">

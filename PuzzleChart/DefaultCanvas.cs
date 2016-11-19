@@ -30,7 +30,16 @@ namespace PuzzleChart
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
         }
-        
+
+
+        public void RemovePuzzleObject(PuzzleObject puzzle_object)
+        {
+            this.puzzle_objects.Remove(puzzle_object);
+        }
+        public ITool GetActiveTool()
+        {
+            return this.activeTool;
+        }
         private void DefaultCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (this.activeTool != null)
@@ -112,6 +121,37 @@ namespace PuzzleChart
                 puzzle_objects.Add(temp);
                 Debug.WriteLine("Redo is selected");
                 this.Repaint();
+            }
+        }
+
+        public PuzzleObject GetObjectAt(int x, int y)
+        {
+            foreach (PuzzleObject obj in puzzle_objects)
+            {
+                if (obj.Intersect(x, y))
+                {
+                    return obj;
+                }
+            }
+            return null;
+        }
+
+        public PuzzleObject SelectObjectAt(int x, int y)
+        {
+            PuzzleObject obj = GetObjectAt(x, y);
+            if (obj != null)
+            {
+                obj.Select();
+            }
+
+            return obj;
+        }
+
+        public void DeselectAllObjects()
+        {
+            foreach (PuzzleObject drawObj in puzzle_objects)
+            {
+                drawObj.Deselect();
             }
         }
     }

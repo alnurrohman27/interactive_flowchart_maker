@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Oval : StatefulPuzzleObject
+    public class Oval : PuzzleObject
     {
         
         public int x { get; set; }
@@ -65,9 +65,16 @@ namespace PuzzleChart.Shapes
                 this.graphics.DrawEllipse(pen, x, y, width, height);
             }
         }
-        
 
-        
+        public override void Translate(int x, int y, int xAmount, int yAmount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Intersect(int xTest, int yTest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

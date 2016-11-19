@@ -17,13 +17,13 @@ namespace PuzzleChart
         }
         private PuzzleState state;
 
-        public abstract void Draw(StatefulPuzzleObject obj);
+        public abstract void Draw(PuzzleObject obj);
         
-        public virtual void Deselect(StatefulPuzzleObject obj)
+        public virtual void Deselect(PuzzleObject obj)
         {
 
         }
-        public virtual void Select(StatefulPuzzleObject obj)
+        public virtual void Select(PuzzleObject obj)
         {
 
         }

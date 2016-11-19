@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Parallelogram : StatefulPuzzleObject
+    public class Parallelogram : PuzzleObject
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -80,6 +80,16 @@ namespace PuzzleChart.Shapes
             my_point_array[3] = new Point(x + width + width/3, y  );
 
             this.graphics.DrawPolygon(pen, my_point_array);
+        }
+
+        public override void Translate(int x, int y, int xAmount, int yAmount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Intersect(int xTest, int yTest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

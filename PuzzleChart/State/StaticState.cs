@@ -19,12 +19,12 @@ namespace PuzzleChart.State
             return instance;
         }
 
-        public override void Draw(StatefulPuzzleObject obj)
+        public override void Draw(PuzzleObject obj)
         {
             obj.RenderOnStaticView();
         }
 
-        public override void Select(StatefulPuzzleObject obj)
+        public override void Select(PuzzleObject obj)
         {
             obj.ChangeState(EditState.GetInstance());
         }
