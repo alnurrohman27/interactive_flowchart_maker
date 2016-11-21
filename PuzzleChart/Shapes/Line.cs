@@ -45,10 +45,10 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawLine(pen, this.start_point, this.end_point);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.start_point, this.end_point);
             }
         }
 
@@ -59,10 +59,10 @@ namespace PuzzleChart.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.Solid;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawLine(pen, this.start_point, this.end_point);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.start_point, this.end_point);
             }
         }
 
@@ -72,10 +72,10 @@ namespace PuzzleChart.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawLine(pen, this.start_point, this.end_point);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.start_point, this.end_point);
             }
         }
         public double GetSlope()

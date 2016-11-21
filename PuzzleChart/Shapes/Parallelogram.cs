@@ -46,9 +46,9 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.DrawParallelogram(pen, x, y, width, height);
             }
         }
@@ -64,9 +64,9 @@ namespace PuzzleChart.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.DrawParallelogram(pen, x, y, width, height);
             }
         }
@@ -79,7 +79,7 @@ namespace PuzzleChart.Shapes
             my_point_array[2] = new Point(x + width, y + height);
             my_point_array[3] = new Point(x + width + width/3, y  );
 
-            this.graphics.DrawPolygon(pen, my_point_array);
+            this.GetGraphics().DrawPolygon(pen, my_point_array);
         }
 
         public override void Translate(int x, int y, int xAmount, int yAmount)

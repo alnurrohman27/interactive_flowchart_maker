@@ -41,10 +41,10 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawEllipse(pen, x, y, width, height);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawEllipse(pen, x, y, width, height);
             }
         }
 
@@ -59,10 +59,10 @@ namespace PuzzleChart.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawEllipse(pen, x, y, width, height);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawEllipse(pen, x, y, width, height);
             }
         }
 

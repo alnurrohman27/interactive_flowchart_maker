@@ -47,10 +47,10 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawRectangle(pen, x, y, width, height);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawRectangle(pen, x, y, width, height);
             }
         }
 
@@ -59,7 +59,7 @@ namespace PuzzleChart.Shapes
             this.pen.Color = Color.Black;
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
-            graphics.DrawRectangle(this.pen, x, y, width, height);
+            GetGraphics().DrawRectangle(this.pen, x, y, width, height);
         }
 
         public override void RenderOnPreview()
@@ -68,10 +68,10 @@ namespace PuzzleChart.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
 
-            if (this.graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.graphics.DrawRectangle(pen, x, y, width, height);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawRectangle(pen, x, y, width, height);
             }
         }
 

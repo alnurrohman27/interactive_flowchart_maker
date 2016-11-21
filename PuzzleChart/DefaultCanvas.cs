@@ -71,7 +71,7 @@ namespace PuzzleChart
         {
             foreach (PuzzleObject obj in puzzle_objects)
             {
-                obj.graphics = e.Graphics;
+                obj.SetGraphics(e.Graphics);
                 obj.Draw();
             }
         }

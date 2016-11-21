@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PuzzleChart
@@ -12,7 +13,6 @@ namespace PuzzleChart
     public abstract class PuzzleObject
     {
         public Guid ID { get; set; }
-        public Graphics graphics { get; set; }
 
         public PuzzleState State
         {
@@ -23,6 +23,7 @@ namespace PuzzleChart
         }
 
         private PuzzleState state;
+        private Graphics graphics;
 
         public PuzzleObject()
         {
@@ -44,6 +45,16 @@ namespace PuzzleChart
         public virtual void Draw()
         {
             this.state.Draw(this);
+        }
+
+        public virtual void SetGraphics(Graphics graphics)
+        {
+            this.graphics = graphics;
+        }
+
+        public virtual Graphics GetGraphics()
+        {
+            return this.graphics;
         }
 
         public void Select()
