@@ -82,12 +82,33 @@ namespace PuzzleChart.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            throw new NotImplementedException();
+            this.x += xAmount;
+            this.y += yAmount;
         }
+        private bool pnpoly(int nvert, float testx, float testy)
+        {
 
+            int[] vertx = new int[4];
+            int[] verty = new int[4];
+            int i = 0;
+            for (i = 0; i < 4; i++)
+            {
+                vertx[i] = my_point_array[i].X;
+                verty[i] = my_point_array[i].Y;
+            }
+            bool c = false;
+            int j = 0;
+            for (i = 0, j = nvert - 1; i < nvert; j = i++)
+            {
+                if (((verty[i] > testy) != (verty[j] > testy)) &&
+                    (testx < (vertx[j] - vertx[i]) * (testy - verty[i]) / (verty[j] - verty[i]) + vertx[i]))
+                    c = !c;
+            }
+            return c;
+        }
         public override bool Intersect(int xTest, int yTest)
         {
-            throw new NotImplementedException();
+            return pnpoly(4, xTest, yTest);
         }
     }
 }

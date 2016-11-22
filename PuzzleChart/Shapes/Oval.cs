@@ -68,12 +68,34 @@ namespace PuzzleChart.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            throw new NotImplementedException();
+            this.x += xAmount;
+            this.y += yAmount;
         }
+        public bool Contains(Point location)
+        {
+            Point center = new Point(x + width, y + height);
 
+            double x_radius = width / 2;
+            double y_radius = height / 2;
+
+
+            if (x_radius <= 0.0 || y_radius <= 0.0)
+                return false;
+            /* This is a more general form of the circle equation
+             *
+             * X^2/a^2 + Y^2/b^2 <= 1
+             */
+
+            Point normalized = new Point(location.X - center.X,
+                                         location.Y - center.Y);
+
+            return ((double)(normalized.X * normalized.X)
+                     / (x_radius * x_radius)) + ((double)(normalized.Y * normalized.Y) / (y_radius * y_radius))
+                <= 1.0;
+        }
         public override bool Intersect(int xTest, int yTest)
         {
-            throw new NotImplementedException();
+            return Contains(new Point(xTest, yTest));
         }
     }
 }
