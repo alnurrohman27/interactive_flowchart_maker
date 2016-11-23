@@ -96,5 +96,15 @@ namespace PuzzleChart.Shapes
             }
             return false;
         }
+
+        public override bool Add(PuzzleObject obj)
+        {
+            return false;
+        }
+
+        public override bool Remove(PuzzleObject obj)
+        {
+            return false;
+        }
     }
 }

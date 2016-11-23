@@ -112,5 +112,15 @@ namespace PuzzleChart.Shapes
         {
             return pnpoly(4, xTest, yTest);
         }
+
+        public override bool Add(PuzzleObject obj)
+        {
+            return false;
+        }
+
+        public override bool Remove(PuzzleObject obj)
+        {
+            return false;
+        }
     }
 }
