@@ -63,8 +63,11 @@
     <Compile Include="DefaultToolbox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Edge.cs" />
     <Compile Include="IMenuItem.cs" />
     <Compile Include="IMenuBar.cs" />
+    <Compile Include="IObservable.cs" />
+    <Compile Include="IObserver.cs" />
     <Compile Include="PuzzleState.cs" />
     <Compile Include="PuzzleObject.cs" />
     <Compile Include="MainWindow.cs">
@@ -118,6 +121,7 @@
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Vertex.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
