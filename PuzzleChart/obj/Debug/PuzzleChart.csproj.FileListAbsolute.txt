@@ -27,3 +27,6 @@ C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleC
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.IconSet.resources
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+F:\New folder (3)\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe.config
+F:\New folder (3)\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.exe
+F:\New folder (3)\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.pdb
