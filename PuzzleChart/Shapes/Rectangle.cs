@@ -17,6 +17,7 @@ namespace PuzzleChart.Shapes
         public int height { get; set; }
 
         private Pen pen;
+        private Font font;
 
         public Rectangle()
         {
@@ -53,6 +54,14 @@ namespace PuzzleChart.Shapes
             {
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.GetGraphics().DrawRectangle(pen, x, y, width, height);
+
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+                string text = "Process";
+                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
             }
         }
 
@@ -62,6 +71,14 @@ namespace PuzzleChart.Shapes
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
             GetGraphics().DrawRectangle(this.pen, x, y, width, height);
+
+            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+            font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+            string text = "Process";
+            GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
         }
 
         public override void RenderOnPreview()
