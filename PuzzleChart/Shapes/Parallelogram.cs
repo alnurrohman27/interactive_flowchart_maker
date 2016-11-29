@@ -17,6 +17,7 @@ namespace PuzzleChart.Shapes
         public Point[] my_point_array = new Point[4];
 
         private Pen pen;
+        private Font font;
 
         public Parallelogram()
         {
@@ -50,6 +51,14 @@ namespace PuzzleChart.Shapes
             {
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.DrawParallelogram(pen, x, y, width, height);
+
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+                string text = "Data";
+                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
             }
         }
 
