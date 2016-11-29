@@ -8,6 +8,6 @@ namespace PuzzleChart
 {
     public interface IObserver
     {
-        void Update(int deltaX, int deltaY);
+        void Update(IObservable Vertex,int deltaX, int deltaY);
     }
 }

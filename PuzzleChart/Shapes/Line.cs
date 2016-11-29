@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Line : PuzzleObject
+    public class Line : Edge
     {
         private const double EPSILON = 3.0;
         public Point start_point { get; set; }
         public Point end_point { get; set; }
 
         private Pen pen;
+        private Vertex vertex1;
+        private Vertex vertex2;
 
         public Line()
         {
@@ -105,6 +107,41 @@ namespace PuzzleChart.Shapes
         public override bool Remove(PuzzleObject obj)
         {
             return false;
+        }
+
+        public void AddVertex(Vertex vertex)
+        {
+            if(vertex1 == null)
+            {
+                vertex1 = vertex;
+            }
+            else
+            {
+                vertex2 = vertex;
+            }
+
+        }
+       // public override Point GetIntersectionPoint(Point p1, Point p2)
+        //{
+          //  throw new NotImplementedException();
+       // }
+
+        public override void Update(IObservable vertex,int deltaX, int deltaY)
+        {
+            if(vertex == vertex1)
+               start_point = new Point(this.start_point.X + deltaX, this.start_point.Y + deltaY);
+            
+          else
+            {
+                end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY);
+
+            }
+
+        }
+
+        public override void Update(int deltaX, int deltaY)
+        {
+            throw new NotImplementedException();
         }
     }
 }

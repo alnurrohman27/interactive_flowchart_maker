@@ -40,3 +40,10 @@ F:\New folder (3)\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe.config
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.exe
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.pdb
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.IconSet.resources
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.pdb

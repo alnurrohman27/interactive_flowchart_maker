@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Rectangle : PuzzleObject
+    public class Rectangle : Vertex
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -40,6 +40,8 @@ namespace PuzzleChart.Shapes
         {
             this.x += xAmount;
             this.y += yAmount;
+
+            BroadcastUpdate(xAmount, yAmount);
         }
 
         public override void RenderOnStaticView()
@@ -94,5 +96,7 @@ namespace PuzzleChart.Shapes
         {
             return false;
         }
+
+
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Diamond : PuzzleObject
+    public class Diamond : Vertex
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -84,6 +84,8 @@ namespace PuzzleChart.Shapes
         {
             this.x += xAmount;
             this.y += yAmount;
+
+            BroadcastUpdate(xAmount, yAmount);
         }
         private bool pnpoly(int nvert, float testx, float testy)
         {

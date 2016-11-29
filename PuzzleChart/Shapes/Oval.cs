@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Oval : PuzzleObject
+    public class Oval : Vertex
     {
         
         public int x { get; set; }
@@ -70,6 +70,9 @@ namespace PuzzleChart.Shapes
         {
             this.x += xAmount;
             this.y += yAmount;
+
+
+            BroadcastUpdate(xAmount, yAmount);
         }
         public bool Contains(Point location)
         {

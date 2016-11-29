@@ -14,6 +14,13 @@ namespace PuzzleChart
             edges = new List<Edge>();
         }
 
+        public void BroadcastUpdate(int x, int y)
+        {
+            foreach(var edge in edges)
+            {
+                edge.Update(this, x, y);
+            }
+        }
         public void Subscribe(IObserver O)
         {
             edges.Add((Edge) O);
