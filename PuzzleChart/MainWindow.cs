@@ -168,5 +168,16 @@ namespace PuzzleChart
         }
 
         #endregion
+
+        private void Main_Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Z)
+            {
+                this.canvas.Undo();
+            }else if (e.Control && e.KeyCode == Keys.Y)
+            {
+                this.canvas.Redo();
+            }
+        }
     }
 }

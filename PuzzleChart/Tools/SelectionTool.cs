@@ -40,7 +40,7 @@ namespace PuzzleChart.Tools
         {
             this.Name = "Selection tool";
             this.ToolTipText = "Selection tool";
-            this.Image = null;
+            this.Image = IconSet.arrow;
             this.CheckOnClick = true;
         }
 
