@@ -47,3 +47,4 @@ D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debu
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\obj\Debug\PuzzleChart.csproj.GenerateResource.Cache
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.exe
 D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache

@@ -21,5 +21,7 @@ namespace PuzzleChart
 
         void Undo();
         void Redo();
+        void Save();
+        void Open();
     }
 }

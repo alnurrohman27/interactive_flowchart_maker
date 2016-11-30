@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace PuzzleChart
 {
@@ -153,6 +154,26 @@ namespace PuzzleChart
             {
                 drawObj.Deselect();
             }
+        }
+
+        public void Save()
+        {
+            Debug.WriteLine("Save File is selected");
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.ipd";
+            saveFileDialog1.Title = "Save an Document";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                string name = saveFileDialog1.FileName;
+                File.WriteAllText(name, "test");
+            }
+        }
+
+        public void Open()
+        {
+            Debug.WriteLine("Open File is selected");
         }
     }
 }

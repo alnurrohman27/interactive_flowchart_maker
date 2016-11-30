@@ -46,21 +46,27 @@ namespace PuzzleChart
 
             DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
             fileMenuItem.AddMenuItem(newMenuItem);
+            DefaultMenuItem openMenuItem = new DefaultMenuItem("Open");
+            fileMenuItem.AddMenuItem(openMenuItem);
+            openMenuItem.Click += new System.EventHandler(this.OnOpenMenuItemClick);
+            DefaultMenuItem saveMenuItem = new DefaultMenuItem("Save");
+            fileMenuItem.AddMenuItem(saveMenuItem);
+            saveMenuItem.Click += new System.EventHandler(this.OnSaveMenuItemClick);
             fileMenuItem.AddSeparator();
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
-            exitMenuItem.Click += new System.EventHandler(this.OnexitMenuItemClick);
+            exitMenuItem.Click += new System.EventHandler(this.OnExitMenuItemClick);
              
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
             DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
             editMenuItem.AddMenuItem(undoMenuItem);
-            undoMenuItem.Click += new System.EventHandler(this.OnundoMenuItemClick);
+            undoMenuItem.Click += new System.EventHandler(this.OnUndoMenuItemClick);
 
             DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
             editMenuItem.AddMenuItem(redoMenuItem);
-            redoMenuItem.Click += new System.EventHandler(this.OnredoMenuItemClick);
+            redoMenuItem.Click += new System.EventHandler(this.OnRedoMenuItemClick);
 
             DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
             this.menubar.AddMenuItem(viewMenuItem);
@@ -70,7 +76,7 @@ namespace PuzzleChart
 
             DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
             helpMenuItem.AddMenuItem(aboutMenuItem);
-            helpMenuItem.Click += new System.EventHandler(this.OnaboutMenuItemClick);
+            helpMenuItem.Click += new System.EventHandler(this.OnAboutMenuItemClick);
 
             #endregion
 
@@ -108,16 +114,24 @@ namespace PuzzleChart
             this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
+            OpenCommand openCmd = new OpenCommand(this.canvas);
+            SaveCommand saveCmd = new SaveCommand(this.canvas);
             UndoCommand undoCmd = new UndoCommand(this.canvas);
             RedoCommand redoCmd = new RedoCommand(this.canvas);
 
+            Open toolItemOpen = new Open();
+            toolItemOpen.SetCommand(undoCmd);
+            Save toolItemSave = new Save();
+            toolItemSave.SetCommand(saveCmd);
             Undo toolItemUndo = new Undo();
             toolItemUndo.SetCommand(undoCmd);
             Redo toolItemRedo = new Redo();
             toolItemRedo.SetCommand(redoCmd);
 
-            this.toolbar.AddToolbarItem(toolItemUndo);
+            this.toolbar.AddToolbarItem(toolItemOpen);
+            this.toolbar.AddToolbarItem(toolItemSave);
             this.toolbar.AddSeparator();
+            this.toolbar.AddToolbarItem(toolItemUndo);
             this.toolbar.AddToolbarItem(toolItemRedo);
             #endregion
         }
@@ -147,22 +161,22 @@ namespace PuzzleChart
         {
 
         }
-        private void OnexitMenuItemClick(object sender, EventArgs e)
+        private void OnExitMenuItemClick(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void OnaboutMenuItemClick(object sender, EventArgs e)
+        private void OnAboutMenuItemClick(object sender, EventArgs e)
         {
             MessageBox.Show("Interactive Flow Chart Maker\n byKPL Kel 1");
         }
 
-        private void OnundoMenuItemClick(object sender, EventArgs e)
+        private void OnUndoMenuItemClick(object sender, EventArgs e)
         {
             this.canvas.Undo();
         }
 
-        private void OnredoMenuItemClick(object sender, EventArgs e)
+        private void OnRedoMenuItemClick(object sender, EventArgs e)
         {
             this.canvas.Redo();
         }
@@ -178,6 +192,16 @@ namespace PuzzleChart
             {
                 this.canvas.Redo();
             }
+        }
+
+        private void OnSaveMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Save();
+        }
+
+        private void OnOpenMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.Open();
         }
     }
 }
