@@ -8,7 +8,7 @@ namespace PuzzleChart
 {
     public interface IObservable
     {
-        void Subscribe(IObserver O);
+        void Subscribe(Edge O);
         void Unsubscribe(IObserver O);
 
     }

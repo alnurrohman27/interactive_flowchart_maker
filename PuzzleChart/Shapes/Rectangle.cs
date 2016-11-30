@@ -15,6 +15,7 @@ namespace PuzzleChart.Shapes
         public int y { get; set; }
         public int width { get; set; }
         public int height { get; set; }
+        public Point[] my_point_array = new Point[5];
 
         private Pen pen;
         private Font font;
@@ -24,7 +25,14 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
         }
-
+        public void AddPointArray()
+        {
+            my_point_array[0] = new Point(x, y);
+            my_point_array[1] = new Point(x + width, y);
+            my_point_array[2] = new Point(x + width, y + height);
+            my_point_array[3] = new Point(x, y + height);
+            my_point_array[4] = new Point(x, y);
+        }
         public Rectangle(int x, int y) : this()
         {
             this.x = x;
@@ -70,6 +78,7 @@ namespace PuzzleChart.Shapes
             this.pen.Color = Color.Black;
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
+            AddPointArray();
             GetGraphics().DrawRectangle(this.pen, x, y, width, height);
 
             System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
@@ -114,6 +123,45 @@ namespace PuzzleChart.Shapes
             return false;
         }
 
+        private Point LineIntersectProcess(double A1,double B1,double C1, Point start_point,Point end_point)
+        {
+            double x1 = start_point.X,
+                y1 = start_point.Y,
+                x2 = end_point.X,
+                y2 = end_point.Y;
 
+            double A2 = end_point.Y - start_point.Y,
+                B2 = start_point.X - end_point.X,
+                C2 = A2 * start_point.X + B2 * start_point.Y;
+
+            double det = A1 * B2 - A2 * B1;
+            if (det == 0)
+            {
+                return new Point(0,0);
+            }
+            else
+            {
+                double x = (B2 * C1 - B1 * C2) / det;
+                double y = (A1 * C2 - A2 * C1) / det;
+                return new Point((int)x, (int)y);
+            }
+        }
+
+        public override Point LineIntersect(Point start_point, Point end_point)
+        {
+            double A = end_point.Y - start_point.Y,
+                B = start_point.X - end_point.X,
+                C = A * start_point.X + B * start_point.Y;
+            Point intersection;
+            for (int counter = 0;counter < 4; counter++)
+            {
+                intersection = LineIntersectProcess(A, B, C, my_point_array[counter], my_point_array[counter + 1]);
+                if(intersection.X != 0 && intersection.Y!= 0)
+                {
+                    return intersection;
+                }
+            }
+            return new Point(0, 0);
+        }
     }
 }

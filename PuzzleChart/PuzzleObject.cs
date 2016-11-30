@@ -32,6 +32,7 @@ namespace PuzzleChart
 
         public abstract bool Add(PuzzleObject obj);
         public abstract bool Remove(PuzzleObject obj);
+        public abstract Point LineIntersect(Point start_point, Point end_point);
         public abstract bool Intersect(int xTest, int yTest);
         public abstract void Translate(int x, int y, int xAmount, int yAmount);
         public abstract void RenderOnPreview();

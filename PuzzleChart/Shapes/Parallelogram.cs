@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleChart.Shapes
 {
-    public class Parallelogram : PuzzleObject
+    public class Parallelogram : Vertex
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -82,7 +82,6 @@ namespace PuzzleChart.Shapes
 
         public void DrawParallelogram(Pen pen, int x, int y, int width, int height)
         {
-            //my_point_array = { new Point(x + width / 2, y), new Point(x, y + height / 2), new Point(x + width / 2, y + height), new Point(x + width, y + height / 2) };
             my_point_array[0] = new Point(x + width / 3, y);
             my_point_array[1] = new Point(x, y + height);
             my_point_array[2] = new Point(x + width, y + height);
@@ -95,6 +94,8 @@ namespace PuzzleChart.Shapes
         {
             this.x += xAmount;
             this.y += yAmount;
+
+            BroadcastUpdate(xAmount, yAmount);
         }
         private bool pnpoly(int nvert,float testx, float testy)
         {
@@ -130,6 +131,11 @@ namespace PuzzleChart.Shapes
         public override bool Remove(PuzzleObject obj)
         {
             return false;
+        }
+
+        public override Point LineIntersect(Point start_point, Point end_point)
+        {
+            throw new NotImplementedException();
         }
     }
 }

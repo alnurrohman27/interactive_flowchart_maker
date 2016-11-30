@@ -13,7 +13,7 @@ namespace PuzzleChart.Tools
     {
         private ICanvas canvas;
         private Line line_segment;
-        private Vertex startingObject, endingObject;
+        private Vertex start_object, end_object;
   
         public Cursor cursor
         {
@@ -57,12 +57,14 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
+                start_object = null;
+                end_object = null;
                 line_segment = new Line(new System.Drawing.Point(e.X, e.Y));
                 line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
                 canvas.AddPuzzleObject(line_segment);
-                if (canvas.GetObjectAt(e.X,e.Y) is Vertex)
+                if (canvas.GetObjectAt(e.X,e.Y) is Vertex && canvas.GetObjectAt(e.X, e.Y) != null && !(canvas.GetObjectAt(e.X,e.Y) is Line))
                 {
-                    startingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                    start_object = (Vertex)canvas.GetObjectAt(e.X, e.Y);
                 }
             }
         }
@@ -85,33 +87,30 @@ namespace PuzzleChart.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {   
-                    Point P = new Point();
                     line_segment.end_point = new Point(e.X, e.Y);
                     line_segment.Select();
-                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
+                    
+                    if (canvas.GetObjectAt(e.X, e.Y) != null && !(canvas.GetObjectAt(e.X,e.Y) is Line)) 
                     {
-                        endingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                        end_object = (Vertex)canvas.GetObjectAt(e.X, e.Y);
                     }
-                    if (startingObject != null)
+                    if (start_object != null)
                     {
-                        //P = startingObject.GetIntersectionPoint(line_segment.start_point, line_segment.end_point);
-                        startingObject.Subscribe(line_segment);
-                        line_segment.AddVertex(startingObject);
-                        //line_segment.start_point = new Point(P.X, P.Y);
+                        start_object.Subscribe(line_segment);
+                        line_segment.AddVertex(start_object, true);
+                        //line_segment.start_point = start_object.LineIntersect(line_segment.start_point, line_segment.end_point);
+
                     }
-                    if (endingObject != null)
+                    if (end_object != null && end_object != start_object)
                     {
-                        //P = endingObject.GetIntersectionPoint(line_segment.start_point, line_segment.end_point);
-                        endingObject.Subscribe(line_segment);
-                        line_segment.AddVertex(endingObject);
-                        //line_segment.end_point = new Point(P.X, P.Y);
+                        end_object.Subscribe(line_segment);
+                        line_segment.AddVertex(end_object, false);
+                        //line_segment.end_point = end_object.LineIntersect(line_segment.start_point, line_segment.end_point);
+
                     }
+
                 }
- /*               else if (e.Button == MouseButtons.Right)
-                {
-                    canvas.RemoveDrawingObject(this.line_segment);
-                }
-   */         
+    
 
             }
         }

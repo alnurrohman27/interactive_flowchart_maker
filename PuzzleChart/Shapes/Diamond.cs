@@ -131,5 +131,10 @@ namespace PuzzleChart.Shapes
         {
             return false;
         }
+
+        public override Point LineIntersect(Point start_point, Point end_point)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

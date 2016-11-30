@@ -12,8 +12,9 @@ namespace PuzzleChart
         public Vertex()
         {
             edges = new List<Edge>();
+            
         }
-
+        
         public void BroadcastUpdate(int x, int y)
         {
             foreach(var edge in edges)
@@ -21,9 +22,10 @@ namespace PuzzleChart
                 edge.Update(this, x, y);
             }
         }
-        public void Subscribe(IObserver O)
+
+        public void Subscribe(Edge O)
         {
-            edges.Add((Edge) O);
+            edges.Add(O);
         }
 
         public void Unsubscribe (IObserver O)

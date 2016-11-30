@@ -16,8 +16,8 @@ namespace PuzzleChart.Shapes
         public Point end_point { get; set; }
 
         private Pen pen;
-        private Vertex vertex1;
-        private Vertex vertex2;
+        private Vertex start_point_vertex;
+        private Vertex end_point_vertex;
 
         public Line()
         {
@@ -109,39 +109,32 @@ namespace PuzzleChart.Shapes
             return false;
         }
 
-        public void AddVertex(Vertex vertex)
+        public void AddVertex(Vertex vertex,bool start_or_end)
         {
-            if(vertex1 == null)
+            if (start_or_end)
             {
-                vertex1 = vertex;
+                start_point_vertex = vertex;
             }
             else
             {
-                vertex2 = vertex;
+                end_point_vertex = vertex;
             }
-
         }
-       // public override Point GetIntersectionPoint(Point p1, Point p2)
-        //{
-          //  throw new NotImplementedException();
-       // }
+       
 
         public override void Update(IObservable vertex,int deltaX, int deltaY)
         {
-            if(vertex == vertex1)
-               start_point = new Point(this.start_point.X + deltaX, this.start_point.Y + deltaY);
-            
-          else
-            {
+            if(vertex == start_point_vertex)
+                start_point = new Point(this.start_point.X + deltaX, this.start_point.Y + deltaY);
+            else if (vertex == end_point_vertex)
                 end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY);
-
-            }
-
+            
         }
 
-        public override void Update(int deltaX, int deltaY)
+        public override Point LineIntersect(Point start_point, Point end_point)
         {
             throw new NotImplementedException();
         }
+
     }
 }

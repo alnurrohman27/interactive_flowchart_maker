@@ -83,6 +83,7 @@ namespace PuzzleChart.Shapes
 
             BroadcastUpdate(xAmount, yAmount);
         }
+
         public bool Contains(Point location)
         {
             Point center = new Point(x + width, y + height);
@@ -118,6 +119,11 @@ namespace PuzzleChart.Shapes
         public override bool Remove(PuzzleObject obj)
         {
             return false;
+        }
+
+        public override Point LineIntersect(Point start_point, Point end_point)
+        {
+            throw new NotImplementedException();
         }
     }
 }
