@@ -127,8 +127,7 @@ namespace PuzzleChart.Shapes
             if(vertex == start_point_vertex)
                 start_point = new Point(this.start_point.X + deltaX, this.start_point.Y + deltaY);
             else if (vertex == end_point_vertex)
-                end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY);
-            
+                end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY); 
         }
 
         public override Point LineIntersect(Point start_point, Point end_point)

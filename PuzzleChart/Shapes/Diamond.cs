@@ -14,7 +14,7 @@ namespace PuzzleChart.Shapes
         public int y { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-        public Point[] my_point_array = new Point[4];
+        public Point[] my_point_array = new Point[5];
 
         private Pen pen;
         private Font font;
@@ -85,6 +85,7 @@ namespace PuzzleChart.Shapes
             my_point_array[1] = new Point(x, y + height / 2);
             my_point_array[2] = new Point(x + width / 2, y + height);
             my_point_array[3] = new Point(x + width, y + height / 2);
+            my_point_array[4] = new Point(x + width / 2, y);
 
             this.GetGraphics().DrawPolygon(pen, my_point_array);
         }
@@ -132,9 +133,51 @@ namespace PuzzleChart.Shapes
             return false;
         }
 
+        bool LineIntersectProcess(Point start_line, Point end_line, Point start_shape, Point end_shape, out Point intersection)
+        {
+            float p0_x = start_line.X, p0_y = start_line.Y, p1_x = end_line.X, p1_y = end_line.Y,
+                  p2_x = start_shape.X, p2_y = start_shape.Y, p3_x = end_shape.X, p3_y = end_shape.Y;
+            float i_x = 0, i_y = 0;
+            float s1_x, s1_y, s2_x, s2_y;
+            s1_x = p1_x - p0_x; s1_y = p1_y - p0_y;
+            s2_x = p3_x - p2_x; s2_y = p3_y - p2_y;
+
+            float s, t;
+            s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
+            t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
+
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+            {
+                // Collision detected0
+                i_x = p0_x + (t * s1_x);
+                i_y = p0_y + (t * s1_y);
+                intersection = new Point((int)i_x, (int)i_y);
+                return true;
+            }
+            intersection = new Point(0, 0);
+            return false; // No collision
+        }
+
         public override Point LineIntersect(Point start_point, Point end_point)
         {
-            throw new NotImplementedException();
+            Point intersection;
+            int counter = 0;
+
+
+            for (counter = 0; counter < 4; counter++)
+            {
+                if (LineIntersectProcess(start_point, end_point, my_point_array[counter], my_point_array[counter + 1], out intersection))
+                    break;
+            }
+
+            if (counter == 1)
+                return my_point_array[1];
+            else if (counter == 2)
+                return my_point_array[3];
+            else if (counter == 0 || counter == 3)
+                return my_point_array[0]; 
+
+            return new Point(0, 0);
         }
     }
 }

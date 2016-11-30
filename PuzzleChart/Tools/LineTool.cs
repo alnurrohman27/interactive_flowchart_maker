@@ -98,14 +98,14 @@ namespace PuzzleChart.Tools
                     {
                         start_object.Subscribe(line_segment);
                         line_segment.AddVertex(start_object, true);
-                        //line_segment.start_point = start_object.LineIntersect(line_segment.start_point, line_segment.end_point);
+                        line_segment.start_point = start_object.LineIntersect(line_segment.start_point, line_segment.end_point);
 
                     }
                     if (end_object != null && end_object != start_object)
                     {
                         end_object.Subscribe(line_segment);
                         line_segment.AddVertex(end_object, false);
-                        //line_segment.end_point = end_object.LineIntersect(line_segment.start_point, line_segment.end_point);
+                        line_segment.end_point = end_object.LineIntersect(line_segment.start_point, line_segment.end_point);
 
                     }
 

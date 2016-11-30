@@ -123,43 +123,39 @@ namespace PuzzleChart.Shapes
             return false;
         }
 
-        private Point LineIntersectProcess(double A1,double B1,double C1, Point start_point,Point end_point)
+        bool LineIntersectProcess(Point start_line,Point end_line, Point start_shape, Point end_shape, out Point intersection)
         {
-            double x1 = start_point.X,
-                y1 = start_point.Y,
-                x2 = end_point.X,
-                y2 = end_point.Y;
+            float p0_x = start_line.X, p0_y = start_line.Y, p1_x = end_line.X,p1_y = end_line.Y,
+                  p2_x = start_shape.X, p2_y = start_shape.Y,p3_x = end_shape.X, p3_y = end_shape.Y;
+            float i_x =0, i_y=0;
+            float s1_x, s1_y, s2_x, s2_y;
+            s1_x = p1_x - p0_x; s1_y = p1_y - p0_y;
+            s2_x = p3_x - p2_x; s2_y = p3_y - p2_y;
 
-            double A2 = end_point.Y - start_point.Y,
-                B2 = start_point.X - end_point.X,
-                C2 = A2 * start_point.X + B2 * start_point.Y;
+            float s, t;
+            s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
+            t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
 
-            double det = A1 * B2 - A2 * B1;
-            if (det == 0)
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
             {
-                return new Point(0,0);
+                // Collision detected0
+                i_x = p0_x + (t * s1_x);
+                i_y = p0_y + (t * s1_y);
+                intersection = new Point((int)i_x, (int)i_y);
+                return true;
             }
-            else
-            {
-                double x = (B2 * C1 - B1 * C2) / det;
-                double y = (A1 * C2 - A2 * C1) / det;
-                return new Point((int)x, (int)y);
-            }
+            intersection = new Point(0, 0);
+            return false; // No collision
         }
 
         public override Point LineIntersect(Point start_point, Point end_point)
         {
-            double A = end_point.Y - start_point.Y,
-                B = start_point.X - end_point.X,
-                C = A * start_point.X + B * start_point.Y;
             Point intersection;
-            for (int counter = 0;counter < 4; counter++)
+
+            for(int i = 0; i < 4; i++)
             {
-                intersection = LineIntersectProcess(A, B, C, my_point_array[counter], my_point_array[counter + 1]);
-                if(intersection.X != 0 && intersection.Y!= 0)
-                {
+                if (LineIntersectProcess(start_point, end_point, my_point_array[i], my_point_array[i + 1], out intersection))
                     return intersection;
-                }
             }
             return new Point(0, 0);
         }

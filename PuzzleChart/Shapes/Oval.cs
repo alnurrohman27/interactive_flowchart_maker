@@ -86,7 +86,7 @@ namespace PuzzleChart.Shapes
 
         public bool Contains(Point location)
         {
-            Point center = new Point(x + width, y + height);
+            Point center = new Point(x + width/2, y + height/2);
 
             double x_radius = width / 2;
             double y_radius = height / 2;
@@ -102,9 +102,7 @@ namespace PuzzleChart.Shapes
             Point normalized = new Point(location.X - center.X,
                                          location.Y - center.Y);
 
-            return ((double)(normalized.X * normalized.X)
-                     / (x_radius * x_radius)) + ((double)(normalized.Y * normalized.Y) / (y_radius * y_radius))
-                <= 1.0;
+            return ((double)(normalized.X * normalized.X) / (x_radius * x_radius)) + ((double)(normalized.Y * normalized.Y) / (y_radius * y_radius)) <= 1.0;
         }
         public override bool Intersect(int xTest, int yTest)
         {
