@@ -184,33 +184,52 @@ namespace PuzzleChart.Shapes
             return new Point(0, 0);
         }
 
-        public void serialize(string path, int id)
+        public void Serialize(string path)
         {
-            using (StreamWriter sw = File.AppendText(path))
+            XDocument doc = XDocument.Load(path);
+            XElement xmlFile = doc.Element("puzzle_object");
+
+            xmlFile.Add(new XElement("diamond",
+                new XElement("id", this.ID.ToString()),
+                new XElement("x", x.ToString()),
+                new XElement("y", y.ToString()),
+                new XElement("width", width.ToString()),
+                new XElement("height", height.ToString())
+            ));
+            doc.Save(path);
+            doc = XDocument.Load(path);
+            xmlFile = (XElement)doc.Root.LastNode;
+
+            List <Edge> listEdges = GetEdges();
+            foreach (Edge edgeObj in listEdges)
             {
-                sw.WriteLine("\t<Diamond>");
-
-                sw.WriteLine("\t\t<ID>" + id.ToString() + "</ID>");
-                sw.WriteLine("\t\t<X>" + x.ToString() + "</X>");
-                sw.WriteLine("\t\t<Y>" + y.ToString() + "</Y>");
-                sw.WriteLine("\t\t<Width>" + width.ToString() + "</Width>");
-                sw.WriteLine("\t\t<Height>" + height.ToString() + "</Height>");
-
-                List<Edge> listEdges = GetEdges();
-                foreach (Edge edgeObj in listEdges)
+                Line lineObj = (Line)edgeObj;
+                
+                if(lineObj.GetEndPointVertex() != null)
                 {
-                    Line lineObj = (Line)edgeObj;
-                    sw.WriteLine("\t\t<Line>");
-                    sw.WriteLine("\t\t\t<Start_Point>" + lineObj.start_point.ToString() + "</Start_Point>");
-                    sw.WriteLine("\t\t\t<End_Point>" + lineObj.end_point.ToString() + "</End_Point>");
-                    sw.WriteLine("\t\t</Line>");
+                    xmlFile.Add(new XElement("line",
+                       new XElement("id", lineObj.ID.ToString()),
+                       new XElement("start_point", lineObj.start_point.ToString()),
+                       new XElement("end_point", lineObj.end_point.ToString()),
+                       new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString()),
+                       new XElement("end_vertex", lineObj.GetEndPointVertex().ID.ToString())
+                    ));
                 }
-
-                sw.WriteLine("\t</Diamond>");
+                else
+                {
+                    xmlFile.Add(new XElement("line",
+                       new XElement("id", lineObj.ID.ToString()),
+                       new XElement("start_point", lineObj.start_point.ToString()),
+                       new XElement("end_point", lineObj.end_point.ToString()),
+                       new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString())
+                    ));
+                }
+                doc.Save(path);
             }
+            
         }
 
-        public PuzzleObject unserialize(string path)
+        public PuzzleObject Unserialize(string path)
         {
             throw new NotImplementedException();
         }

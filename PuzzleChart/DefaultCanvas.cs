@@ -177,53 +177,54 @@ namespace PuzzleChart
                     sw.WriteLine("<PuzzleObject>");
                 }
 
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.NewLineOnAttributes = true;
+                XmlWriter writer = XmlWriter.Create(name, settings);
+                writer.WriteStartDocument();
+                writer.WriteStartElement("puzzle_object");
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Close();
 
-                int i = 0;
                 foreach (PuzzleObject obj in puzzle_objects)
                 {
-                    i++;
                     if (obj is IOpenSave)
                     {
                         if (obj is Diamond)
                         {
-                            Debug.WriteLine("ID: " + i + " Type: Diamond");
+                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Diamond");
                             Diamond diamondObj = (Diamond)obj;
-                            diamondObj.serialize(name, i);
+                            diamondObj.Serialize(name);
                         }
                         else if(obj is Shapes.Rectangle)
                         {
-                            Debug.WriteLine("ID: " + i + " Type: Rectangle");
+                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Rectangle");
                             Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
-                            rectangleObj.serialize(name, i);
+                            rectangleObj.Serialize(name);
                         }
                         else if (obj is Oval)
                         {
-                            Debug.WriteLine("ID: " + i + " Type: Oval");
+                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Oval");
                             Oval ovalObj = (Oval)obj;
-                            ovalObj.serialize(name, i);
+                            ovalObj.Serialize(name);
                         }
                         else if (obj is Parallelogram)
                         {
-                            Debug.WriteLine("ID: " + i + " Type: Line");
+                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Parallelogram");
                             Parallelogram parallelogramObj = (Parallelogram)obj;
-                            parallelogramObj.serialize(name, i);
+                            parallelogramObj.Serialize(name);
                         }
                         else if (obj is Line)
                         {
-                            Debug.WriteLine("ID: " + i + " Type: Line");
+                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Line");
                             Line lineObj = (Line)obj;
-                            lineObj.serialize(name, i);
+                            lineObj.Serialize(name);
                         }
 
                     }
                 }
 
-                using (StreamWriter sw = File.AppendText(name))
-                {
-                    sw.WriteLine("</PuzzleObject>");
-                }
-
-                //File.WriteAllText(name, "test");
             }
 
         }
@@ -231,6 +232,24 @@ namespace PuzzleChart
         public void Open()
         {
             Debug.WriteLine("Open File is selected");
+            Stream myStream = null;
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.xml";
+            openFileDialog1.RestoreDirectory = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk");
+                }
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace PuzzleChart.Shapes
 {
@@ -137,24 +138,37 @@ namespace PuzzleChart.Shapes
             throw new NotImplementedException();
         }
 
-        public void serialize(string path, int id)
+        public void Serialize(string path)
         {
-            using (StreamWriter sw = File.AppendText(path))
+            XDocument doc = XDocument.Load(path);
+            XElement xmlFile = doc.Element("puzzle_object");
+
+            if (start_point_vertex == null)
             {
-                if(this.start_point_vertex == null)
-                {
-                    sw.WriteLine("\t<Line>");
-                    sw.WriteLine("\t\t<ID>" + id.ToString() + "</ID>");
-                    sw.WriteLine("\t\t<Start_Point>" + start_point.ToString() + "</Start_Point>");
-                    sw.WriteLine("\t\t<End_Point>" + end_point.ToString() + "</End_Point>");
-                    sw.WriteLine("\t</Line>");
-                }
+                xmlFile.Add(new XElement("Line",
+                    new XElement("id", this.ID.ToString()),
+                    new XElement("start_point", start_point.ToString()),
+                    new XElement("end_point", end_point.ToString())
+                    
+                ));
             }
+            doc.Save(path);
+
         }
 
-        public PuzzleObject unserialize(string path)
+        public PuzzleObject Unserialize(string path)
         {
             throw new NotImplementedException();
+        }
+
+        public Vertex GetStartPointVertex()
+        {
+            return this.start_point_vertex;
+        }
+
+        public Vertex GetEndPointVertex()
+        {
+            return this.end_point_vertex;
         }
     }
 }
