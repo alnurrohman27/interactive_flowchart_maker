@@ -5,10 +5,11 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace PuzzleChart.Shapes
 {
-    public class Oval : Vertex
+    public class Oval : Vertex, IOpenSave
     {
         
         public int x { get; set; }
@@ -120,6 +121,16 @@ namespace PuzzleChart.Shapes
         }
 
         public override Point LineIntersect(Point start_point, Point end_point)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void serialize(string path, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PuzzleObject unserialize(string path)
         {
             throw new NotImplementedException();
         }

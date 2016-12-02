@@ -6,10 +6,11 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace PuzzleChart.Shapes
 {
-    public class Line : Edge
+    public class Line : Edge, IOpenSave
     {
         private const double EPSILON = 3.0;
         public Point start_point { get; set; }
@@ -135,5 +136,14 @@ namespace PuzzleChart.Shapes
             throw new NotImplementedException();
         }
 
+        public void serialize(string path, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PuzzleObject unserialize(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -5,10 +5,11 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace PuzzleChart.Shapes
 {
-    public class Parallelogram : Vertex
+    public class Parallelogram : Vertex, IOpenSave
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -168,6 +169,16 @@ namespace PuzzleChart.Shapes
                     return intersection;
             }
             return new Point(0, 0);
+        }
+
+        public void serialize(string path, int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PuzzleObject unserialize(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

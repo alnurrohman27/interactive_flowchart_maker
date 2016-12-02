@@ -120,7 +120,7 @@ namespace PuzzleChart
             RedoCommand redoCmd = new RedoCommand(this.canvas);
 
             Open toolItemOpen = new Open();
-            toolItemOpen.SetCommand(undoCmd);
+            toolItemOpen.SetCommand(openCmd);
             Save toolItemSave = new Save();
             toolItemSave.SetCommand(saveCmd);
             Undo toolItemUndo = new Undo();
@@ -191,6 +191,14 @@ namespace PuzzleChart
             }else if (e.Control && e.KeyCode == Keys.Y)
             {
                 this.canvas.Redo();
+            }
+            else if(e.Control && e.KeyCode == Keys.S)
+            {
+                this.canvas.Save();
+            }
+            else if(e.Control && e.KeyCode == Keys.O)
+            {
+                this.canvas.Open();
             }
         }
 

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace PuzzleChart.Shapes
 {
-    public class Rectangle : Vertex
+    public class Rectangle : Vertex, IOpenSave
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -158,6 +162,35 @@ namespace PuzzleChart.Shapes
                     return intersection;
             }
             return new Point(0, 0);
+        }
+
+        public void serialize(string path, int id)
+        {
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine("\t<Rectangle>");
+                sw.WriteLine("\t\t<ID>");
+                sw.WriteLine("\t\t\t" + id.ToString());
+                sw.WriteLine("\t\t</ID>");
+                sw.WriteLine("\t\t<X>");
+                sw.WriteLine("\t\t\t" + x.ToString());
+                sw.WriteLine("\t\t</X>");
+                sw.WriteLine("\t\t<Y>");
+                sw.WriteLine("\t\t\t" + y.ToString());
+                sw.WriteLine("\t\t</Y>");
+                sw.WriteLine("\t\t<Height>");
+                sw.WriteLine("\t\t\t" + height.ToString());
+                sw.WriteLine("\t\t</Height>");
+                sw.WriteLine("\t\t<Width>");
+                sw.WriteLine("\t\t\t" + width.ToString());
+                sw.WriteLine("\t\t</Width>");
+                sw.WriteLine("\t</Rectangle>");
+            }
+        }
+
+        public PuzzleObject unserialize(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

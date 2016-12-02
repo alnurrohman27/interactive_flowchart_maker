@@ -70,6 +70,7 @@
     <Compile Include="IMenuBar.cs" />
     <Compile Include="IObservable.cs" />
     <Compile Include="IObserver.cs" />
+    <Compile Include="IOpenSave.cs" />
     <Compile Include="PuzzleState.cs" />
     <Compile Include="PuzzleObject.cs" />
     <Compile Include="MainWindow.cs">

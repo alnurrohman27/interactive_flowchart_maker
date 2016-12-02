@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace PuzzleChart.Shapes
 {
-    public class Diamond : Vertex
+    public class Diamond : Vertex, IOpenSave
     {
         public int x { get; set; }
         public int y { get; set; }
@@ -178,6 +182,35 @@ namespace PuzzleChart.Shapes
                 return my_point_array[0]; 
 
             return new Point(0, 0);
+        }
+
+        public void serialize(string path, int id)
+        {
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine("\t<Diamond>");
+                sw.WriteLine("\t\t<ID>");
+                sw.WriteLine("\t\t\t" + id.ToString());
+                sw.WriteLine("\t\t</ID>");
+                sw.WriteLine("\t\t<X>");
+                sw.WriteLine("\t\t\t" + x.ToString());
+                sw.WriteLine("\t\t</X>");
+                sw.WriteLine("\t\t<Y>");
+                sw.WriteLine("\t\t\t" + y.ToString());
+                sw.WriteLine("\t\t</Y>");
+                sw.WriteLine("\t\t<Height>");
+                sw.WriteLine("\t\t\t" + height.ToString());
+                sw.WriteLine("\t\t</Height>");
+                sw.WriteLine("\t\t<Width>");
+                sw.WriteLine("\t\t\t" + width.ToString());
+                sw.WriteLine("\t\t</Width>");
+                sw.WriteLine("\t</Diamond>");
+            }
+        }
+
+        public PuzzleObject unserialize(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

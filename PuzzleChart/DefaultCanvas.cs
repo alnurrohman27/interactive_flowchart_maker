@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using PuzzleChart.Shapes;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace PuzzleChart
 {
@@ -167,8 +171,42 @@ namespace PuzzleChart
             if (saveFileDialog1.FileName != "")
             {
                 string name = saveFileDialog1.FileName;
-                File.WriteAllText(name, "test");
+
+                using (StreamWriter sw = File.CreateText(name))
+                {
+                    sw.WriteLine("<PuzzleObject>");
+                }
+
+
+                int i = 0;
+                foreach (PuzzleObject obj in puzzle_objects)
+                {
+                    i++;
+                    if (obj is IOpenSave)
+                    {
+                        if (obj is Diamond)
+                        {
+                            Debug.WriteLine("ID: " + i + " Type: Diamond");
+                            Diamond diamondObj = (Diamond)obj;
+                            diamondObj.serialize(name, i);
+                        }
+                        else if(obj is Shapes.Rectangle)
+                        {
+                            Debug.WriteLine("ID: " + i + " Type: Rectangle");
+                            Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
+                            rectangleObj.serialize(name, i);
+                        }
+                    }
+                }
+
+                using (StreamWriter sw = File.AppendText(name))
+                {
+                    sw.WriteLine("</PuzzleObject>");
+                }
+
+                //File.WriteAllText(name, "test");
             }
+
         }
 
         public void Open()
