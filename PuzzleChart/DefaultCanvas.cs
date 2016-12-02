@@ -196,6 +196,25 @@ namespace PuzzleChart
                             Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
                             rectangleObj.serialize(name, i);
                         }
+                        else if (obj is Oval)
+                        {
+                            Debug.WriteLine("ID: " + i + " Type: Oval");
+                            Oval ovalObj = (Oval)obj;
+                            ovalObj.serialize(name, i);
+                        }
+                        else if (obj is Parallelogram)
+                        {
+                            Debug.WriteLine("ID: " + i + " Type: Line");
+                            Parallelogram parallelogramObj = (Parallelogram)obj;
+                            parallelogramObj.serialize(name, i);
+                        }
+                        else if (obj is Line)
+                        {
+                            Debug.WriteLine("ID: " + i + " Type: Line");
+                            Line lineObj = (Line)obj;
+                            lineObj.serialize(name, i);
+                        }
+
                     }
                 }
 

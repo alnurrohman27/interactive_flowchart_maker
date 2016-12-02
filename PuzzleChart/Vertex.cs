@@ -32,5 +32,10 @@ namespace PuzzleChart
         {
             edges.Remove((Edge) O);
         }
+        
+        public List<Edge> GetEdges()
+        {
+            return this.edges;
+        }
     }
 }

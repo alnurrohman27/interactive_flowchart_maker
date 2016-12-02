@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -138,7 +139,17 @@ namespace PuzzleChart.Shapes
 
         public void serialize(string path, int id)
         {
-            throw new NotImplementedException();
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                if(this.start_point_vertex == null)
+                {
+                    sw.WriteLine("\t<Line>");
+                    sw.WriteLine("\t\t<ID>" + id.ToString() + "</ID>");
+                    sw.WriteLine("\t\t<Start_Point>" + start_point.ToString() + "</Start_Point>");
+                    sw.WriteLine("\t\t<End_Point>" + end_point.ToString() + "</End_Point>");
+                    sw.WriteLine("\t</Line>");
+                }
+            }
         }
 
         public PuzzleObject unserialize(string path)

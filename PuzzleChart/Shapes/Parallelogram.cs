@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,7 +174,28 @@ namespace PuzzleChart.Shapes
 
         public void serialize(string path, int id)
         {
-            throw new NotImplementedException();
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine("\t<Parallelogram>");
+
+                sw.WriteLine("\t\t<ID>" + id.ToString() + "</ID>");
+                sw.WriteLine("\t\t<X>" + x.ToString() + "</X>");
+                sw.WriteLine("\t\t<Y>" + y.ToString() + "</Y>");
+                sw.WriteLine("\t\t<Width>" + width.ToString() + "</Width>");
+                sw.WriteLine("\t\t<Height>" + height.ToString() + "</Height>");
+
+                List<Edge> listEdges = GetEdges();
+                foreach (Edge edgeObj in listEdges)
+                {
+                    Line lineObj = (Line)edgeObj;
+                    sw.WriteLine("\t\t<Line>");
+                    sw.WriteLine("\t\t\t<Start_Point>" + lineObj.start_point.ToString() + "</Start_Point>");
+                    sw.WriteLine("\t\t\t<End_Point>" + lineObj.end_point.ToString() + "</End_Point>");
+                    sw.WriteLine("\t\t</Line>");
+                }
+
+                sw.WriteLine("\t</Parallelogram>");
+            }
         }
 
         public PuzzleObject unserialize(string path)

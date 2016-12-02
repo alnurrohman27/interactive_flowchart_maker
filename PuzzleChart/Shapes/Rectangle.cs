@@ -169,21 +169,23 @@ namespace PuzzleChart.Shapes
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine("\t<Rectangle>");
-                sw.WriteLine("\t\t<ID>");
-                sw.WriteLine("\t\t\t" + id.ToString());
-                sw.WriteLine("\t\t</ID>");
-                sw.WriteLine("\t\t<X>");
-                sw.WriteLine("\t\t\t" + x.ToString());
-                sw.WriteLine("\t\t</X>");
-                sw.WriteLine("\t\t<Y>");
-                sw.WriteLine("\t\t\t" + y.ToString());
-                sw.WriteLine("\t\t</Y>");
-                sw.WriteLine("\t\t<Height>");
-                sw.WriteLine("\t\t\t" + height.ToString());
-                sw.WriteLine("\t\t</Height>");
-                sw.WriteLine("\t\t<Width>");
-                sw.WriteLine("\t\t\t" + width.ToString());
-                sw.WriteLine("\t\t</Width>");
+
+                sw.WriteLine("\t\t<ID>" + id.ToString() + "</ID>");
+                sw.WriteLine("\t\t<X>" + x.ToString() + "</X>");
+                sw.WriteLine("\t\t<Y>" + y.ToString() + "</Y>");
+                sw.WriteLine("\t\t<Width>" + width.ToString() + "</Width>");
+                sw.WriteLine("\t\t<Height>" + height.ToString() + "</Height>");
+
+                List<Edge> listEdges = GetEdges();
+                foreach (Edge edgeObj in listEdges)
+                {
+                    Line lineObj = (Line)edgeObj;
+                    sw.WriteLine("\t\t<Line>");
+                    sw.WriteLine("\t\t\t<Start_Point>" + lineObj.start_point.ToString() + "</Start_Point>");
+                    sw.WriteLine("\t\t\t<End_Point>" + lineObj.end_point.ToString() + "</End_Point>");
+                    sw.WriteLine("\t\t</Line>");
+                }
+
                 sw.WriteLine("\t</Rectangle>");
             }
         }
