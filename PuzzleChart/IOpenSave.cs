@@ -10,6 +10,6 @@ namespace PuzzleChart
     public interface IOpenSave
     {
         void Serialize(string path);
-        PuzzleObject Unserialize(string path);
+        List<PuzzleObject> Unserialize(string path);
     }
 }

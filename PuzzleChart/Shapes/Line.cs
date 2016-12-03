@@ -145,20 +145,96 @@ namespace PuzzleChart.Shapes
 
             if (start_point_vertex == null)
             {
-                xmlFile.Add(new XElement("Line",
+                xmlFile.Add(new XElement("line", 
                     new XElement("id", this.ID.ToString()),
-                    new XElement("start_point", start_point.ToString()),
-                    new XElement("end_point", end_point.ToString())
-                    
+                    new XElement("start_point", new XAttribute("x", start_point.X.ToString()), new XAttribute("y", start_point.Y.ToString())),
+                    new XElement("end_point", new XAttribute("x", end_point.X.ToString()), new XAttribute("y", end_point.Y.ToString()))
                 ));
             }
             doc.Save(path);
 
         }
 
-        public PuzzleObject Unserialize(string path)
+        public List<PuzzleObject> Unserialize(string path)
         {
-            throw new NotImplementedException();
+            List<PuzzleObject> listObj = new List<PuzzleObject>();
+            Line lineObj = null;
+            int flag = 0;
+            Point startPoint = new Point(), endPoint = new Point();
+            string id = null;
+            bool loopFlag = true;
+            XmlTextReader reader = new XmlTextReader(path);
+            reader.Read();
+            reader.Read();
+            reader.Read();
+            try
+            {
+                if (reader.Name == "puzzle_object")
+                {
+                    while (reader.Read())
+                    {
+                        loopFlag = true;
+                        if(reader.Name == "line")
+                        {
+                            while (reader.Read())
+                            {
+                                switch (reader.NodeType)
+                                {
+                                    case XmlNodeType.Element: // The node is an element.
+                                        if (reader.Name == "id")
+                                            flag = 1;
+                                        else if (reader.Name == "start_point")
+                                        {
+                                            flag = 2;
+                                            int x = 0, y = 0;
+
+                                            reader.MoveToAttribute(0);
+                                            x = Int32.Parse(reader.Value);
+                                            reader.MoveToNextAttribute();
+                                            y = Int32.Parse(reader.Value);
+
+                                            reader.MoveToElement();
+                                            startPoint = new Point(x, y);
+                                        }
+
+                                        else if (reader.Name == "end_point")
+                                        {
+                                            flag = 3;
+                                            int x = 0, y = 0;
+
+                                            reader.MoveToAttribute(0);
+                                            x = Int32.Parse(reader.Value);
+                                            reader.MoveToNextAttribute();
+                                            y = Int32.Parse(reader.Value);
+
+                                            reader.MoveToElement();
+                                            endPoint = new Point(x, y);
+                                        }
+                                        break;
+                                    case XmlNodeType.Text:
+                                        if (flag == 1)
+                                        {
+                                            id = reader.Value;
+                                        }
+                                        break;
+                                }
+                            }
+                            if (id != null)
+                            {
+                                Console.WriteLine("Data startPoint: " + startPoint.ToString() + ", endPoint: " + endPoint.ToString());
+                                lineObj = new Line(startPoint, endPoint);
+                                listObj.Add(lineObj);
+                            }
+                        }            
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            reader.Close();
+            return listObj;
         }
 
         public Vertex GetStartPointVertex()

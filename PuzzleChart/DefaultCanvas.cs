@@ -168,82 +168,137 @@ namespace PuzzleChart
             saveFileDialog1.Title = "Save an Document";
             saveFileDialog1.ShowDialog();
 
-            if (saveFileDialog1.FileName != "")
+            try
             {
-                string name = saveFileDialog1.FileName;
-
-                using (StreamWriter sw = File.CreateText(name))
+                if (saveFileDialog1.FileName != "")
                 {
-                    sw.WriteLine("<PuzzleObject>");
-                }
+                    string name = saveFileDialog1.FileName;
 
-                XmlWriterSettings settings = new XmlWriterSettings();
-                settings.Indent = true;
-                settings.NewLineOnAttributes = true;
-                XmlWriter writer = XmlWriter.Create(name, settings);
-                writer.WriteStartDocument();
-                writer.WriteStartElement("puzzle_object");
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-                writer.Close();
-
-                foreach (PuzzleObject obj in puzzle_objects)
-                {
-                    if (obj is IOpenSave)
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    settings.NewLineOnAttributes = true;
+                    XmlWriter writer = XmlWriter.Create(name, settings);
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("puzzle_object");
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
+                    writer.Close();
+                    
+                    foreach (PuzzleObject obj in puzzle_objects)
                     {
-                        if (obj is Diamond)
+                        if (obj is IOpenSave)
                         {
-                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Diamond");
-                            Diamond diamondObj = (Diamond)obj;
-                            diamondObj.Serialize(name);
-                        }
-                        else if(obj is Shapes.Rectangle)
-                        {
-                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Rectangle");
-                            Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
-                            rectangleObj.Serialize(name);
-                        }
-                        else if (obj is Oval)
-                        {
-                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Oval");
-                            Oval ovalObj = (Oval)obj;
-                            ovalObj.Serialize(name);
-                        }
-                        else if (obj is Parallelogram)
-                        {
-                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Parallelogram");
-                            Parallelogram parallelogramObj = (Parallelogram)obj;
-                            parallelogramObj.Serialize(name);
-                        }
-                        else if (obj is Line)
-                        {
-                            Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Line");
-                            Line lineObj = (Line)obj;
-                            lineObj.Serialize(name);
-                        }
+                            if (obj is Diamond)
+                            {
+                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Diamond");
+                                Diamond diamondObj = (Diamond)obj;
+                                diamondObj.Serialize(name);
+                            }
+                            else if (obj is Shapes.Rectangle)
+                            {
+                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Rectangle");
+                                Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
+                                rectangleObj.Serialize(name);
+                            }
+                            else if (obj is Oval)
+                            {
+                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Oval");
+                                Oval ovalObj = (Oval)obj;
+                                ovalObj.Serialize(name);
+                            }
+                            else if (obj is Parallelogram)
+                            {
+                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Parallelogram");
+                                Parallelogram parallelogramObj = (Parallelogram)obj;
+                                parallelogramObj.Serialize(name);
+                            }
+                            else if (obj is Line)
+                            {
+                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Line");
+                                Line lineObj = (Line)obj;
+                                lineObj.Serialize(name);
+                            }
 
+                        }
                     }
-                }
 
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error: File being used by another process or corrupt");
+            }
+            
 
         }
 
         public void Open()
         {
             Debug.WriteLine("Open File is selected");
-            Stream myStream = null;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
-            openFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.xml";
+            openFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.ipd";
             openFileDialog1.RestoreDirectory = true;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    
-                    
+                    this.puzzle_objects.Clear();
+                    List<PuzzleObject> listObj = new List<PuzzleObject>();
+
+                    Diamond diamondObj = new Diamond();
+                    listObj = diamondObj.Unserialize(openFileDialog1.FileName);
+                    foreach(PuzzleObject obj in listObj)
+                    {
+                        puzzle_objects.Add(obj);
+                        obj.Select();
+                        obj.Deselect();
+                    }
+                    listObj.Clear();
+
+                    Oval ovalObj = new Oval();
+                    listObj = ovalObj.Unserialize(openFileDialog1.FileName);
+                    foreach (PuzzleObject obj in listObj)
+                    {
+                        puzzle_objects.Add(obj);
+                        obj.Select();
+                        obj.Deselect();
+                    }
+                    listObj.Clear();
+
+                    Parallelogram parallelogramObj = new Parallelogram();
+                    listObj = parallelogramObj.Unserialize(openFileDialog1.FileName);
+                    foreach (PuzzleObject obj in listObj)
+                    {
+                        puzzle_objects.Add(obj);
+                        obj.Select();
+                        obj.Deselect();
+                    }
+                    listObj.Clear();
+
+                    Shapes.Rectangle rectangleObj = new Shapes.Rectangle();
+                    listObj = rectangleObj.Unserialize(openFileDialog1.FileName);
+                    foreach (PuzzleObject obj in listObj)
+                    {
+                        puzzle_objects.Add(obj);
+                        obj.Select();
+                        obj.Deselect();
+                    }
+                    listObj.Clear();
+
+                    Line lineObj = new Line();
+                    listObj = lineObj.Unserialize(openFileDialog1.FileName);
+                    foreach (PuzzleObject obj in listObj)
+                    {
+                        puzzle_objects.Add(obj);
+                        obj.Select();
+                        obj.Deselect();
+                    }
+                    listObj.Clear();
+
+                    this.Repaint();
+
                 }
                 catch (Exception ex)
                 {

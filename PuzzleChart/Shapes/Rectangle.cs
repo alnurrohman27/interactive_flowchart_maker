@@ -167,7 +167,25 @@ namespace PuzzleChart.Shapes
         public void Serialize(string path)
         {
             XDocument doc = XDocument.Load(path);
-            XElement xmlFile = doc.Element("puzzle_object");
+            XElement xmlFile = doc.Root;
+
+            if (doc.Root.LastNode != null)
+            {
+                xmlFile = (XElement)doc.LastNode;
+            }
+
+            xmlFile.Add(new XElement("rectangle",
+                new XElement("id", this.ID.ToString()),
+                new XElement("x", x.ToString()),
+                new XElement("y", y.ToString()),
+                new XElement("width", width.ToString()),
+                new XElement("height", height.ToString())
+            ));
+            doc.Save(path);
+
+            doc = XDocument.Load(path);
+            xmlFile = (XElement)doc.LastNode;
+            xmlFile = (XElement)xmlFile.LastNode;
 
             List<Edge> listEdges = GetEdges();
             foreach (Edge edgeObj in listEdges)
@@ -176,38 +194,120 @@ namespace PuzzleChart.Shapes
 
                 if (lineObj.GetEndPointVertex() != null)
                 {
-                    xmlFile.Add(new XElement("Rectangle",
-                       new XElement("id", this.ID.ToString()),
-                       new XElement("x", x.ToString()),
-                       new XElement("y", y.ToString()),
-                       new XElement("width", width.ToString()),
-                       new XElement("height", height.ToString()),
-                       new XElement("start_point", lineObj.start_point.ToString()),
-                       new XElement("end_point", lineObj.end_point.ToString()),
-                       new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString()),
-                       new XElement("end_vertex", lineObj.GetEndPointVertex().ID.ToString())
+                    xmlFile.Add(new XElement("edge",
+                        new XElement("id", lineObj.ID.ToString()),
+                        new XElement("start_point", new XAttribute("x", lineObj.start_point.X.ToString()), new XAttribute("y", lineObj.start_point.Y.ToString())),
+                        new XElement("end_point", new XAttribute("x", lineObj.end_point.X.ToString()), new XAttribute("y", lineObj.end_point.Y.ToString())),
+                        new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString()),
+                        new XElement("end_vertex", lineObj.GetEndPointVertex().ID.ToString())
                     ));
                 }
                 else
                 {
-                    xmlFile.Add(new XElement("Rectangle",
-                       new XElement("id", this.ID.ToString()),
-                       new XElement("x", x.ToString()),
-                       new XElement("y", y.ToString()),
-                       new XElement("width", width.ToString()),
-                       new XElement("height", height.ToString()),
-                       new XElement("start_point", lineObj.start_point.ToString()),
-                       new XElement("end_point", lineObj.end_point.ToString()),
-                       new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString())
+                    xmlFile.Add(new XElement("edge",
+                        new XElement("id", lineObj.ID.ToString()),
+                        new XElement("start_point", new XAttribute("x", lineObj.start_point.X.ToString()), new XAttribute("y", lineObj.start_point.Y.ToString())),
+                        new XElement("end_point", new XAttribute("x", lineObj.end_point.X.ToString()), new XAttribute("y", lineObj.end_point.Y.ToString())),
+                        new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString())
                     ));
                 }
+                doc.Save(path);
             }
-            doc.Save(path);
         }
 
-        public PuzzleObject Unserialize(string path)
+        public List<PuzzleObject> Unserialize(string path)
         {
-            throw new NotImplementedException();
+            List<PuzzleObject> listObj = new List<PuzzleObject>();
+            Rectangle rectangleObj = null;
+            int x = 0, y = 0, width = 0, height = 0, flag = 0;
+            bool loopFlag = true;
+            string id = null;
+            XmlTextReader reader = new XmlTextReader(path);
+            reader.Read();
+            reader.Read();
+            reader.Read();
+            try
+            {
+                if (reader.Name == "puzzle_object")
+                {
+                    while (reader.Read())
+                    {
+                        loopFlag = true;
+                        switch (reader.NodeType)
+                        {
+                            case XmlNodeType.Element: // The node is an element.
+                                if (reader.Name == "rectangle")
+                                {
+                                    while (reader.Read() && loopFlag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+
+                                            case XmlNodeType.Element: // The node is an element.
+                                                if (reader.Name == "id")
+                                                    flag = 1;
+                                                else if (reader.Name == "x")
+                                                    flag = 2;
+                                                else if (reader.Name == "y")
+                                                    flag = 3;
+                                                else if (reader.Name == "width")
+                                                    flag = 4;
+                                                else if (reader.Name == "height")
+                                                    flag = 5;
+                                                break;
+                                            case XmlNodeType.Text:
+                                                if (flag == 1)
+                                                {
+                                                    id = reader.Value;
+                                                }
+
+                                                else if (flag == 2)
+                                                {
+                                                    x = Int32.Parse(reader.Value);
+                                                }
+
+                                                else if (flag == 3)
+                                                {
+                                                    y = Int32.Parse(reader.Value);
+                                                }
+
+                                                else if (flag == 4)
+                                                {
+                                                    width = Int32.Parse(reader.Value);
+                                                }
+
+                                                else if (flag == 5)
+                                                {
+                                                    height = Int32.Parse(reader.Value);
+                                                }
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                if (reader.Name == "rectangle")
+                                                {
+                                                    loopFlag = false;
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    if (x > 0 && y > 0 && width > 0 && height > 0)
+                                    {
+                                        Console.WriteLine("Data x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
+                                        rectangleObj = new Rectangle(x, y, width, height);
+                                        rectangleObj.ID = new Guid(id);
+                                        listObj.Add(rectangleObj);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            reader.Close();
+            return listObj;
         }
     }
 }
