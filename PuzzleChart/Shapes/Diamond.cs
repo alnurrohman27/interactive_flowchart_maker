@@ -216,17 +216,11 @@ namespace PuzzleChart.Shapes
                 new XElement("width", width.ToString()),
                 new XElement("height", height.ToString())
             ));
-            doc.Save(path);
-
-            doc = XDocument.Load(path);
-            xmlFile = (XElement)doc.LastNode;
-            xmlFile = (XElement)xmlFile.LastNode;
 
             List <Edge> listEdges = GetEdges();
             foreach (Edge edgeObj in listEdges)
             {
                 Line lineObj = (Line)edgeObj;
-                
                 if(lineObj.GetEndPointVertex() != null)
                 {
                     xmlFile.Add(new XElement("edge",
@@ -246,9 +240,10 @@ namespace PuzzleChart.Shapes
                         new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString())
                     ));
                 }
-                doc.Save(path);
+                
             }
-            
+            doc.Save(path);
+
         }
 
         public List<PuzzleObject> Unserialize(string path)
@@ -269,70 +264,67 @@ namespace PuzzleChart.Shapes
                     while(reader.Read())
                     {
                         loopFlag = true;
-                        switch (reader.NodeType)
+                        if (reader.Name == "diamond")
                         {
-                            case XmlNodeType.Element: // The node is an element.
-                                if (reader.Name == "diamond")
+                            while (reader.Read() && loopFlag)
+                            {
+                                switch (reader.NodeType)
                                 {
-                                    while (reader.Read() && loopFlag)
-                                    {
-                                        switch (reader.NodeType)
+                                    case XmlNodeType.Element: // The node is an element.
+                                        if (reader.Name == "id")
+                                            flag = 1;
+                                        else if (reader.Name == "x")
+                                            flag = 2;
+                                        else if (reader.Name == "y")
+                                            flag = 3;
+                                        else if (reader.Name == "width")
+                                            flag = 4;
+                                        else if (reader.Name == "height")
+                                            flag = 5;
+                                        break;
+                                    case XmlNodeType.Text:
+                                        if (flag == 1)
                                         {
-                                            case XmlNodeType.Element: // The node is an element.
-                                                if(reader.Name == "id")
-                                                    flag = 1;
-                                                else if (reader.Name == "x")
-                                                    flag = 2;
-                                                else if (reader.Name == "y")
-                                                    flag = 3;
-                                                else if (reader.Name == "width")
-                                                    flag = 4;
-                                                else if (reader.Name == "height")
-                                                    flag = 5;
-                                                break;
-                                            case XmlNodeType.Text:
-                                                if (flag == 1)
-                                                {
-                                                    id = reader.Value;
-                                                }
-
-                                                else if (flag == 2)
-                                                {
-                                                    x = Int32.Parse(reader.Value);
-                                                }
-
-                                                else if (flag == 3)
-                                                {
-                                                    y = Int32.Parse(reader.Value);
-                                                }
-
-                                                else if (flag == 4)
-                                                {
-                                                    width = Int32.Parse(reader.Value);
-                                                }
-
-                                                else if (flag == 5)
-                                                {
-                                                    height = Int32.Parse(reader.Value);
-                                                }
-                                                break;
-                                            case XmlNodeType.EndElement:
-                                                if(reader.Name == "diamond")
-                                                {
-                                                    loopFlag = false;
-                                                }
-                                                break;
+                                            id = reader.Value;
                                         }
-                                    }
-                                    if (x > 0 && y > 0 && width > 0 && height > 0)
-                                    {
-                                        Console.WriteLine("Data x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
-                                        diamondObj = new Diamond(x, y, width, height);
-                                        diamondObj.ID = new Guid(id);
-                                        listObj.Add(diamondObj);
-                                    }
+
+                                        else if (flag == 2)
+                                        {
+                                            x = Int32.Parse(reader.Value);
+                                        }
+
+                                        else if (flag == 3)
+                                        {
+                                            y = Int32.Parse(reader.Value);
+                                        }
+
+                                        else if (flag == 4)
+                                        {
+                                            width = Int32.Parse(reader.Value);
+                                        }
+
+                                        else if (flag == 5)
+                                        {
+                                            height = Int32.Parse(reader.Value);
+                                        }
+                                        break;
+                                    case XmlNodeType.EndElement:
+                                        if (reader.Name == "diamond")
+                                        {
+                                            loopFlag = false;
+                                        }
+                                        break;
                                 }
-                                break;
+                            }
+                            if (x > 0 && y > 0 && width > 0 && height > 0)
+                            {
+                                Console.WriteLine("Data x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
+                                diamondObj = new Diamond(x, y, width, height);
+                                diamondObj.ID = new Guid(id);
+                                listObj.Add(diamondObj);
+                                id = null;
+                                diamondObj = null;
+                            }
                         }
                     }
                 }

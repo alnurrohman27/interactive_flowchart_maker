@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -17,6 +18,8 @@ namespace PuzzleChart.Shapes
         private const double EPSILON = 3.0;
         public Point start_point { get; set; }
         public Point end_point { get; set; }
+        public Guid id_start_point_vertex { get; set; }
+        public Guid id_end_point_vertex { get; set; }
 
         private Pen pen;
         private Vertex start_point_vertex;
@@ -116,10 +119,12 @@ namespace PuzzleChart.Shapes
             if (start_or_end)
             {
                 start_point_vertex = vertex;
+                id_start_point_vertex = vertex.ID;
             }
             else
             {
                 end_point_vertex = vertex;
+                id_end_point_vertex = vertex.ID;
             }
         }
        
@@ -157,25 +162,23 @@ namespace PuzzleChart.Shapes
         public List<PuzzleObject> Unserialize(string path)
         {
             List<PuzzleObject> listObj = new List<PuzzleObject>();
-            Line lineObj = null;
-            int flag = 0;
+            Line lineObj = null;  
             Point startPoint = new Point(), endPoint = new Point();
             string id = null;
             bool loopFlag = true;
+            int flag = 0;
             XmlTextReader reader = new XmlTextReader(path);
-            reader.Read();
-            reader.Read();
-            reader.Read();
+            reader.MoveToContent();
             try
             {
                 if (reader.Name == "puzzle_object")
                 {
                     while (reader.Read())
                     {
-                        loopFlag = true;
-                        if(reader.Name == "line")
+                        if (reader.Name == "line")
                         {
-                            while (reader.Read())
+                            loopFlag = true;
+                            while (reader.Read() && loopFlag)
                             {
                                 switch (reader.NodeType)
                                 {
@@ -195,7 +198,6 @@ namespace PuzzleChart.Shapes
                                             reader.MoveToElement();
                                             startPoint = new Point(x, y);
                                         }
-
                                         else if (reader.Name == "end_point")
                                         {
                                             flag = 3;
@@ -212,27 +214,144 @@ namespace PuzzleChart.Shapes
                                         break;
                                     case XmlNodeType.Text:
                                         if (flag == 1)
-                                        {
                                             id = reader.Value;
-                                        }
+                                        break;
+                                    case XmlNodeType.EndElement:
+                                        if (reader.Name == "line")
+                                            loopFlag = false;
                                         break;
                                 }
                             }
                             if (id != null)
                             {
-                                Console.WriteLine("Data startPoint: " + startPoint.ToString() + ", endPoint: " + endPoint.ToString());
+                                Console.WriteLine("Edge ID: " + id + " startPoint: " + startPoint.ToString() + ", endPoint: " + endPoint.ToString());
                                 lineObj = new Line(startPoint, endPoint);
+                                lineObj.ID = new Guid(id);
                                 listObj.Add(lineObj);
                             }
-                        }            
+                        }
+                        else if (reader.Name == "edge")
+                        {
+                            loopFlag = true;
+                            //Debug.WriteLine("Masuk Elemen " + reader.Name);
+                            string startVertex = null, endVertex = null;
+                            while (reader.Read() && loopFlag)
+                            {
+                                reader.MoveToContent();
+                                //Debug.WriteLine("Masuk Elemen " + reader.Name);
+                                if (reader.Name == "id")
+                                {
+                                    bool tempFlag = true;
+                                    while (reader.Read() && tempFlag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+                                            case XmlNodeType.Element: // The node is an element.
+                                                //Debug.WriteLine("Masuk Elemen " + reader.Name);
+                                                break;
+                                            case XmlNodeType.Text:
+                                                id = reader.Value;
+                                                //Debug.WriteLine("Value: " + reader.Value);
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                tempFlag = false;
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (reader.Name == "start_point")
+                                {
+                                    int x = 0, y = 0;
+
+                                    reader.MoveToFirstAttribute();
+                                    x = Int32.Parse(reader.Value);
+                                    reader.MoveToNextAttribute();
+                                    y = Int32.Parse(reader.Value);
+
+                                    reader.MoveToElement();
+                                    startPoint = new Point(x, y);
+
+                                    //Debug.WriteLine("Value: " + startPoint);
+                                }
+                                else if (reader.Name == "end_point")
+                                {
+                                    int x = 0, y = 0;
+
+                                    reader.MoveToFirstAttribute();
+                                    x = Int32.Parse(reader.Value);
+                                    reader.MoveToNextAttribute();
+                                    y = Int32.Parse(reader.Value);
+
+                                    reader.MoveToElement();
+                                    endPoint = new Point(x, y);
+
+                                    //Debug.WriteLine("Value: " + endPoint);
+                                }
+                                else if (reader.Name == "start_vertex")
+                                {
+                                    bool tempFlag = true;
+                                    while (reader.Read() && tempFlag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+                                            case XmlNodeType.Element: // The node is an element.
+                                                //Debug.WriteLine("Masuk Elemen " + reader.Name);
+                                                break;
+                                            case XmlNodeType.Text:
+                                                startVertex = reader.Value;
+                                                //Debug.WriteLine("Value: " + reader.Value);
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                tempFlag = false;
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (reader.Name == "end_vertex")
+                                {
+                                    bool tempFlag = true;
+                                    while (reader.Read() && tempFlag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+                                            case XmlNodeType.Element: // The node is an element.
+                                                //Debug.WriteLine("Masuk Elemen " + reader.Name);
+                                                break;
+                                            case XmlNodeType.Text:
+                                                endVertex = reader.Value;
+                                                //Debug.WriteLine("Value: " + reader.Value);
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                tempFlag = false;
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (reader.Name == "edge")
+                                    loopFlag = false;
+                                
+                            }
+                            if (id != null)
+                            {
+                                lineObj = new Line(startPoint, endPoint);
+                                lineObj.ID = new Guid(id);
+                                lineObj.id_start_point_vertex = new Guid(startVertex);
+                                lineObj.id_end_point_vertex = new Guid(endVertex);
+                                listObj.Add(lineObj);
+                                Console.WriteLine("Edge ID: " + id + ", startPoint: " + startPoint.ToString() + ", endPoint: " + endPoint.ToString() + ", startVertex: " + lineObj.id_start_point_vertex + ", endVertex: " + lineObj.id_end_point_vertex);
+                            }
+                        }    
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine("Error Message: " + ex);
             }
             reader.Close();
+
+            
+
             return listObj;
         }
 

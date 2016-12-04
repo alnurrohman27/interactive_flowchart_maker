@@ -206,11 +206,6 @@ namespace PuzzleChart.Shapes
                 new XElement("width", width.ToString()),
                 new XElement("height", height.ToString())
             ));
-            doc.Save(path);
-
-            doc = XDocument.Load(path);
-            xmlFile = (XElement)doc.LastNode;
-            xmlFile = (XElement)xmlFile.LastNode;
 
             List<Edge> listEdges = GetEdges();
             foreach (Edge edgeObj in listEdges)
@@ -236,8 +231,8 @@ namespace PuzzleChart.Shapes
                         new XElement("start_vertex", lineObj.GetStartPointVertex().ID.ToString())
                     ));
                 }
-                doc.Save(path);
             }
+            doc.Save(path);
         }
 
         public List<PuzzleObject> Unserialize(string path)

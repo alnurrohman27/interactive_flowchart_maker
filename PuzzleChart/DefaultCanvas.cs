@@ -68,6 +68,8 @@ namespace PuzzleChart
             {
                 this.countRecover = 0;
                 this.countDelete = 0;
+                this.memory_delete = new List<PuzzleObject>();
+                this.memory_stack = new List<PuzzleObject>();
                 this.activeTool.ToolMouseUp(sender, e);
                 this.Repaint();
             }
@@ -127,11 +129,24 @@ namespace PuzzleChart
             {
                 Debug.WriteLine("Undo is selected");
                 var i = this.memory_delete.Count - 1;
-                this.puzzle_objects.Add(this.memory_delete[i]);
-                this.memory_delete.RemoveAt(i);
-                this.countDelete--;
-                this.countRecover++;
-                this.Repaint();
+                if (memory_delete[i] is Line)
+                {
+                    Line tempLine = (Line)memory_delete[i];
+                    foreach(PuzzleObject obj in puzzle_objects)
+                    {
+                        Vertex tempVertex;
+                        if (tempLine.id_start_point_vertex == obj.ID || tempLine.id_end_point_vertex == obj.ID)
+                        {
+                            tempVertex = (Vertex)obj;
+                            tempVertex.Subscribe(tempLine);
+                        }
+                    }
+                }
+                puzzle_objects.Add(memory_delete[i]);
+                memory_delete.RemoveAt(i);
+                countDelete--;
+                countRecover++;
+                Repaint();
             }
         }
 
@@ -256,6 +271,7 @@ namespace PuzzleChart
             catch(Exception ex)
             {
                 MessageBox.Show("Error: File being used by another process or corrupt");
+                Debug.WriteLine("Error Message: " + ex);
             }
             
 
@@ -318,11 +334,45 @@ namespace PuzzleChart
 
                     Line lineObj = new Line();
                     listObj = lineObj.Unserialize(openFileDialog1.FileName);
-                    foreach (PuzzleObject obj in listObj)
+
+                    for (int i = 0; i < listObj.Count; i++)
                     {
-                        puzzle_objects.Add(obj);
-                        obj.Select();
-                        obj.Deselect();
+                        Line temp1 = (Line)listObj[i];
+                        for (int j = 1; j < listObj.Count; j++)
+                        {
+                            Line temp2 = (Line)listObj[j];
+                            if (temp1.ID == temp2.ID && i != j)
+                            {
+                                listObj.RemoveAt(j);
+                            }
+                        }
+                    }
+
+                    foreach (Line obj in listObj)
+                    {
+                        Line tempObj = new Line(obj.start_point, obj.end_point);
+                        tempObj.ID = obj.ID;
+
+                        foreach (PuzzleObject obj2 in puzzle_objects)
+                        {
+                            Vertex allObj;
+                            if (obj2 is Vertex)
+                            {
+                                allObj = (Vertex)obj2;
+                                if (allObj.ID == obj.id_start_point_vertex)
+                                {
+                                    tempObj.AddVertex(allObj, true);
+                                }
+                                if (allObj.ID == obj.id_end_point_vertex)
+                                {
+                                    tempObj.AddVertex(allObj, false);
+                                }
+                                allObj.Subscribe(tempObj);
+                            }
+                        }
+                        puzzle_objects.Add(tempObj);
+                        tempObj.Select();
+                        tempObj.Deselect();
                     }
                     listObj.Clear();
 
@@ -331,7 +381,8 @@ namespace PuzzleChart
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk");
+                    MessageBox.Show("Error: File being used by another process or corrupt");
+                    Debug.WriteLine("Error Message: " + ex);
                 }
             }
         }
@@ -343,6 +394,19 @@ namespace PuzzleChart
             {
                 if (obj.State is EditState)
                 {
+                    if(obj is Line)
+                    {
+                        Line tempLine = (Line)obj;
+                        foreach (PuzzleObject obj2 in puzzle_objects)
+                        {
+                            Vertex tempVertex;
+                            if(obj2 is Line == false && tempLine.id_start_point_vertex == obj2.ID || obj2 is Line == false && tempLine.id_end_point_vertex == obj2.ID)
+                            {
+                                tempVertex = (Vertex)obj2;
+                                tempVertex.Unsubscribe(tempLine);
+                            }
+                        }
+                    }
                     tempObj.Add(obj);
                 }
             }
@@ -360,6 +424,7 @@ namespace PuzzleChart
         public void CopyObject()
         {
             List<PuzzleObject> tempObj = new List<PuzzleObject>();
+            memory_copy.Clear();
             bool flagCopy = false;
             foreach (PuzzleObject obj in puzzle_objects)
             {
@@ -380,62 +445,101 @@ namespace PuzzleChart
 
         public void PasteObject()
         {
-            foreach (PuzzleObject obj in this.memory_copy)
+            List<Line> listTempLine = new List<Line>();
+            StaticState staticState = new StaticState();
+            List<CopyMemory> listCopyMem = new List<CopyMemory>();
+
+            foreach (PuzzleObject obj in memory_copy)
             {
                 Console.WriteLine("Copy object to canvas: " + obj.ID);
+                CopyMemory copyMemory = new CopyMemory();
                 if(obj is Line)
                 {
                     Line temp = (Line)obj;
-                    Line drawObj = new Line();
-                    drawObj.start_point = temp.start_point;
-                    drawObj.end_point = temp.end_point;
-
-                    this.puzzle_objects.Add(drawObj);
+                    Line drawObj = new Line(temp.start_point, temp.end_point);
+                    if (temp.id_start_point_vertex != null)
+                        drawObj.id_start_point_vertex = temp.id_start_point_vertex;
+                    if(temp.id_end_point_vertex != null)
+                        drawObj.id_end_point_vertex = temp.id_end_point_vertex;
+                    listTempLine.Add(drawObj);
                 }
                 else if (obj is Diamond)
                 {
                     Diamond temp = (Diamond)obj;
-                    Diamond drawObj = new Diamond();
-                    drawObj.x = temp.x;
-                    drawObj.y = temp.y;
-                    drawObj.width = temp.width;
-                    drawObj.height = temp.height;
-                    this.puzzle_objects.Add(drawObj);
+                    Diamond drawObj = new Diamond(temp.x, temp.y, temp.width, temp.height);
+                    copyMemory.ID = drawObj.ID;
+                    copyMemory.before_copied = obj.ID;
+                    copyMemory.setObjectName("Diamond");
+                    listCopyMem.Add(copyMemory);
+                    puzzle_objects.Add(drawObj);
                 }
                 else if (obj is Oval)
                 {
                     Oval temp = (Oval)obj;
-                    Oval drawObj = new Oval();
-                    drawObj.x = temp.x;
-                    drawObj.y = temp.y;
-                    drawObj.width = temp.width;
-                    drawObj.height = temp.height;
+                    Oval drawObj = new Oval(temp.x, temp.y, temp.width, temp.height);
+                    copyMemory.ID = drawObj.ID;
+                    copyMemory.before_copied = obj.ID;
+                    copyMemory.setObjectName("Oval");
+                    listCopyMem.Add(copyMemory);
                     this.puzzle_objects.Add(drawObj);
                 }
                 else if(obj is Parallelogram)
                 {
                     Parallelogram temp = (Parallelogram)obj;
-                    Parallelogram drawObj = new Parallelogram();
-                    drawObj.x = temp.x;
-                    drawObj.y = temp.y;
-                    drawObj.width = temp.width;
-                    drawObj.height = temp.height;
+                    Parallelogram drawObj = new Parallelogram(temp.x, temp.y, temp.width, temp.height);
+                    copyMemory.ID = drawObj.ID;
+                    copyMemory.before_copied = obj.ID;
+                    copyMemory.setObjectName("Parallelogram");
+                    listCopyMem.Add(copyMemory);
                     this.puzzle_objects.Add(drawObj);
                 }
                 else if (obj is Shapes.Rectangle)
                 {
                     Shapes.Rectangle temp = (Shapes.Rectangle)obj;
-                    Shapes.Rectangle drawObj = new Shapes.Rectangle();
-                    drawObj.x = temp.x;
-                    drawObj.y = temp.y;
-                    drawObj.width = temp.width;
-                    drawObj.height = temp.height;
+                    Shapes.Rectangle drawObj = new Shapes.Rectangle(temp.x, temp.y, temp.width, temp.height);
+                    copyMemory.ID = drawObj.ID;
+                    copyMemory.before_copied = obj.ID;
+                    copyMemory.setObjectName("Rectangle");
+                    listCopyMem.Add(copyMemory);
                     this.puzzle_objects.Add(drawObj);
                 }
-                StaticState staticState = new StaticState();
                 obj.ChangeState(staticState);
-                this.Repaint();
             }
+            foreach (Line obj in listTempLine)
+            {
+                Line drawObj = new Line(obj.start_point, obj.end_point);
+                foreach (PuzzleObject obj3 in puzzle_objects)
+                {
+                    foreach(CopyMemory copyMem in listCopyMem)
+                    {
+                        Vertex obj2 = null;
+                        if (obj3.ID == copyMem.ID)
+                        {
+                            obj2 = (Vertex)obj3;
+                            obj2.ID = copyMem.ID;
+                            if (obj.id_start_point_vertex == copyMem.before_copied && obj3 is Vertex)
+                            {
+                                drawObj.AddVertex(obj2, true);
+                                drawObj.id_start_point_vertex = obj2.ID;
+                                Debug.WriteLine("Edge ID: " + copyMem.before_copied + " Vertex: " + obj2.ID);
+                            }
+                            if (obj.id_end_point_vertex == copyMem.before_copied && obj3 is Vertex)
+                            {
+                                drawObj.AddVertex(obj2, false);
+                                drawObj.id_end_point_vertex = obj2.ID;
+                                Debug.WriteLine("Edge ID: " + copyMem.before_copied + " Vertex: " + obj2.ID);
+                            }
+                            if (obj2 != null)
+                                obj2.Subscribe(drawObj);
+                        }
+                    }
+                    
+                }
+                puzzle_objects.Add(drawObj);
+            }
+            listTempLine.Clear();
+            Debug.WriteLine("Count: " + puzzle_objects.Count);
+            this.Repaint();
         }
     }
 }
