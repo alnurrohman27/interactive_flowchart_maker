@@ -59,7 +59,6 @@ namespace PuzzleChart.Shapes
 
         public override void RenderOnEditingView()
         {
-            RenderOnStaticView();
             pen.Color = Color.Blue;
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.Solid;

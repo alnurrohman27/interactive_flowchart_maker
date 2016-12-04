@@ -23,5 +23,8 @@ namespace PuzzleChart
         void Redo();
         void Save();
         void Open();
+        void DeleteObject();
+        void CopyObject();
+        void PasteObject();
     }
 }

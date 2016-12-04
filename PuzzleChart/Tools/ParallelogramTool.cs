@@ -83,6 +83,7 @@ namespace PuzzleChart.Tools
                 parallelogram.width = e.X - this.parallelogram.x;
                 parallelogram.height = e.Y - this.parallelogram.y;
                 parallelogram.Select();
+                //parallelogram.Deselect();
             }
         }
     }

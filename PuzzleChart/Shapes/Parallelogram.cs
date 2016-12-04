@@ -67,7 +67,23 @@ namespace PuzzleChart.Shapes
 
         public override void RenderOnEditingView()
         {
-            RenderOnStaticView();
+            this.pen.Color = Color.Blue;
+            this.pen.DashStyle = DashStyle.Solid;
+            pen.Width = 1.5f;
+
+            if (this.GetGraphics() != null)
+            {
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.DrawParallelogram(pen, x, y, width, height);
+
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+                string text = "Data";
+                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
+            }
         }
 
         public override void RenderOnPreview()

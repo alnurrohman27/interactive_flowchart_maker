@@ -83,6 +83,7 @@ namespace PuzzleChart.Tools
                 oval.width = e.X - this.oval.x;
                 oval.height = e.Y - this.oval.y;
                 oval.Select();
+                //oval.Deselect();
             }
         }
     }

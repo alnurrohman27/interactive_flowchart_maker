@@ -89,7 +89,7 @@ namespace PuzzleChart.Tools
                 {   
                     line_segment.end_point = new Point(e.X, e.Y);
                     line_segment.Select();
-                    
+
                     if (canvas.GetObjectAt(e.X, e.Y) != null && !(canvas.GetObjectAt(e.X,e.Y) is Line)) 
                     {
                         end_object = (Vertex)canvas.GetObjectAt(e.X, e.Y);
@@ -110,7 +110,6 @@ namespace PuzzleChart.Tools
                     }
 
                 }
-    
 
             }
         }

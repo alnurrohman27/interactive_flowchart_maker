@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CopyCommand.cs" />
     <Compile Include="Commands\OpenCommand.cs" />
+    <Compile Include="Commands\PasteCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
@@ -100,7 +102,13 @@
     <Compile Include="State\EditState.cs" />
     <Compile Include="State\PreviewState.cs" />
     <Compile Include="State\StaticState.cs" />
+    <Compile Include="ToolbarItems\Copy.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ToolbarItems\Open.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolbarItems\Paste.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ToolbarItems\Redo.cs">
@@ -192,6 +200,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\save-icon-9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paste.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

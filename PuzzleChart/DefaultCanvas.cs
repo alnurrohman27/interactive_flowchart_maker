@@ -11,6 +11,7 @@ using PuzzleChart.Shapes;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using PuzzleChart.State;
 
 namespace PuzzleChart
 {
@@ -19,12 +20,19 @@ namespace PuzzleChart
         private ITool activeTool;
         private List<PuzzleObject> puzzle_objects;
         private List<PuzzleObject> memory_stack;
+        private List<PuzzleObject> memory_delete;
+        private List<PuzzleObject> memory_copy;
+        private int countDelete, countRecover;
         private PuzzleObject temp;
 
         public DefaultCanvas()
         {
             this.puzzle_objects = new List<PuzzleObject>();
             this.memory_stack = new List<PuzzleObject>();
+            this.memory_delete = new List<PuzzleObject>();
+            this.memory_copy = new List<PuzzleObject>();
+            this.countDelete = 0;
+            this.countRecover = 0;
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -58,6 +66,8 @@ namespace PuzzleChart
         {
             if (this.activeTool != null)
             {
+                this.countRecover = 0;
+                this.countDelete = 0;
                 this.activeTool.ToolMouseUp(sender, e);
                 this.Repaint();
             }
@@ -105,26 +115,45 @@ namespace PuzzleChart
         public void Undo()
         {
             var last = puzzle_objects.Count - 1;
-            if(last >= 0)
+            if(last >= 0 && this.countDelete == 0 && this.countRecover == 0)
             {
                 this.temp = puzzle_objects[puzzle_objects.Count - 1];
                 puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
                 memory_stack.Add(temp);
                 Debug.WriteLine("Undo is selected");
                 this.Repaint();
-            }        
-           
+            }   
+            else if(this.countDelete > 0)
+            {
+                Debug.WriteLine("Undo is selected");
+                var i = this.memory_delete.Count - 1;
+                this.puzzle_objects.Add(this.memory_delete[i]);
+                this.memory_delete.RemoveAt(i);
+                this.countDelete--;
+                this.countRecover++;
+                this.Repaint();
+            }
         }
 
         public void Redo()
         {
             var last = memory_stack.Count - 1;
-            if(last >= 0)
+            if(last >= 0 && this.countDelete == 0 && this.countRecover == 0)
             {
                 this.temp = memory_stack[memory_stack.Count - 1];
                 memory_stack.RemoveAt(memory_stack.Count - 1);
                 puzzle_objects.Add(temp);
                 Debug.WriteLine("Redo is selected");
+                this.Repaint();
+            }
+            else if (this.countRecover > 0)
+            {
+                Debug.WriteLine("Redo is selected");
+                var i = this.puzzle_objects.Count - 1;
+                this.memory_delete.Add(this.puzzle_objects[i]);
+                this.puzzle_objects.RemoveAt(i);
+                this.countDelete++;
+                this.countRecover--;
                 this.Repaint();
             }
         }
@@ -304,6 +333,108 @@ namespace PuzzleChart
                 {
                     MessageBox.Show("Error: Could not read file from disk");
                 }
+            }
+        }
+
+        public void DeleteObject()
+        {
+            List<PuzzleObject> tempObj = new List<PuzzleObject>();
+            foreach (PuzzleObject obj in puzzle_objects)
+            {
+                if (obj.State is EditState)
+                {
+                    tempObj.Add(obj);
+                }
+            }
+
+            foreach (PuzzleObject obj in tempObj)
+            {
+                Console.WriteLine("Delete object: " + obj.ID);
+                this.countDelete++;
+                this.memory_delete.Add(obj);
+                this.RemovePuzzleObject(obj);
+            }
+            this.Repaint();
+        }
+
+        public void CopyObject()
+        {
+            List<PuzzleObject> tempObj = new List<PuzzleObject>();
+            bool flagCopy = false;
+            foreach (PuzzleObject obj in puzzle_objects)
+            {
+                if (obj.State is EditState)
+                {
+                    tempObj.Add(obj);
+                    flagCopy = true;
+                }
+            }
+            if(flagCopy)
+                this.memory_copy.Clear();
+            foreach (PuzzleObject obj in tempObj)
+            {
+                Console.WriteLine("Copy object to clipboard: " + obj.ID);
+                this.memory_copy.Add(obj);
+            }
+        }
+
+        public void PasteObject()
+        {
+            foreach (PuzzleObject obj in this.memory_copy)
+            {
+                Console.WriteLine("Copy object to canvas: " + obj.ID);
+                if(obj is Line)
+                {
+                    Line temp = (Line)obj;
+                    Line drawObj = new Line();
+                    drawObj.start_point = temp.start_point;
+                    drawObj.end_point = temp.end_point;
+
+                    this.puzzle_objects.Add(drawObj);
+                }
+                else if (obj is Diamond)
+                {
+                    Diamond temp = (Diamond)obj;
+                    Diamond drawObj = new Diamond();
+                    drawObj.x = temp.x;
+                    drawObj.y = temp.y;
+                    drawObj.width = temp.width;
+                    drawObj.height = temp.height;
+                    this.puzzle_objects.Add(drawObj);
+                }
+                else if (obj is Oval)
+                {
+                    Oval temp = (Oval)obj;
+                    Oval drawObj = new Oval();
+                    drawObj.x = temp.x;
+                    drawObj.y = temp.y;
+                    drawObj.width = temp.width;
+                    drawObj.height = temp.height;
+                    this.puzzle_objects.Add(drawObj);
+                }
+                else if(obj is Parallelogram)
+                {
+                    Parallelogram temp = (Parallelogram)obj;
+                    Parallelogram drawObj = new Parallelogram();
+                    drawObj.x = temp.x;
+                    drawObj.y = temp.y;
+                    drawObj.width = temp.width;
+                    drawObj.height = temp.height;
+                    this.puzzle_objects.Add(drawObj);
+                }
+                else if (obj is Shapes.Rectangle)
+                {
+                    Shapes.Rectangle temp = (Shapes.Rectangle)obj;
+                    Shapes.Rectangle drawObj = new Shapes.Rectangle();
+                    drawObj.x = temp.x;
+                    drawObj.y = temp.y;
+                    drawObj.width = temp.width;
+                    drawObj.height = temp.height;
+                    this.puzzle_objects.Add(drawObj);
+                }
+                StaticState staticState = new StaticState();
+                obj.ChangeState(staticState);
+                this.Repaint();
             }
         }
     }

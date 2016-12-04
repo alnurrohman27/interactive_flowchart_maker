@@ -60,6 +60,14 @@ namespace PuzzleChart
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
+            DefaultMenuItem copyMenuItem = new DefaultMenuItem("Copy");
+            editMenuItem.AddMenuItem(copyMenuItem);
+            copyMenuItem.Click += new System.EventHandler(this.OnCopyMenuItemClick);
+
+            DefaultMenuItem pasteMenuItem = new DefaultMenuItem("Paste");
+            editMenuItem.AddMenuItem(pasteMenuItem);
+            copyMenuItem.Click += new System.EventHandler(this.OnPasteMenuItemClick);
+
             DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
             editMenuItem.AddMenuItem(undoMenuItem);
             undoMenuItem.Click += new System.EventHandler(this.OnUndoMenuItemClick);
@@ -118,6 +126,8 @@ namespace PuzzleChart
             SaveCommand saveCmd = new SaveCommand(this.canvas);
             UndoCommand undoCmd = new UndoCommand(this.canvas);
             RedoCommand redoCmd = new RedoCommand(this.canvas);
+            CopyCommand copyCmd = new CopyCommand(this.canvas);
+            PasteCommand pasteCmd = new PasteCommand(this.canvas);
 
             Open toolItemOpen = new Open();
             toolItemOpen.SetCommand(openCmd);
@@ -127,9 +137,15 @@ namespace PuzzleChart
             toolItemUndo.SetCommand(undoCmd);
             Redo toolItemRedo = new Redo();
             toolItemRedo.SetCommand(redoCmd);
+            Copy toolItemCopy = new Copy();
+            toolItemCopy.SetCommand(copyCmd);
+            Paste toolItemPaste = new Paste();
+            toolItemPaste.SetCommand(pasteCmd);
 
             this.toolbar.AddToolbarItem(toolItemOpen);
             this.toolbar.AddToolbarItem(toolItemSave);
+            this.toolbar.AddToolbarItem(toolItemCopy);
+            this.toolbar.AddToolbarItem(toolItemPaste);
             this.toolbar.AddSeparator();
             this.toolbar.AddToolbarItem(toolItemUndo);
             this.toolbar.AddToolbarItem(toolItemRedo);
@@ -200,6 +216,18 @@ namespace PuzzleChart
             {
                 this.canvas.Open();
             }
+            else if(e.Control && e.KeyCode == Keys.C)
+            {
+                this.canvas.CopyObject();
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                this.canvas.PasteObject();
+            }
+            else if(e.KeyCode == Keys.Delete)
+            {
+                this.canvas.DeleteObject();
+            }
         }
 
         private void OnSaveMenuItemClick(object sender, EventArgs e)
@@ -210,6 +238,16 @@ namespace PuzzleChart
         private void OnOpenMenuItemClick(object sender, EventArgs e)
         {
             this.canvas.Open();
+        }
+
+        private void OnPasteMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.PasteObject();
+        }
+
+        private void OnCopyMenuItemClick(object sender, EventArgs e)
+        {
+            this.canvas.CopyObject();
         }
     }
 }

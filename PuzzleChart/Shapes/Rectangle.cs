@@ -79,7 +79,6 @@ namespace PuzzleChart.Shapes
 
         public override void RenderOnEditingView()
         {
-            this.pen.Color = Color.Black;
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
             AddPointArray();

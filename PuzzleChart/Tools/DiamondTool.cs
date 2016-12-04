@@ -83,6 +83,7 @@ namespace PuzzleChart.Tools
                 diamond.width = e.X - this.diamond.x;
                 diamond.height = e.Y - this.diamond.y;
                 diamond.Select();
+                //diamond.Deselect();
             }
         }
     }

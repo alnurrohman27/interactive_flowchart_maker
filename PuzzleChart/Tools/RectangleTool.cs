@@ -82,6 +82,7 @@ namespace PuzzleChart.Tools
             {
                 rectangle.width = e.X - this.rectangle.x;
                 rectangle.height = e.Y - this.rectangle.y;
+
                 rectangle.Select();
             }
         }
