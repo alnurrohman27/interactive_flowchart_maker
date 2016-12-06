@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -96,9 +97,13 @@ namespace PuzzleChart.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
+            transMem.xBefore = this.x;
+            transMem.yBefore = this.y;
+            transMem.xAmount += xAmount;
+            transMem.yAmount += yAmount;
+
             this.x += xAmount;
             this.y += yAmount;
-
 
             BroadcastUpdate(xAmount, yAmount);
         }
@@ -197,9 +202,7 @@ namespace PuzzleChart.Shapes
             bool loopFlag = true;
             string id = null;
             XmlTextReader reader = new XmlTextReader(path);
-            reader.Read();
-            reader.Read();
-            reader.Read();
+            reader.MoveToContent();
             try
             {
                 if (reader.Name == "puzzle_object")
@@ -285,6 +288,59 @@ namespace PuzzleChart.Shapes
             }
             reader.Close();
             return listObj;
+        }
+
+        public override void TranslateUndoRedo(bool undoRedo)
+        {
+            if (undoRedo)
+            {
+                if (!transMem.flag)
+                {
+                    int xAmount = transMem.xAmount;
+                    int yAmount = transMem.yAmount;
+
+                    //transMem.xBefore = this.x;
+                    //transMem.yBefore = this.y;
+
+                    this.x -= xAmount;
+                    this.y -= yAmount;
+
+                    transMem.xAmountRedo = xAmount;
+                    transMem.yAmountRedo = yAmount;
+                    transMem.xAmount -= xAmount;
+                    transMem.yAmount -= yAmount;
+
+                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
+                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
+
+                    BroadcastUpdate(-transMem.xAmountRedo, -transMem.yAmountRedo);
+
+                    transMem.flag = true;
+                }
+            }
+            else
+            {
+                if (transMem.flag)
+                {
+                    int xAmount = transMem.xAmountRedo;
+                    int yAmount = transMem.yAmountRedo;
+
+                    this.x += xAmount;
+                    this.y += yAmount;
+
+                    transMem.xAmount = xAmount;
+                    transMem.yAmount = yAmount;
+                    transMem.xAmountRedo -= xAmount;
+                    transMem.yAmountRedo -= yAmount;
+
+                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
+                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
+
+                    BroadcastUpdate(transMem.xAmount, transMem.yAmount);
+                    transMem.flag = false;
+                }
+            }
+
         }
     }
 }

@@ -103,6 +103,26 @@ namespace PuzzleChart {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fill_color {
+            get {
+                object obj = ResourceManager.GetObject("fill_color", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap font_color {
+            get {
+                object obj = ResourceManager.GetObject("font_color", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap jajargenjang {
             get {
                 object obj = ResourceManager.GetObject("jajargenjang", resourceCulture);
@@ -176,6 +196,16 @@ namespace PuzzleChart {
         internal static System.Drawing.Bitmap save {
             get {
                 object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap text_box {
+            get {
+                object obj = ResourceManager.GetObject("text_box", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

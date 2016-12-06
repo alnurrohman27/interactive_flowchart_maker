@@ -54,6 +54,8 @@ namespace PuzzleChart.Tools
                 canvas.DeselectAllObjects();
                 canvas.SelectObjectAt(e.X, e.Y);
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
+                if(selected_object != null)
+                    selected_object.transMem = new TranslateMemory();
             }
 
         }
@@ -68,7 +70,6 @@ namespace PuzzleChart.Tools
                     int yAmount = e.Y - yInitial;
                     xInitial = e.X;
                     yInitial = e.Y;
-
                     selected_object.Translate(e.X, e.Y, xAmount, yAmount);
                 }
             }

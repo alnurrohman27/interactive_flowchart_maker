@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -19,15 +20,34 @@ namespace PuzzleChart.Shapes
         public int y { get; set; }
         public int width { get; set; }
         public int height { get; set; }
+        public string text { get; set; }
+        public Pen pen { get; set; }
+        public SolidBrush myBrush { get; set; }
+        public Font font { get; set; }
+        public StringFormat stringFormat { get; set; }
         public Point[] my_point_array = new Point[5];
+        public SolidBrush fontColor { get; set; }
+        public DataTable table;
 
-        private Pen pen;
-        private Font font;
 
         public Rectangle()
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
+            font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+            text = "Process";
+
+            stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            myBrush = new SolidBrush(Color.Yellow);
+            fontColor = new SolidBrush(Color.Black);
+
+            table = new DataTable("Object");
+            table.Columns.Add("ID", typeof(int));
+            table.Columns.Add("Name", typeof(string));
+            table.Columns.Add("Value", typeof(int));
         }
         public void AddPointArray()
         {
@@ -36,6 +56,8 @@ namespace PuzzleChart.Shapes
             my_point_array[2] = new Point(x + width, y + height);
             my_point_array[3] = new Point(x, y + height);
             my_point_array[4] = new Point(x, y);
+            this.GetGraphics().DrawPolygon(pen, my_point_array);
+            this.GetGraphics().FillPolygon(myBrush, my_point_array);
         }
         public Rectangle(int x, int y) : this()
         {
@@ -51,6 +73,11 @@ namespace PuzzleChart.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
+            transMem.xBefore = this.x;
+            transMem.yBefore = this.y;
+            transMem.xAmount += xAmount;
+            transMem.yAmount += yAmount;
+
             this.x += xAmount;
             this.y += yAmount;
 
@@ -61,19 +88,14 @@ namespace PuzzleChart.Shapes
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
-
+            AddPointArray();
             if (this.GetGraphics() != null)
             {
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.GetGraphics().DrawRectangle(pen, x, y, width, height);
 
                 System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
-                string text = "Process";
-                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
+                GetGraphics().DrawString(text, font, fontColor, rectangle, stringFormat);
             }
         }
 
@@ -85,12 +107,7 @@ namespace PuzzleChart.Shapes
             GetGraphics().DrawRectangle(this.pen, x, y, width, height);
 
             System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
-            font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
-            string text = "Process";
-            GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
+            GetGraphics().DrawString(text, font, fontColor, rectangle, stringFormat);
         }
 
         public override void RenderOnPreview()
@@ -98,7 +115,7 @@ namespace PuzzleChart.Shapes
             this.pen = new Pen(Color.Red);
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
-
+            AddPointArray();
             if (this.GetGraphics() != null)
             {
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
@@ -217,9 +234,7 @@ namespace PuzzleChart.Shapes
             bool loopFlag = true;
             string id = null;
             XmlTextReader reader = new XmlTextReader(path);
-            reader.Read();
-            reader.Read();
-            reader.Read();
+            reader.MoveToContent();
             try
             {
                 if (reader.Name == "puzzle_object")
@@ -302,6 +317,60 @@ namespace PuzzleChart.Shapes
             }
             reader.Close();
             return listObj;
+        }
+
+        public override void TranslateUndoRedo(bool undoRedo)
+        {
+            if (undoRedo)
+            {
+                if (!transMem.flag)
+                {
+                    int xAmount = transMem.xAmount;
+                    int yAmount = transMem.yAmount;
+
+                    //transMem.xBefore = this.x;
+                    //transMem.yBefore = this.y;
+
+                    this.x -= xAmount;
+                    this.y -= yAmount;
+
+                    transMem.xAmountRedo = xAmount;
+                    transMem.yAmountRedo = yAmount;
+                    transMem.xAmount -= xAmount;
+                    transMem.yAmount -= yAmount;
+
+                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
+                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
+
+                    BroadcastUpdate(-transMem.xAmountRedo, -transMem.yAmountRedo);
+
+                    transMem.flag = true;
+                }
+            }
+            else
+            {
+                if (transMem.flag)
+                {
+                    int xAmount = transMem.xAmountRedo;
+                    int yAmount = transMem.yAmountRedo;
+
+                    this.x += xAmount;
+                    this.y += yAmount;
+
+                    transMem.xAmount = xAmount;
+                    transMem.yAmount = yAmount;
+                    transMem.xAmountRedo -= xAmount;
+                    transMem.yAmountRedo -= yAmount;
+
+                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
+                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
+
+                    BroadcastUpdate(transMem.xAmount, transMem.yAmount);
+
+                    transMem.flag = false;
+                }
+            }
+
         }
     }
 }

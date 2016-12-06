@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using PuzzleChart.State;
+using PuzzleChart.Tools;
 
 namespace PuzzleChart
 {
@@ -102,6 +103,39 @@ namespace PuzzleChart
         public void SetActiveTool(ITool tool)
         {
             this.activeTool = tool;
+            if(this.activeTool is FillColorTool)
+            {
+                FillColorTool fillColorTool = (FillColorTool)activeTool;
+                List<PuzzleObject> listObj = new List<PuzzleObject>();
+                foreach(PuzzleObject obj in puzzle_objects)
+                {
+                    if (obj.State is EditState)
+                        listObj.Add(obj);
+                }
+                fillColorTool.ShowColorBox(listObj);
+            }
+            else if(this.activeTool is FontColorTool)
+            {
+                FontColorTool fontColorTool = (FontColorTool)activeTool;
+                List<PuzzleObject> listObj = new List<PuzzleObject>();
+                foreach (PuzzleObject obj in puzzle_objects)
+                {
+                    if (obj.State is EditState)
+                        listObj.Add(obj);
+                }
+                fontColorTool.ShowColorBox(listObj);
+            }
+            else if(this.activeTool is TextBoxTool)
+            {
+                TextBoxTool textBoxTool = (TextBoxTool)activeTool;
+                List<PuzzleObject> listObj = new List<PuzzleObject>();
+                foreach (PuzzleObject obj in puzzle_objects)
+                {
+                    if (obj.State is EditState)
+                        listObj.Add(obj);
+                }
+                textBoxTool.ShowTextBoxDialog(listObj);
+            }
         }
 
         public void SetBackgroundColor(Color color)
@@ -116,10 +150,25 @@ namespace PuzzleChart
 
         public void Undo()
         {
+
             var last = puzzle_objects.Count - 1;
             if(last >= 0 && this.countDelete == 0 && this.countRecover == 0)
             {
-                this.temp = puzzle_objects[puzzle_objects.Count - 1];
+                bool flagEdit = false;
+                foreach (PuzzleObject obj in puzzle_objects)
+                {
+                    if (obj.State is EditState)
+                    {
+                        this.temp = obj;
+                        flagEdit = true;
+                    }
+                }
+
+                if (!flagEdit)
+                    {
+                    this.temp = puzzle_objects[puzzle_objects.Count - 1];
+                }
+
                 puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
                 memory_stack.Add(temp);
                 Debug.WriteLine("Undo is selected");
@@ -139,9 +188,14 @@ namespace PuzzleChart
                         {
                             tempVertex = (Vertex)obj;
                             tempVertex.Subscribe(tempLine);
+                            if (tempLine.id_start_point_vertex == tempVertex.ID)
+                                tempLine.AddVertex(tempVertex, true);
+                            else
+                                tempLine.AddVertex(tempVertex, false);
                         }
                     }
                 }
+
                 puzzle_objects.Add(memory_delete[i]);
                 memory_delete.RemoveAt(i);
                 countDelete--;
@@ -153,9 +207,11 @@ namespace PuzzleChart
         public void Redo()
         {
             var last = memory_stack.Count - 1;
-            if(last >= 0 && this.countDelete == 0 && this.countRecover == 0)
+            
+            if (last >= 0 && this.countDelete == 0 && this.countRecover == 0)
             {
                 this.temp = memory_stack[memory_stack.Count - 1];
+
                 memory_stack.RemoveAt(memory_stack.Count - 1);
                 puzzle_objects.Add(temp);
                 Debug.WriteLine("Redo is selected");
@@ -165,6 +221,23 @@ namespace PuzzleChart
             {
                 Debug.WriteLine("Redo is selected");
                 var i = this.puzzle_objects.Count - 1;
+                if (puzzle_objects[i] is Line)
+                {
+                    Line tempLine = (Line)puzzle_objects[i];
+                    foreach (PuzzleObject obj in puzzle_objects)
+                    {
+                        Vertex tempVertex;
+                        if (tempLine.id_start_point_vertex == obj.ID || tempLine.id_end_point_vertex == obj.ID)
+                        {
+                            tempVertex = (Vertex)obj;
+                            tempVertex.Subscribe(tempLine);
+                            if (tempLine.id_start_point_vertex == tempVertex.ID)
+                                tempLine.AddVertex(tempVertex, true);
+                            else
+                                tempLine.AddVertex(tempVertex, false);
+                        }
+                    }
+                }
                 this.memory_delete.Add(this.puzzle_objects[i]);
                 this.puzzle_objects.RemoveAt(i);
                 this.countDelete++;
@@ -211,7 +284,6 @@ namespace PuzzleChart
             saveFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.ipd";
             saveFileDialog1.Title = "Save an Document";
             saveFileDialog1.ShowDialog();
-
             try
             {
                 if (saveFileDialog1.FileName != "")
@@ -404,6 +476,10 @@ namespace PuzzleChart
                             {
                                 tempVertex = (Vertex)obj2;
                                 tempVertex.Unsubscribe(tempLine);
+                                if (obj2.ID == tempLine.id_start_point_vertex)
+                                    tempLine.RemoveVertex(true);
+                                else
+                                    tempLine.RemoveVertex(false);
                             }
                         }
                     }

@@ -127,14 +127,29 @@ namespace PuzzleChart.Shapes
                 id_end_point_vertex = vertex.ID;
             }
         }
+
+        public void RemoveVertex(bool start_or_end)
+        {
+            Debug.WriteLine("Masuk Remove Vertex");
+            if (start_or_end)
+            {
+                start_point_vertex = null;
+                id_start_point_vertex = new Guid();
+            }
+            else
+            {
+                end_point_vertex = null;
+                id_end_point_vertex = new Guid();
+            }
+        }
        
 
         public override void Update(IObservable vertex,int deltaX, int deltaY)
         {
-            if(vertex == start_point_vertex)
+            if (vertex == start_point_vertex)
                 start_point = new Point(this.start_point.X + deltaX, this.start_point.Y + deltaY);
             else if (vertex == end_point_vertex)
-                end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY); 
+                end_point = new Point(this.end_point.X + deltaX, this.end_point.Y + deltaY);
         }
 
         public override Point LineIntersect(Point start_point, Point end_point)
@@ -363,6 +378,11 @@ namespace PuzzleChart.Shapes
         public Vertex GetEndPointVertex()
         {
             return this.end_point_vertex;
+        }
+
+        public override void TranslateUndoRedo(bool undoRedo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
