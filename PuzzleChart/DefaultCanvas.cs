@@ -26,6 +26,8 @@ namespace PuzzleChart
         private int countDelete, countRecover;
         private PuzzleObject temp;
 
+        public bool KeyPreview { get; private set; }
+
         public DefaultCanvas()
         {
             this.puzzle_objects = new List<PuzzleObject>();
@@ -43,6 +45,9 @@ namespace PuzzleChart
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
+
+            this.KeyPreview = true;
+            this.KeyDown += new KeyEventHandler(DefaultCanvas_KeyDown);
         }
 
 
@@ -617,5 +622,34 @@ namespace PuzzleChart
             Debug.WriteLine("Count: " + puzzle_objects.Count);
             this.Repaint();
         }
+
+        // Hot keys handler
+        void DefaultCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Z)       // Ctrl-Z Undo
+            {
+                Undo();
+                e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
+            }
+
+            if (e.Control && e.KeyCode == Keys.Y)       // Ctrl-Y Redo
+            {
+                Redo();
+                e.SuppressKeyPress = true;  
+            }
+
+            if (e.Control && e.KeyCode == Keys.S)       // Ctrl-S Save
+            {
+                Save();
+                e.SuppressKeyPress = true;  
+            }
+
+            if (e.Control && e.KeyCode == Keys.O)       // Ctrl-O Open
+            {
+                Open();
+                e.SuppressKeyPress = true;
+            }
+        }
     }
 }
+
