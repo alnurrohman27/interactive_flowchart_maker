@@ -174,8 +174,16 @@ namespace PuzzleChart
                     this.temp = puzzle_objects[puzzle_objects.Count - 1];
                 }
 
-                puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
-                memory_stack.Add(temp);
+                if (temp.transMem != null && temp.transMem.flag == false && temp is Oval == false && temp is Line == false)
+                {
+                    temp.TranslateUndoRedo(true);
+                    memory_stack.Add(temp);
+                }
+                else
+                {
+                    puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
+                    memory_stack.Add(temp);
+                }
                 Debug.WriteLine("Undo is selected");
                 this.Repaint();
             }   
@@ -217,8 +225,16 @@ namespace PuzzleChart
             {
                 this.temp = memory_stack[memory_stack.Count - 1];
 
-                memory_stack.RemoveAt(memory_stack.Count - 1);
-                puzzle_objects.Add(temp);
+                if (temp.transMem != null && temp is Oval == false && temp is Line == false)
+                {
+                    temp.TranslateUndoRedo(false);
+                    memory_stack.Remove(temp);
+                }
+                else
+                {
+                    memory_stack.RemoveAt(memory_stack.Count - 1);
+                    puzzle_objects.Add(temp);
+                }
                 Debug.WriteLine("Redo is selected");
                 this.Repaint();
             }

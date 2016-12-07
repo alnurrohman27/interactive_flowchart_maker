@@ -44,6 +44,7 @@ namespace PuzzleChart.Shapes
             table.Columns.Add("ID", typeof(int));
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("Value", typeof(int));
+            this.translate.Add(this.transMem);
 
         }
 
@@ -349,8 +350,8 @@ namespace PuzzleChart.Shapes
             {
                 if (!transMem.flag)
                 {
-                    int xAmount = transMem.xAmount;
-                    int yAmount = transMem.yAmount;
+                    int xAmount = translate[translate_count].xAmount;
+                    int yAmount = translate[translate_count].yAmount;
 
                     //transMem.xBefore = this.x;
                     //transMem.yBefore = this.y;
@@ -358,10 +359,10 @@ namespace PuzzleChart.Shapes
                     this.x -= xAmount;
                     this.y -= yAmount;
 
-                    transMem.xAmountRedo = xAmount;
-                    transMem.yAmountRedo = yAmount;
-                    transMem.xAmount -= xAmount;
-                    transMem.yAmount -= yAmount;
+                    translate[translate_count].xAmountRedo = xAmount;
+                    translate[translate_count].yAmountRedo = yAmount;
+                    translate[translate_count].xAmount -= xAmount;
+                    translate[translate_count].yAmount -= yAmount;
 
                     Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
                     Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);

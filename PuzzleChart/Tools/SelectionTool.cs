@@ -54,8 +54,16 @@ namespace PuzzleChart.Tools
                 canvas.DeselectAllObjects();
                 canvas.SelectObjectAt(e.X, e.Y);
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
-                if(selected_object != null)
+                
+                if (selected_object != null)
+                {
                     selected_object.transMem = new TranslateMemory();
+                    selected_object.translate.Add(selected_object.transMem);
+                    selected_object.translate_count++;
+                    Debug.WriteLine(selected_object.translate.Count);
+                    Debug.WriteLine(selected_object.translate_count);
+                }
+                    
             }
 
         }

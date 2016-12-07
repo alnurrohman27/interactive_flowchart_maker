@@ -13,6 +13,8 @@ namespace PuzzleChart
     {
         public Guid ID { get; set; }
         public TranslateMemory transMem { get; set; }
+        public List<TranslateMemory> translate = new List<TranslateMemory>();
+        public int translate_count = 0;
 
         public PuzzleState State
         {
