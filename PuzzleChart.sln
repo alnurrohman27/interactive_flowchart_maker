@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart", "PuzzleChart\PuzzleChart.csproj", "{2798788C-89E4-4241-8D04-A5256ED8E8B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart.FontColorTool", "PuzzleChart.FontColorTool\PuzzleChart.FontColorTool.csproj", "{A29E0E50-D6A6-4C3E-B7CE-CD947105470D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart.FillColorTool", "PuzzleChart.FillColorTool\PuzzleChart.FillColorTool.csproj", "{C0D01276-A945-4D3A-89F3-65C4E29D046E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{2798788C-89E4-4241-8D04-A5256ED8E8B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2798788C-89E4-4241-8D04-A5256ED8E8B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2798788C-89E4-4241-8D04-A5256ED8E8B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A29E0E50-D6A6-4C3E-B7CE-CD947105470D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A29E0E50-D6A6-4C3E-B7CE-CD947105470D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A29E0E50-D6A6-4C3E-B7CE-CD947105470D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A29E0E50-D6A6-4C3E-B7CE-CD947105470D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

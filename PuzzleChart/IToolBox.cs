@@ -8,7 +8,7 @@ namespace PuzzleChart
 {
     public delegate void ToolSelectedEventHandler(ITool tool);
 
-    public interface IToolBox
+    public interface IToolBox : IPluginHost
     {
         event ToolSelectedEventHandler tool_selected;
         void AddTool(ITool tool);

@@ -46,9 +46,8 @@ namespace PuzzleChart
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseDoubleClick += DefaultCanvas_MouseDoubleClick;
+            this.KeyDown += DefaultCanvas_KeyDown;
 
-            this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(DefaultCanvas_KeyDown);
         }
 
 
@@ -87,6 +86,7 @@ namespace PuzzleChart
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseDown(sender, e);
+
                 this.Repaint();
             }
         }
@@ -105,6 +105,27 @@ namespace PuzzleChart
             this.activeTool.ToolMouseDoubleClick(sender, e);
         }
 
+        private void DefaultCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Control && e.KeyCode == Keys.A)
+            {
+                SelectAllObj();
+            }
+        }
+
+        private void SelectAllObj ()
+        {
+            foreach (PuzzleObject obj in puzzle_objects)
+            {
+                if(obj.State is StaticState)
+                {
+                    PuzzleState editState = new EditState();
+                    obj.ChangeState(editState);
+                    Repaint();
+                }
+            }
+        }
+
         public void Repaint()
         {
             this.Invalidate();
@@ -114,30 +135,6 @@ namespace PuzzleChart
         public void SetActiveTool(ITool tool)
         {
             this.activeTool = tool;
-            if(this.activeTool is FillColorTool)
-            {
-                FillColorTool fillColorTool = (FillColorTool)activeTool;
-                List<PuzzleObject> listObj = new List<PuzzleObject>();
-                foreach(PuzzleObject obj in puzzle_objects)
-                {
-                    if (obj.State is EditState)
-                        listObj.Add(obj);
-                }
-                if (listObj.Count > 0)
-                    fillColorTool.ShowColorBox(listObj);
-            }
-            else if(this.activeTool is FontColorTool)
-            {
-                FontColorTool fontColorTool = (FontColorTool)activeTool;
-                List<PuzzleObject> listObj = new List<PuzzleObject>();
-                foreach (PuzzleObject obj in puzzle_objects)
-                {
-                    if (obj.State is EditState)
-                        listObj.Add(obj);
-                }
-                if(listObj.Count > 0)
-                    fontColorTool.ShowColorBox(listObj);
-            }
         }
 
         public void SetBackgroundColor(Color color)
@@ -634,34 +631,6 @@ namespace PuzzleChart
             listTempLine.Clear();
             Debug.WriteLine("Count: " + puzzle_objects.Count);
             this.Repaint();
-        }
-
-        // Hot keys handler
-        void DefaultCanvas_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.Z)       // Ctrl-Z Undo
-            {
-                Undo();
-                e.SuppressKeyPress = true;  // Stops other controls on the form receiving event.
-            }
-
-            if (e.Control && e.KeyCode == Keys.Y)       // Ctrl-Y Redo
-            {
-                Redo();
-                e.SuppressKeyPress = true;  
-            }
-
-            if (e.Control && e.KeyCode == Keys.S)       // Ctrl-S Save
-            {
-                Save();
-                e.SuppressKeyPress = true;  
-            }
-
-            if (e.Control && e.KeyCode == Keys.O)       // Ctrl-O Open
-            {
-                Open();
-                e.SuppressKeyPress = true;
-            }
         }
     }
 }

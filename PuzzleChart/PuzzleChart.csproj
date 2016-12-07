@@ -73,12 +73,13 @@
     <Compile Include="Form\FormTextDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IColor.cs" />
     <Compile Include="IMenuItem.cs" />
     <Compile Include="IMenuBar.cs" />
     <Compile Include="IObservable.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="IOpenSave.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPluginHost.cs" />
     <Compile Include="PuzzleState.cs" />
     <Compile Include="PuzzleObject.cs" />
     <Compile Include="MainWindow.cs">
@@ -127,12 +128,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\DiamondTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tools\FillColorTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tools\FontColorTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\LineTool.cs">

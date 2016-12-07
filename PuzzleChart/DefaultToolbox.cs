@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PuzzleChart
 {
-    class DefaultToolbox : ToolStrip,IToolBox
+    class DefaultToolbox : ToolStrip, IToolBox
     {
         private ITool activeTool;
 
@@ -41,6 +41,20 @@ namespace PuzzleChart
                 }
 
                 this.Items.Add(toggleButton);
+            }
+        }
+
+        public void Register(IPlugin plugin)
+        {
+            if (plugin != null)
+            {
+                Debug.WriteLine("Opening plugin: " + plugin.Name);
+
+                if (plugin is ITool)
+                {
+                    ITool tool = (ITool)plugin;
+                    AddTool(tool);
+                }
             }
         }
 

@@ -11,6 +11,8 @@ using System.Windows.Forms;
 using PuzzleChart.ToolbarItems;
 using PuzzleChart.Tools;
 using PuzzleChart.Commands;
+using System.IO;
+using System.Reflection;
 
 namespace PuzzleChart
 {
@@ -20,10 +22,68 @@ namespace PuzzleChart
         private ICanvas canvas;
         private IToolbar toolbar;
         private IMenuBar menubar;
+        private IPlugin[] plugins;
 
         public MainWindow()
         {
             InitializeComponent();
+            LoadPlugins();
+            InitUI();
+        }
+
+        private static void InstantiateMyTypeFail(AppDomain domain)
+        {
+            // Calling InstantiateMyType will always fail since the assembly info
+            // given to CreateInstance is invalid.
+            try
+            {
+                // You must supply a valid fully qualified assembly name here.
+                domain.CreateInstance("Assembly text name, Version, Culture, PublicKeyToken", "MyType");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine();
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private void LoadPlugins()
+        {
+            string path = Application.StartupPath + "\\Plugins";
+            string[] pluginFiles = Directory.GetFiles(path, "*.dll");
+            plugins = new IPlugin[pluginFiles.Length];
+
+            for (int i = 0; i < pluginFiles.Length; i++)
+            {
+                Type type = null;
+                try
+                {
+                    Assembly asm = Assembly.LoadFile(pluginFiles[i]);
+                    if (asm != null)
+                    {
+                        var pluginInterface = typeof(IPlugin);
+                        
+                        foreach (Type t in asm.GetTypes())
+                        {
+                            if (pluginInterface.IsAssignableFrom(t))
+                            {
+                                type = t;
+                            }
+                        }
+                    }
+
+                    if (type != null)
+                        plugins[i] = (IPlugin)Activator.CreateInstance(type);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error Load Plugins: " + e.Message);
+                }
+            }
+        }
+        
+        private void InitUI()
+        {
             Debug.WriteLine("Initializing UI objects.");
 
             #region Canvas
@@ -56,7 +116,7 @@ namespace PuzzleChart
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
             exitMenuItem.Click += new System.EventHandler(this.OnExitMenuItemClick);
-             
+
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
@@ -108,11 +168,18 @@ namespace PuzzleChart
             this.tool_box.AddTool(new RectangleTool());
             this.tool_box.AddTool(new ParallelogramTool());
             this.tool_box.AddTool(new OvalTool());
-            this.tool_box.AddTool(new FillColorTool());
-            this.tool_box.AddTool(new FontColorTool());
             this.tool_box.AddTool(new SelectionTool());
             //this.tool_box.AddTool(new StatefulLineTool());
             //this.tool_box.AddTool(new RectangleTool());
+
+            if (plugins != null)
+            {
+                for (int i = 0; i < this.plugins.Length; i++)
+                {
+                    this.tool_box.Register(plugins[i]);
+                }
+            }
+
             this.tool_box.tool_selected += Toolbox_ToolSelected;
 
             #endregion
@@ -174,7 +241,7 @@ namespace PuzzleChart
         {
 
         }
-        
+
         private void toolStripContainer1_ContentPanel_Load(object sender, EventArgs e)
         {
 
@@ -206,19 +273,20 @@ namespace PuzzleChart
             if (e.Control && e.KeyCode == Keys.Z)
             {
                 this.canvas.Undo();
-            }else if (e.Control && e.KeyCode == Keys.Y)
+            }
+            else if (e.Control && e.KeyCode == Keys.Y)
             {
                 this.canvas.Redo();
             }
-            else if(e.Control && e.KeyCode == Keys.S)
+            else if (e.Control && e.KeyCode == Keys.S)
             {
                 this.canvas.Save();
             }
-            else if(e.Control && e.KeyCode == Keys.O)
+            else if (e.Control && e.KeyCode == Keys.O)
             {
                 this.canvas.Open();
             }
-            else if(e.Control && e.KeyCode == Keys.C)
+            else if (e.Control && e.KeyCode == Keys.C)
             {
                 this.canvas.CopyObject();
             }
@@ -226,7 +294,7 @@ namespace PuzzleChart
             {
                 this.canvas.PasteObject();
             }
-            else if(e.KeyCode == Keys.Delete)
+            else if (e.KeyCode == Keys.Delete)
             {
                 this.canvas.DeleteObject();
             }

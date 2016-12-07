@@ -1,0 +1,9 @@
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\bin\Debug\PuzzleChart.FontColorTool.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\bin\Debug\PuzzleChart.FontColorTool.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\bin\Debug\PuzzleChart.exe
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\bin\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\obj\Debug\PuzzleChart.FontColorTool.csprojResolveAssemblyReference.cache
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\obj\Debug\PuzzleChart.FontColorTool.IconSet.resources
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\obj\Debug\PuzzleChart.FontColorTool.csproj.GenerateResource.Cache
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\obj\Debug\PuzzleChart.FontColorTool.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FontColorTool\obj\Debug\PuzzleChart.FontColorTool.pdb

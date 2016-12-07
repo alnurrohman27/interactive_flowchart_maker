@@ -118,5 +118,10 @@ namespace PuzzleChart.Tools
         {
             
         }
+
+        public void ToolMouseDownAndKeys(object sender, MouseEventArgs e)
+        {
+            
+        }
     }
 }
