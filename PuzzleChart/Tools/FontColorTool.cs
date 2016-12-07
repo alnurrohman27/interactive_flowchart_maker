@@ -148,6 +148,20 @@ namespace PuzzleChart.Tools
                         }
                     }
 
+                    else if (obj is Oval)
+                    {
+                        Oval obj2 = (Oval)obj;
+                        obj2.myBrush = new SolidBrush(colorDialog.Color);
+                        if (obj2.GetGraphics() != null)
+                        {
+                            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(obj2.x, obj2.y, obj2.width, obj2.height);
+
+                            newGraph.DrawString(obj2.text, obj2.font, obj2.fontColor, rectangle, obj2.stringFormat);
+                            obj2.SetGraphics(newGraph);
+                            obj2.Draw();
+                        }
+                    }
+
                 }
             }
         }

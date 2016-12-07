@@ -1,6 +1,9 @@
-﻿using System;
+﻿using PuzzleChart.Form;
+using PuzzleChart.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +17,7 @@ namespace PuzzleChart.Tools
         private PuzzleObject selected_object;
         private int xInitial;
         private int yInitial;
+        private FormTextDialog textBox;
 
         public Cursor cursor
         {
@@ -90,10 +94,38 @@ namespace PuzzleChart.Tools
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Text text = new Text();
-            //text.Value = "Untitled";
-            //selectedObject.Add(text);
-            //Debug.WriteLine("selection tool double click");
+            try
+            {
+                if(selected_object != null)
+                {
+                    PuzzleObject obj = selected_object;
+                    if (obj is Line == false)
+                    {
+                        Control control = new Control();
+                        Graphics newGraph = control.CreateGraphics();
+
+                        textBox = new FormTextDialog(obj);
+                        textBox.Name = "Text Box";
+                        textBox.Width = 320;
+                        textBox.Height = 350;
+                        if (obj is Diamond)
+                            textBox.Width = 400;
+                        else if(obj is Oval)
+                        {
+                            textBox.Width = 200;
+                            textBox.Height = 150;
+                        }
+                        else
+                            textBox.Width = 320;
+                        textBox.ShowDialog();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error Message: " + ex);
+            }
         }
 
         public void ToolKeyUp(object sender, KeyEventArgs e)

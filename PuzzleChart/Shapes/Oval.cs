@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -14,19 +15,33 @@ namespace PuzzleChart.Shapes
 {
     public class Oval : Vertex, IOpenSave
     {
-        
+
         public int x { get; set; }
         public int y { get; set; }
         public int width { get; set; }
         public int height { get; set; }
-
-        private Pen pen;
-        private Font font;
+        public string text { get; set; }
+        public SolidBrush fontColor { get; set; }
+        public StringFormat stringFormat { get; set; }
+        public Point[] my_point_array = new Point[5];
+        public Pen pen;
+        public Font font;
+        public SolidBrush myBrush;
 
         public Oval()
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
+
+            stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+            font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
+
+            myBrush = new SolidBrush(Color.Brown);
+            fontColor = new SolidBrush(Color.Black);
+
+            text = "Start/End";
         }
 
         public Oval(int x, int y) : this()
@@ -48,16 +63,13 @@ namespace PuzzleChart.Shapes
 
             if (this.GetGraphics() != null)
             {
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.GetGraphics().DrawEllipse(pen, x, y, width, height);
+                this.GetGraphics().FillEllipse(myBrush, rectangle);
 
-                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
-                string text = "Start/End";
-                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
+                GetGraphics().DrawString(text, font, fontColor, rectangle, stringFormat);
             }
         }
 
@@ -65,20 +77,17 @@ namespace PuzzleChart.Shapes
         {
             this.pen = new Pen(Color.Blue);
             this.pen.DashStyle = DashStyle.Solid;
-            pen.Width = 1.5f;
+            pen.Width = 2f;
 
             if (this.GetGraphics() != null)
             {
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.GetGraphics().DrawEllipse(pen, x, y, width, height);
+                this.GetGraphics().FillEllipse(myBrush, rectangle);
 
-                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
-                string text = "Start/End";
-                GetGraphics().DrawString(text, font, Brushes.Black, rectangle, stringFormat);
+                GetGraphics().DrawString(text, font, fontColor, rectangle, stringFormat);
             }
         }
 
@@ -90,8 +99,11 @@ namespace PuzzleChart.Shapes
 
             if (this.GetGraphics() != null)
             {
+                System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(x, y, width, height);
+
                 this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                 this.GetGraphics().DrawEllipse(pen, x, y, width, height);
+                this.GetGraphics().FillEllipse(myBrush, rectangle);
             }
         }
 

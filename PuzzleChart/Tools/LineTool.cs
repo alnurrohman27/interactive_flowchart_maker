@@ -113,5 +113,10 @@ namespace PuzzleChart.Tools
 
             }
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            
+        }
     }
 }

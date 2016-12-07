@@ -45,6 +45,7 @@ namespace PuzzleChart
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
+            this.MouseDoubleClick += DefaultCanvas_MouseDoubleClick;
 
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(DefaultCanvas_KeyDown);
@@ -99,6 +100,11 @@ namespace PuzzleChart
             }
         }
 
+        private void DefaultCanvas_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.activeTool.ToolMouseDoubleClick(sender, e);
+        }
+
         public void Repaint()
         {
             this.Invalidate();
@@ -117,7 +123,8 @@ namespace PuzzleChart
                     if (obj.State is EditState)
                         listObj.Add(obj);
                 }
-                fillColorTool.ShowColorBox(listObj);
+                if (listObj.Count > 0)
+                    fillColorTool.ShowColorBox(listObj);
             }
             else if(this.activeTool is FontColorTool)
             {
@@ -128,18 +135,8 @@ namespace PuzzleChart
                     if (obj.State is EditState)
                         listObj.Add(obj);
                 }
-                fontColorTool.ShowColorBox(listObj);
-            }
-            else if(this.activeTool is TextBoxTool)
-            {
-                TextBoxTool textBoxTool = (TextBoxTool)activeTool;
-                List<PuzzleObject> listObj = new List<PuzzleObject>();
-                foreach (PuzzleObject obj in puzzle_objects)
-                {
-                    if (obj.State is EditState)
-                        listObj.Add(obj);
-                }
-                textBoxTool.ShowTextBoxDialog(listObj);
+                if(listObj.Count > 0)
+                    fontColorTool.ShowColorBox(listObj);
             }
         }
 

@@ -108,10 +108,9 @@ namespace PuzzleChart
             this.tool_box.AddTool(new RectangleTool());
             this.tool_box.AddTool(new ParallelogramTool());
             this.tool_box.AddTool(new OvalTool());
-            this.tool_box.AddTool(new SelectionTool());
             this.tool_box.AddTool(new FillColorTool());
             this.tool_box.AddTool(new FontColorTool());
-            this.tool_box.AddTool(new TextBoxTool());
+            this.tool_box.AddTool(new SelectionTool());
             //this.tool_box.AddTool(new StatefulLineTool());
             //this.tool_box.AddTool(new RectangleTool());
             this.tool_box.tool_selected += Toolbox_ToolSelected;

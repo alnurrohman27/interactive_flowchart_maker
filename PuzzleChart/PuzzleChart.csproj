@@ -150,9 +150,6 @@
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Tools\TextBoxTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TranslateMemory.cs" />
     <Compile Include="Vertex.cs" />
     <EmbeddedResource Include="MainWindow.resx">

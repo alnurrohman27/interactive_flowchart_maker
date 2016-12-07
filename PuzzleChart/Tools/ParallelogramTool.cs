@@ -86,5 +86,10 @@ namespace PuzzleChart.Tools
                 //parallelogram.Deselect();
             }
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

@@ -86,5 +86,10 @@ namespace PuzzleChart.Tools
                 rectangle.Select();
             }
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }

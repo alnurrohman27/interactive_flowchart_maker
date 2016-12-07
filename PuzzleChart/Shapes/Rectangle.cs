@@ -41,7 +41,7 @@ namespace PuzzleChart.Shapes
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
 
-            myBrush = new SolidBrush(Color.Yellow);
+            myBrush = new SolidBrush(Color.LightSkyBlue);
             fontColor = new SolidBrush(Color.Black);
 
             table = new DataTable("Object");
@@ -102,6 +102,7 @@ namespace PuzzleChart.Shapes
         public override void RenderOnEditingView()
         {
             this.pen.Color = Color.Blue;
+            pen.Width = 2f;
             this.pen.DashStyle = DashStyle.Solid;
             AddPointArray();
             GetGraphics().DrawRectangle(this.pen, x, y, width, height);

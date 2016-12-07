@@ -86,5 +86,10 @@ namespace PuzzleChart.Tools
                 //diamond.Deselect();
             }
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            
+        }
     }
 }

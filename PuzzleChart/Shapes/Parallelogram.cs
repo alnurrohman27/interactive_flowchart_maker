@@ -82,7 +82,7 @@ namespace PuzzleChart.Shapes
         {
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
-            pen.Width = 1.5f;
+            pen.Width = 2f;
 
             if (this.GetGraphics() != null)
             {
