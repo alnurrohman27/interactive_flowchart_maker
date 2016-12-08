@@ -1,13 +1,9 @@
-﻿using PuzzleChart.Shapes;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PuzzleChart.Api;
+using PuzzleChart.Api.Shapes;
 
 namespace PuzzleChart.Form
 {
@@ -81,9 +77,9 @@ namespace PuzzleChart.Form
                     this.Controls.Add(boxName);
                     this.Controls.Add(myDataGrid);
                 }
-                else if(obj is Shapes.Rectangle)
+                else if(obj is Api.Shapes.Rectangle)
                 {
-                    Shapes.Rectangle obj3 = (Shapes.Rectangle)obj;
+                    Api.Shapes.Rectangle obj3 = (Api.Shapes.Rectangle)obj;
 
                     myDataTable = obj3.table.Copy();
                     // Create the form and its controls.
@@ -197,10 +193,10 @@ namespace PuzzleChart.Form
                     obj3.table = dataTable.Copy();
                     obj3.text = boxName.Text;
                 }
-                else if (obj is Shapes.Rectangle)
+                else if (obj is Api.Shapes.Rectangle)
                 {
                     DataTable dataTable = (DataTable)myDataGrid.DataSource;
-                    Shapes.Rectangle obj3 = (Shapes.Rectangle)obj;
+                    Api.Shapes.Rectangle obj3 = (Api.Shapes.Rectangle)obj;
                     obj3.table = dataTable.Copy();
                     obj3.text = boxName.Text;
                 }

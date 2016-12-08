@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart.FontColorTool",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart.FillColorTool", "PuzzleChart.FillColorTool\PuzzleChart.FillColorTool.csproj", "{C0D01276-A945-4D3A-89F3-65C4E29D046E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuzzleChart.Api", "PuzzleChart.Api\PuzzleChart.Api.csproj", "{F8A0BBFA-8CB3-4AD6-8857-9BE67F9ED1C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0D01276-A945-4D3A-89F3-65C4E29D046E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8A0BBFA-8CB3-4AD6-8857-9BE67F9ED1C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A0BBFA-8CB3-4AD6-8857-9BE67F9ED1C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A0BBFA-8CB3-4AD6-8857-9BE67F9ED1C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A0BBFA-8CB3-4AD6-8857-9BE67F9ED1C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

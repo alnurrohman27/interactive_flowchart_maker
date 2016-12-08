@@ -53,12 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PuzzleChart\PuzzleChart.csproj">
-      <Project>{2798788c-89e4-4241-8d04-a5256ed8e8b3}</Project>
-      <Name>PuzzleChart</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="IconSet.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IconSet.Designer.cs</LastGenOutput>
@@ -66,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\text_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PuzzleChart.Api\PuzzleChart.Api.csproj">
+      <Project>{f8a0bbfa-8cb3-4ad6-8857-9be67f9ed1c5}</Project>
+      <Name>PuzzleChart.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

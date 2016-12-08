@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.IO;
-using PuzzleChart.Shapes;
 using System.Xml;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using PuzzleChart.State;
-using PuzzleChart.Tools;
+using PuzzleChart.Api;
+using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api.Shapes;
+using PuzzleChart.Api.State;
 
 namespace PuzzleChart
 {
-    public class DefaultCanvas : Control,ICanvas
+    public class DefaultCanvas : Control, ICanvas
     {
         private ITool activeTool;
         private List<PuzzleObject> puzzle_objects;
@@ -325,10 +321,10 @@ namespace PuzzleChart
                                 Diamond diamondObj = (Diamond)obj;
                                 diamondObj.Serialize(name);
                             }
-                            else if (obj is Shapes.Rectangle)
+                            else if (obj is Api.Shapes.Rectangle)
                             {
                                 Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Rectangle");
-                                Shapes.Rectangle rectangleObj = (Shapes.Rectangle)obj;
+                                Api.Shapes.Rectangle rectangleObj = (Api.Shapes.Rectangle)obj;
                                 rectangleObj.Serialize(name);
                             }
                             else if (obj is Oval)
@@ -409,7 +405,7 @@ namespace PuzzleChart
                     }
                     listObj.Clear();
 
-                    Shapes.Rectangle rectangleObj = new Shapes.Rectangle();
+                    Api.Shapes.Rectangle rectangleObj = new Api.Shapes.Rectangle();
                     listObj = rectangleObj.Unserialize(openFileDialog1.FileName);
                     foreach (PuzzleObject obj in listObj)
                     {
@@ -584,10 +580,10 @@ namespace PuzzleChart
                     listCopyMem.Add(copyMemory);
                     this.puzzle_objects.Add(drawObj);
                 }
-                else if (obj is Shapes.Rectangle)
+                else if (obj is Api.Shapes.Rectangle)
                 {
-                    Shapes.Rectangle temp = (Shapes.Rectangle)obj;
-                    Shapes.Rectangle drawObj = new Shapes.Rectangle(temp.x, temp.y, temp.width, temp.height);
+                    Api.Shapes.Rectangle temp = (Api.Shapes.Rectangle)obj;
+                    Api.Shapes.Rectangle drawObj = new Api.Shapes.Rectangle(temp.x, temp.y, temp.width, temp.height);
                     copyMemory.ID = drawObj.ID;
                     copyMemory.before_copied = obj.ID;
                     copyMemory.setObjectName("Rectangle");

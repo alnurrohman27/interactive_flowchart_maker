@@ -1,7 +1,7 @@
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.FillColorTool.dll
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.FillColorTool.pdb
-D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.exe
-D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.Api.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\bin\Debug\PuzzleChart.Api.pdb
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\obj\Debug\PuzzleChart.FillColorTool.csprojResolveAssemblyReference.cache
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\obj\Debug\PuzzleChart.FillColorTool.IconSet.resources
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.FillColorTool\obj\Debug\PuzzleChart.FillColorTool.csproj.GenerateResource.Cache

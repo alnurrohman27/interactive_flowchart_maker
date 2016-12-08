@@ -1,11 +1,8 @@
-﻿using PuzzleChart.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
+using PuzzleChart.Api;
+using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api.Shapes;
 
 namespace PuzzleChart.FillColorTool
 {
@@ -120,9 +117,9 @@ namespace PuzzleChart.FillColorTool
                                 obj2.Draw();
                             }
                         }
-                        else if (selected_object is Shapes.Rectangle)
+                        else if (selected_object is Api.Shapes.Rectangle)
                         {
-                            Shapes.Rectangle obj2 = (Shapes.Rectangle)selected_object;
+                            Api.Shapes.Rectangle obj2 = (Api.Shapes.Rectangle)selected_object;
                             obj2.myBrush = new SolidBrush(colorDialog.Color);
                             if (obj2.GetGraphics() != null)
                             {

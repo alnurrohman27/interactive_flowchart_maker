@@ -1,12 +1,9 @@
-﻿using PuzzleChart.Shapes;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PuzzleChart.Api;
+using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api.Shapes;
 
 namespace PuzzleChart.FontColorTool
 {
@@ -125,9 +122,9 @@ namespace PuzzleChart.FontColorTool
                             }
                         }
 
-                        else if (selected_object is Shapes.Rectangle)
+                        else if (selected_object is Api.Shapes.Rectangle)
                         {
-                            Shapes.Rectangle obj2 = (Shapes.Rectangle)selected_object;
+                            Api.Shapes.Rectangle obj2 = (Api.Shapes.Rectangle)selected_object;
                             obj2.fontColor = new SolidBrush(colorDialog.Color);
                             if (obj2.GetGraphics() != null)
                             {

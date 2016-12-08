@@ -61,6 +61,9 @@ C:\Users\user\Documents\GitHub\interactive_flowchart_maker\PuzzleChart\obj\Debug
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\bin\Debug\PuzzleChart.exe.config
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\bin\Debug\PuzzleChart.exe
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\bin\Debug\PuzzleChart.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\bin\Debug\PuzzleChart.Api.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\bin\Debug\PuzzleChart.Api.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\obj\Debug\PuzzleChart.csprojResolveAssemblyReference.cache
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\obj\Debug\PuzzleChart.MainWindow.resources
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\obj\Debug\PuzzleChart.Properties.Resources.resources
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\obj\Debug\PuzzleChart.IconSet.resources

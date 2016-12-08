@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PuzzleChart.ToolbarItems;
 using PuzzleChart.Tools;
 using PuzzleChart.Commands;
 using System.IO;
 using System.Reflection;
+using PuzzleChart.Api;
+using PuzzleChart.Api.Interfaces;
 
 namespace PuzzleChart
 {

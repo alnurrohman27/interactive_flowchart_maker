@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows.Forms;
-using PuzzleChart.Shapes;
+using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api.Shapes;
 
 namespace PuzzleChart.Tools
 {
