@@ -1,6 +1,6 @@
 ﻿using PuzzleChart.Api.Interfaces;
 
-namespace PuzzleChart.Api
+namespace PuzzleChart.Commands
 {
     public class PasteCommand : ICommand
     {
