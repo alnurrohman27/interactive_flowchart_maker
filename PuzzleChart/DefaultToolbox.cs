@@ -15,6 +15,10 @@ namespace PuzzleChart
             {
                 return this.activeTool;
             }
+            set
+            {
+                this.active_tool = value;
+            }
         }
 
         public event ToolSelectedEventHandler tool_selected;

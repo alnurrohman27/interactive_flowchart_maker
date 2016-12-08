@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="Interfaces\ICanvas.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
+    <Compile Include="Interfaces\IEditor.cs" />
     <Compile Include="Interfaces\IMenuBar.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />
     <Compile Include="Interfaces\IObservable.cs" />

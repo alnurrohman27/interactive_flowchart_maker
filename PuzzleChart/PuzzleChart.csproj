@@ -55,6 +55,9 @@
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DefaultEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DefaultMenubar.cs">
       <SubType>Component</SubType>
     </Compile>

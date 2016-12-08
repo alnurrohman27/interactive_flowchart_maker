@@ -14,6 +14,6 @@ namespace PuzzleChart.Api.Interfaces
         void AddTool(ITool tool);
         void RemoveTool(ITool tool);
         void AddSeparator();
-        ITool active_tool { get; }
+        ITool active_tool { get; set; }
     }
 }

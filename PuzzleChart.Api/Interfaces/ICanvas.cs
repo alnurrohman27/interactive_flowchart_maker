@@ -1,8 +1,11 @@
-﻿namespace PuzzleChart.Api.Interfaces
+﻿using System;
+
+namespace PuzzleChart.Api.Interfaces
 {
     public interface ICanvas
     {
         ITool GetActiveTool();
+        String Name { get; set; }
         void SetActiveTool(ITool tool);
         void Repaint();
 

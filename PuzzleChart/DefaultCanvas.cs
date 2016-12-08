@@ -9,6 +9,7 @@ using PuzzleChart.Api;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api.Shapes;
 using PuzzleChart.Api.State;
+using System.IO;
 
 namespace PuzzleChart
 {
@@ -21,8 +22,10 @@ namespace PuzzleChart
         private List<PuzzleObject> memory_copy;
         private int countDelete, countRecover;
         private PuzzleObject temp;
+        public bool saved;
 
         public bool KeyPreview { get; private set; }
+
 
         public DefaultCanvas()
         {
@@ -33,6 +36,7 @@ namespace PuzzleChart
             this.countDelete = 0;
             this.countRecover = 0;
             this.DoubleBuffered = true;
+            this.saved = false;
 
             this.BackColor = Color.White;
             this.Dock = DockStyle.Fill;
@@ -348,7 +352,8 @@ namespace PuzzleChart
 
                         }
                     }
-
+                    this.saved = true;
+                    this.Name = Path.GetFileNameWithoutExtension(saveFileDialog1.FileName);
                 }
             }
             catch(Exception ex)
@@ -458,7 +463,8 @@ namespace PuzzleChart
                         tempObj.Deselect();
                     }
                     listObj.Clear();
-
+                    this.saved = true;
+                    this.Name = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
                     this.Repaint();
 
                 }

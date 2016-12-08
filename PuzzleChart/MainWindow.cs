@@ -14,10 +14,10 @@ namespace PuzzleChart
     public partial class MainWindow : System.Windows.Forms.Form
     {
         private IToolBox tool_box;
-        private ICanvas canvas;
         private IToolbar toolbar;
         private IMenuBar menubar;
         private IPlugin[] plugins;
+        private IEditor editor;
 
         public MainWindow()
         {
@@ -84,8 +84,13 @@ namespace PuzzleChart
             #region Canvas
 
             Debug.WriteLine("Loading canvas...");
-            this.canvas = new DefaultCanvas();
-            this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.canvas);
+            editor = new DefaultEditor();
+            this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.editor);
+
+            ICanvas canvas = new DefaultCanvas();
+            canvas.Name = "Untitled - 1";
+            this.editor.AddCanvas(canvas);
+
 
             #endregion
 
@@ -101,6 +106,7 @@ namespace PuzzleChart
 
             DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
             fileMenuItem.AddMenuItem(newMenuItem);
+            newMenuItem.Click += new System.EventHandler(this.OnNewMenuItemClick);
             DefaultMenuItem openMenuItem = new DefaultMenuItem("Open");
             fileMenuItem.AddMenuItem(openMenuItem);
             openMenuItem.Click += new System.EventHandler(this.OnOpenMenuItemClick);
@@ -149,6 +155,7 @@ namespace PuzzleChart
             Debug.WriteLine("Loading toolbox...");
             this.tool_box = new DefaultToolbox();
             this.toolStripContainer1.LeftToolStripPanel.Controls.Add((Control)this.tool_box);
+            this.editor.ToolBox = tool_box;
 
             #endregion
 
@@ -185,44 +192,49 @@ namespace PuzzleChart
             this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
-            OpenCommand openCmd = new OpenCommand(this.canvas);
-            SaveCommand saveCmd = new SaveCommand(this.canvas);
-            UndoCommand undoCmd = new UndoCommand(this.canvas);
-            RedoCommand redoCmd = new RedoCommand(this.canvas);
-            CopyCommand copyCmd = new CopyCommand(this.canvas);
-            PasteCommand pasteCmd = new PasteCommand(this.canvas);
+            if(editor != null)
+            {
+                OpenCommand openCmd = new OpenCommand(editor.GetSelectedCanvas(), editor);
+                SaveCommand saveCmd = new SaveCommand(editor.GetSelectedCanvas(),editor);
+                UndoCommand undoCmd = new UndoCommand(editor.GetSelectedCanvas());
+                RedoCommand redoCmd = new RedoCommand(editor.GetSelectedCanvas());
+                CopyCommand copyCmd = new CopyCommand(editor.GetSelectedCanvas());
+                PasteCommand pasteCmd = new PasteCommand(editor.GetSelectedCanvas());
 
-            Open toolItemOpen = new Open();
-            toolItemOpen.SetCommand(openCmd);
-            Save toolItemSave = new Save();
-            toolItemSave.SetCommand(saveCmd);
-            Undo toolItemUndo = new Undo();
-            toolItemUndo.SetCommand(undoCmd);
-            Redo toolItemRedo = new Redo();
-            toolItemRedo.SetCommand(redoCmd);
-            Copy toolItemCopy = new Copy();
-            toolItemCopy.SetCommand(copyCmd);
-            Paste toolItemPaste = new Paste();
-            toolItemPaste.SetCommand(pasteCmd);
+                Open toolItemOpen = new Open();
+                toolItemOpen.SetCommand(openCmd);
+                Save toolItemSave = new Save();
+                toolItemSave.SetCommand(saveCmd);
+                Undo toolItemUndo = new Undo();
+                toolItemUndo.SetCommand(undoCmd);
+                Redo toolItemRedo = new Redo();
+                toolItemRedo.SetCommand(redoCmd);
+                Copy toolItemCopy = new Copy();
+                toolItemCopy.SetCommand(copyCmd);
+                Paste toolItemPaste = new Paste();
+                toolItemPaste.SetCommand(pasteCmd);
 
-            this.toolbar.AddToolbarItem(toolItemOpen);
-            this.toolbar.AddToolbarItem(toolItemSave);
-            this.toolbar.AddToolbarItem(toolItemCopy);
-            this.toolbar.AddToolbarItem(toolItemPaste);
-            this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(toolItemUndo);
-            this.toolbar.AddToolbarItem(toolItemRedo);
+                this.toolbar.AddToolbarItem(toolItemOpen);
+                this.toolbar.AddToolbarItem(toolItemSave);
+                this.toolbar.AddToolbarItem(toolItemCopy);
+                this.toolbar.AddToolbarItem(toolItemPaste);
+                this.toolbar.AddSeparator();
+                this.toolbar.AddToolbarItem(toolItemUndo);
+                this.toolbar.AddToolbarItem(toolItemRedo);
+            }
             #endregion
         }
 
         #region Method
         private void Toolbox_ToolSelected(ITool tool)
         {
-            if (this.canvas != null)
+            if (this.editor != null)
             {
+                ICanvas canvas = this.editor.GetSelectedCanvas();
                 Debug.WriteLine("Tool " + tool.Name + " is selected");
-                this.canvas.SetActiveTool(tool);
-                tool.target_canvas = this.canvas;
+                canvas.SetActiveTool(tool);
+                tool.target_canvas = canvas;
+
             }
         }
 
@@ -240,6 +252,15 @@ namespace PuzzleChart
         {
 
         }
+
+        private void OnNewMenuItemClick(object sender, EventArgs e)
+        {
+            ICanvas canvas = new DefaultCanvas();
+            DefaultEditor edit = (DefaultEditor)editor;
+            canvas.Name = "Untitled - " + (edit.newTabCount);
+            this.editor.AddCanvas(canvas);
+        }
+
         private void OnExitMenuItemClick(object sender, EventArgs e)
         {
             Application.Exit();
@@ -250,68 +271,100 @@ namespace PuzzleChart
             MessageBox.Show("Interactive Flow Chart Maker\n byKPL Kel 1");
         }
 
-        private void OnUndoMenuItemClick(object sender, EventArgs e)
-        {
-            this.canvas.Undo();
-        }
-
-        private void OnRedoMenuItemClick(object sender, EventArgs e)
-        {
-            this.canvas.Redo();
-        }
-
         #endregion
 
         private void Main_Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.Z)
+            if (e.Control && e.KeyCode == Keys.Z && this.editor != null)
             {
-                this.canvas.Undo();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                UndoCommand undoCmd = new UndoCommand(canvas);
+                undoCmd.Execute();
             }
-            else if (e.Control && e.KeyCode == Keys.Y)
+            else if (e.Control && e.KeyCode == Keys.Y && this.editor != null)
             {
-                this.canvas.Redo();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                RedoCommand redoCmd = new RedoCommand(canvas);
+                redoCmd.Execute();
             }
-            else if (e.Control && e.KeyCode == Keys.S)
+            else if (e.Control && e.KeyCode == Keys.S && this.editor != null)
             {
-                this.canvas.Save();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                SaveCommand saveCmd = new SaveCommand(canvas, editor);
+                saveCmd.Execute();
             }
-            else if (e.Control && e.KeyCode == Keys.O)
+            else if (e.Control && e.KeyCode == Keys.O && this.editor != null)
             {
-                this.canvas.Open();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                OpenCommand openCmd = new OpenCommand(canvas, editor);
+                openCmd.Execute();
             }
-            else if (e.Control && e.KeyCode == Keys.C)
+            else if (e.Control && e.KeyCode == Keys.C && this.editor != null)
             {
-                this.canvas.CopyObject();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                CopyCommand copyCmd = new CopyCommand(canvas);
+                copyCmd.Execute();
             }
-            else if (e.Control && e.KeyCode == Keys.V)
+            else if (e.Control && e.KeyCode == Keys.V && this.editor != null)
             {
-                this.canvas.PasteObject();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                PasteCommand pasteCmd = new PasteCommand(canvas);
+                pasteCmd.Execute();
             }
             else if (e.KeyCode == Keys.Delete)
             {
-                this.canvas.DeleteObject();
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                canvas.DeleteObject();
+            }
+        }
+
+        private void OnUndoMenuItemClick(object sender, EventArgs e)
+        {
+            if (this.editor != null)
+            {
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                UndoCommand undoCmd = new UndoCommand(canvas);
+                undoCmd.Execute();
+            }
+
+        }
+
+        private void OnRedoMenuItemClick(object sender, EventArgs e)
+        {
+            if (this.editor != null)
+            {
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                RedoCommand redoCmd = new RedoCommand(canvas);
+                redoCmd.Execute();
             }
         }
 
         private void OnSaveMenuItemClick(object sender, EventArgs e)
         {
-            this.canvas.Save();
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            SaveCommand saveCmd = new SaveCommand(canvas, editor);
+            saveCmd.Execute();
         }
 
         private void OnOpenMenuItemClick(object sender, EventArgs e)
         {
-            this.canvas.Open();
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            OpenCommand openCmd = new OpenCommand(canvas, editor);
+            openCmd.Execute();
         }
 
         private void OnPasteMenuItemClick(object sender, EventArgs e)
         {
-            this.canvas.PasteObject();
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            PasteCommand pasteCmd = new PasteCommand(canvas);
+            pasteCmd.Execute();
         }
 
         private void OnCopyMenuItemClick(object sender, EventArgs e)
         {
-            this.canvas.CopyObject();
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            CopyCommand copyCmd = new CopyCommand(canvas);
+            copyCmd.Execute();
         }
     }
 }

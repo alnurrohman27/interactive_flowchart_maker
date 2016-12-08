@@ -2,3 +2,4 @@ D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\bin\Debug\PuzzleChart.Api.pdb
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.dll
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.csprojResolveAssemblyReference.cache
