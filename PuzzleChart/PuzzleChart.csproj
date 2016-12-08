@@ -67,9 +67,6 @@
     <Compile Include="DefaultToolbox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Form\FormTextDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,9 +111,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\RectangleTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">

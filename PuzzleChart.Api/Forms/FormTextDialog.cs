@@ -1,13 +1,12 @@
-﻿using System;
+﻿using PuzzleChart.Api.Shapes;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using PuzzleChart.Api;
-using PuzzleChart.Api.Shapes;
 
-namespace PuzzleChart.Form
+namespace PuzzleChart.Api.Forms
 {
-    public partial class FormTextDialog : System.Windows.Forms.Form
+    public partial class FormTextDialog : Form
     {
         private System.ComponentModel.Container components;
         private Button button1;
@@ -32,13 +31,13 @@ namespace PuzzleChart.Form
         {
             this.obj = obj2;
             InitializeComponent();
-            if(obj2 is Oval == false && obj2 is Line == false)
+            if (obj2 is Oval == false && obj2 is Line == false)
                 AddDataTable();
         }
 
         private void InitializeComponent()
         {
-            
+
             if (obj is Line == false)
             {
                 if (obj is Parallelogram)
@@ -77,7 +76,7 @@ namespace PuzzleChart.Form
                     this.Controls.Add(boxName);
                     this.Controls.Add(myDataGrid);
                 }
-                else if(obj is Api.Shapes.Rectangle)
+                else if (obj is Api.Shapes.Rectangle)
                 {
                     Api.Shapes.Rectangle obj3 = (Api.Shapes.Rectangle)obj;
 
@@ -150,10 +149,10 @@ namespace PuzzleChart.Form
                     this.Controls.Add(boxName);
                     this.Controls.Add(myDataGrid);
                 }
-                
-                else if(obj is Oval)
+
+                else if (obj is Oval)
                 {
-                   Oval  obj3 = (Oval)obj;
+                    Oval obj3 = (Oval)obj;
 
                     // Create the form and its controls.
                     this.components = new System.ComponentModel.Container();

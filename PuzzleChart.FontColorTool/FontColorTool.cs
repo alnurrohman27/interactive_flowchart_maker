@@ -15,8 +15,6 @@ namespace PuzzleChart.FontColorTool
         private int xInitial;
         private int yInitial;
 
-        private string name;
-
         public Cursor cursor
         {
             get

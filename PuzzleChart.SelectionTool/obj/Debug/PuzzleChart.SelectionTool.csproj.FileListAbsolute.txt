@@ -1,0 +1,9 @@
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\bin\Debug\PuzzleChart.SelectionTool.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\bin\Debug\PuzzleChart.SelectionTool.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\bin\Debug\PuzzleChart.Api.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\bin\Debug\PuzzleChart.Api.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\obj\Debug\PuzzleChart.SelectionTool.csprojResolveAssemblyReference.cache
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\obj\Debug\PuzzleChart.SelectionTool.IconSet.resources
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\obj\Debug\PuzzleChart.SelectionTool.csproj.GenerateResource.Cache
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\obj\Debug\PuzzleChart.SelectionTool.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.SelectionTool\obj\Debug\PuzzleChart.SelectionTool.pdb

@@ -1,15 +1,15 @@
-﻿using PuzzleChart.Form;
-using System;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System;
 using System.Windows.Forms;
 using PuzzleChart.Api;
-using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api.Shapes;
+using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api.Forms;
+using System.Drawing;
+using System.Diagnostics;
 
-namespace PuzzleChart.Tools
+namespace PuzzleChart.SelectionTool
 {
-    public class SelectionTool : ToolStripButton, ITool
+    public class SelectionTool : ToolStripButton, ITool, IPlugin
     {
         private ICanvas canvas;
         private PuzzleObject selected_object;
@@ -38,6 +38,19 @@ namespace PuzzleChart.Tools
             }
         }
 
+        public IPluginHost Host
+        {
+            get
+            {
+                return this.Host;
+            }
+
+            set
+            {
+                this.Host = value;
+            }
+        }
+
         public SelectionTool()
         {
             this.Name = "Selection tool";
@@ -56,16 +69,16 @@ namespace PuzzleChart.Tools
                 canvas.DeselectAllObjects();
                 canvas.SelectObjectAt(e.X, e.Y);
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
-                
+
                 if (selected_object != null)
                 {
                     selected_object.transMem = new TranslateMemory();
                     selected_object.translate.Add(selected_object.transMem);
                     selected_object.translate_count++;
                 }
-                    
+
             }
-            else if(e.Button == MouseButtons.Left && canvas != null && Control.ModifierKeys == Keys.Control)
+            else if (e.Button == MouseButtons.Left && canvas != null && Control.ModifierKeys == Keys.Control)
             {
                 canvas.SelectObjectAt(e.X, e.Y);
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
@@ -104,7 +117,7 @@ namespace PuzzleChart.Tools
         {
             try
             {
-                if(selected_object != null)
+                if (selected_object != null)
                 {
                     PuzzleObject obj = selected_object;
                     if (obj is Line == false)
@@ -118,7 +131,7 @@ namespace PuzzleChart.Tools
                         textBox.Height = 350;
                         if (obj is Diamond)
                             textBox.Width = 400;
-                        else if(obj is Oval)
+                        else if (obj is Oval)
                         {
                             textBox.Width = 200;
                             textBox.Height = 150;
