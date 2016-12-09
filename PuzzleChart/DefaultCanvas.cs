@@ -17,24 +17,21 @@ namespace PuzzleChart
     {
         private ITool activeTool;
         private List<PuzzleObject> puzzle_objects;
-        private List<PuzzleObject> memory_stack;
-        private List<PuzzleObject> memory_delete;
-        private List<PuzzleObject> memory_copy;
-        private int countDelete, countRecover;
-        private PuzzleObject temp;
+        private Stack<ICommand> undoStack;
+        private Stack<ICommand> redoStack;
+        private List<PuzzleObject> listCopiedItems;
         public bool saved;
 
         public bool KeyPreview { get; private set; }
 
-
         public DefaultCanvas()
         {
             this.puzzle_objects = new List<PuzzleObject>();
-            this.memory_stack = new List<PuzzleObject>();
-            this.memory_delete = new List<PuzzleObject>();
-            this.memory_copy = new List<PuzzleObject>();
-            this.countDelete = 0;
-            this.countRecover = 0;
+            this.listCopiedItems = new List<PuzzleObject>();
+
+            this.redoStack = new Stack<ICommand>();
+            this.undoStack = new Stack<ICommand>(); 
+
             this.DoubleBuffered = true;
             this.saved = false;
 
@@ -50,6 +47,40 @@ namespace PuzzleChart
 
         }
 
+        public ICommand PopUndoStack()
+        {
+            if (undoStack.Count > 0)
+            {
+                ICommand command = undoStack.Pop();
+                redoStack.Push(command);
+                return command;
+            }
+            else
+                return null;
+
+        }
+
+        public void PushUndoStack(ICommand command)
+        {
+            undoStack.Push(command);
+        }
+
+        public ICommand PopRedoStack()
+        {
+            if (redoStack.Count > 0)
+            {
+                ICommand command = redoStack.Pop();
+                undoStack.Push(command);
+                return command;
+            }
+            else
+                return null;
+        }
+
+        public void PushRedoStack(ICommand command)
+        {
+            redoStack.Push(command);
+        }
 
         public void RemovePuzzleObject(PuzzleObject puzzle_object)
         {
@@ -72,10 +103,6 @@ namespace PuzzleChart
         {
             if (this.activeTool != null)
             {
-                this.countRecover = 0;
-                this.countDelete = 0;
-                this.memory_delete = new List<PuzzleObject>();
-                this.memory_stack = new List<PuzzleObject>();
                 this.activeTool.ToolMouseUp(sender, e);
                 this.Repaint();
             }
@@ -85,8 +112,10 @@ namespace PuzzleChart
         {
             if (this.activeTool != null)
             {
-                this.activeTool.ToolMouseDown(sender, e);
-
+                if(Control.ModifierKeys == Keys.None)
+                    this.activeTool.ToolMouseDown(sender, e);
+                else if(Control.ModifierKeys == Keys.Control)
+                    this.activeTool.ToolMouseDownAndKeys(sender, e);
                 this.Repaint();
             }
         }
@@ -147,120 +176,6 @@ namespace PuzzleChart
             this.puzzle_objects.Add(puzzle_object);
         }
 
-        public void Undo()
-        {
-
-            var last = puzzle_objects.Count - 1;
-            if(last >= 0 && this.countDelete == 0 && this.countRecover == 0)
-            {
-                bool flagEdit = false;
-                foreach (PuzzleObject obj in puzzle_objects)
-                {
-                    if (obj.State is EditState)
-                    {
-                        this.temp = obj;
-                        flagEdit = true;
-                    }
-                }
-
-                if (!flagEdit)
-                    {
-                    this.temp = puzzle_objects[puzzle_objects.Count - 1];
-                }
-
-                if (temp.transMem != null && temp.transMem.flag == false && temp is Oval == false && temp is Line == false)
-                {
-                    temp.TranslateUndoRedo(true);
-                    memory_stack.Add(temp);
-                }
-                else
-                {
-                    puzzle_objects.RemoveAt(puzzle_objects.Count - 1);
-                    memory_stack.Add(temp);
-                }
-                Debug.WriteLine("Undo is selected");
-                this.Repaint();
-            }   
-            else if(this.countDelete > 0)
-            {
-                Debug.WriteLine("Undo is selected");
-                var i = this.memory_delete.Count - 1;
-                if (memory_delete[i] is Line)
-                {
-                    Line tempLine = (Line)memory_delete[i];
-                    foreach(PuzzleObject obj in puzzle_objects)
-                    {
-                        Vertex tempVertex;
-                        if (tempLine.id_start_point_vertex == obj.ID || tempLine.id_end_point_vertex == obj.ID)
-                        {
-                            tempVertex = (Vertex)obj;
-                            tempVertex.Subscribe(tempLine);
-                            if (tempLine.id_start_point_vertex == tempVertex.ID)
-                                tempLine.AddVertex(tempVertex, true);
-                            else
-                                tempLine.AddVertex(tempVertex, false);
-                        }
-                    }
-                }
-
-                puzzle_objects.Add(memory_delete[i]);
-                memory_delete.RemoveAt(i);
-                countDelete--;
-                countRecover++;
-                Repaint();
-            }
-        }
-
-        public void Redo()
-        {
-            var last = memory_stack.Count - 1;
-            
-            if (last >= 0 && this.countDelete == 0 && this.countRecover == 0)
-            {
-                this.temp = memory_stack[memory_stack.Count - 1];
-
-                if (temp.transMem != null && temp is Oval == false && temp is Line == false)
-                {
-                    temp.TranslateUndoRedo(false);
-                    memory_stack.Remove(temp);
-                }
-                else
-                {
-                    memory_stack.RemoveAt(memory_stack.Count - 1);
-                    puzzle_objects.Add(temp);
-                }
-                Debug.WriteLine("Redo is selected");
-                this.Repaint();
-            }
-            else if (this.countRecover > 0)
-            {
-                Debug.WriteLine("Redo is selected");
-                var i = this.puzzle_objects.Count - 1;
-                if (puzzle_objects[i] is Line)
-                {
-                    Line tempLine = (Line)puzzle_objects[i];
-                    foreach (PuzzleObject obj in puzzle_objects)
-                    {
-                        Vertex tempVertex;
-                        if (tempLine.id_start_point_vertex == obj.ID || tempLine.id_end_point_vertex == obj.ID)
-                        {
-                            tempVertex = (Vertex)obj;
-                            tempVertex.Subscribe(tempLine);
-                            if (tempLine.id_start_point_vertex == tempVertex.ID)
-                                tempLine.AddVertex(tempVertex, true);
-                            else
-                                tempLine.AddVertex(tempVertex, false);
-                        }
-                    }
-                }
-                this.memory_delete.Add(this.puzzle_objects[i]);
-                this.puzzle_objects.RemoveAt(i);
-                this.countDelete++;
-                this.countRecover--;
-                this.Repaint();
-            }
-        }
-
         public PuzzleObject GetObjectAt(int x, int y)
         {
             foreach (PuzzleObject obj in puzzle_objects)
@@ -284,12 +199,38 @@ namespace PuzzleChart
             return obj;
         }
 
+        public List<PuzzleObject> GetAllObjects()
+        {
+            return this.puzzle_objects;
+        }
+
         public void DeselectAllObjects()
         {
             foreach (PuzzleObject drawObj in puzzle_objects)
             {
                 drawObj.Deselect();
             }
+        }
+
+        public List<PuzzleObject> GetSelectedObjects()
+        {
+            List<PuzzleObject> listObj = new List<PuzzleObject>();
+            foreach(PuzzleObject obj in this.puzzle_objects)
+            {
+                if (obj.State is EditState)
+                    listObj.Add(obj);
+            }
+            return listObj;
+        }
+
+        public void SetCopiedItems(List<PuzzleObject> listCopiedItems)
+        {
+            this.listCopiedItems = listCopiedItems;
+        }
+
+        public List<PuzzleObject> GetCopiedItems()
+        {
+            return this.listCopiedItems;
         }
 
         public void Save()
@@ -476,164 +417,12 @@ namespace PuzzleChart
             }
         }
 
-        public void DeleteObject()
-        {
-            List<PuzzleObject> tempObj = new List<PuzzleObject>();
-            foreach (PuzzleObject obj in puzzle_objects)
-            {
-                if (obj.State is EditState)
-                {
-                    if(obj is Line)
-                    {
-                        Line tempLine = (Line)obj;
-                        foreach (PuzzleObject obj2 in puzzle_objects)
-                        {
-                            Vertex tempVertex;
-                            if(obj2 is Line == false && tempLine.id_start_point_vertex == obj2.ID || obj2 is Line == false && tempLine.id_end_point_vertex == obj2.ID)
-                            {
-                                tempVertex = (Vertex)obj2;
-                                tempVertex.Unsubscribe(tempLine);
-                                if (obj2.ID == tempLine.id_start_point_vertex)
-                                    tempLine.RemoveVertex(true);
-                                else
-                                    tempLine.RemoveVertex(false);
-                            }
-                        }
-                    }
-                    tempObj.Add(obj);
-                }
-            }
-
-            foreach (PuzzleObject obj in tempObj)
-            {
-                Console.WriteLine("Delete object: " + obj.ID);
-                this.countDelete++;
-                this.memory_delete.Add(obj);
-                this.RemovePuzzleObject(obj);
-            }
-            this.Repaint();
-        }
-
-        public void CopyObject()
-        {
-            List<PuzzleObject> tempObj = new List<PuzzleObject>();
-            memory_copy.Clear();
-            bool flagCopy = false;
-            foreach (PuzzleObject obj in puzzle_objects)
-            {
-                if (obj.State is EditState)
-                {
-                    tempObj.Add(obj);
-                    flagCopy = true;
-                }
-            }
-            if(flagCopy)
-                this.memory_copy.Clear();
-            foreach (PuzzleObject obj in tempObj)
-            {
-                Console.WriteLine("Copy object to clipboard: " + obj.ID);
-                this.memory_copy.Add(obj);
-            }
-        }
-
         public void PasteObject()
         {
-            List<Line> listTempLine = new List<Line>();
-            StaticState staticState = new StaticState();
-            List<CopyMemory> listCopyMem = new List<CopyMemory>();
-
-            foreach (PuzzleObject obj in memory_copy)
-            {
-                Console.WriteLine("Copy object to canvas: " + obj.ID);
-                CopyMemory copyMemory = new CopyMemory();
-                if(obj is Line)
-                {
-                    Line temp = (Line)obj;
-                    Line drawObj = new Line(temp.start_point, temp.end_point);
-                    if (temp.id_start_point_vertex != null)
-                        drawObj.id_start_point_vertex = temp.id_start_point_vertex;
-                    if(temp.id_end_point_vertex != null)
-                        drawObj.id_end_point_vertex = temp.id_end_point_vertex;
-                    listTempLine.Add(drawObj);
-                }
-                else if (obj is Diamond)
-                {
-                    Diamond temp = (Diamond)obj;
-                    Diamond drawObj = new Diamond(temp.x, temp.y, temp.width, temp.height);
-                    copyMemory.ID = drawObj.ID;
-                    copyMemory.before_copied = obj.ID;
-                    copyMemory.setObjectName("Diamond");
-                    listCopyMem.Add(copyMemory);
-                    puzzle_objects.Add(drawObj);
-                }
-                else if (obj is Oval)
-                {
-                    Oval temp = (Oval)obj;
-                    Oval drawObj = new Oval(temp.x, temp.y, temp.width, temp.height);
-                    copyMemory.ID = drawObj.ID;
-                    copyMemory.before_copied = obj.ID;
-                    copyMemory.setObjectName("Oval");
-                    listCopyMem.Add(copyMemory);
-                    this.puzzle_objects.Add(drawObj);
-                }
-                else if(obj is Parallelogram)
-                {
-                    Parallelogram temp = (Parallelogram)obj;
-                    Parallelogram drawObj = new Parallelogram(temp.x, temp.y, temp.width, temp.height);
-                    copyMemory.ID = drawObj.ID;
-                    copyMemory.before_copied = obj.ID;
-                    copyMemory.setObjectName("Parallelogram");
-                    listCopyMem.Add(copyMemory);
-                    this.puzzle_objects.Add(drawObj);
-                }
-                else if (obj is Api.Shapes.Rectangle)
-                {
-                    Api.Shapes.Rectangle temp = (Api.Shapes.Rectangle)obj;
-                    Api.Shapes.Rectangle drawObj = new Api.Shapes.Rectangle(temp.x, temp.y, temp.width, temp.height);
-                    copyMemory.ID = drawObj.ID;
-                    copyMemory.before_copied = obj.ID;
-                    copyMemory.setObjectName("Rectangle");
-                    listCopyMem.Add(copyMemory);
-                    this.puzzle_objects.Add(drawObj);
-                }
-                obj.ChangeState(staticState);
-            }
-            foreach (Line obj in listTempLine)
-            {
-                Line drawObj = new Line(obj.start_point, obj.end_point);
-                foreach (PuzzleObject obj3 in puzzle_objects)
-                {
-                    foreach(CopyMemory copyMem in listCopyMem)
-                    {
-                        Vertex obj2 = null;
-                        if (obj3.ID == copyMem.ID)
-                        {
-                            obj2 = (Vertex)obj3;
-                            obj2.ID = copyMem.ID;
-                            if (obj.id_start_point_vertex == copyMem.before_copied && obj3 is Vertex)
-                            {
-                                drawObj.AddVertex(obj2, true);
-                                drawObj.id_start_point_vertex = obj2.ID;
-                                Debug.WriteLine("Edge ID: " + copyMem.before_copied + " Vertex: " + obj2.ID);
-                            }
-                            if (obj.id_end_point_vertex == copyMem.before_copied && obj3 is Vertex)
-                            {
-                                drawObj.AddVertex(obj2, false);
-                                drawObj.id_end_point_vertex = obj2.ID;
-                                Debug.WriteLine("Edge ID: " + copyMem.before_copied + " Vertex: " + obj2.ID);
-                            }
-                            if (obj2 != null)
-                                obj2.Subscribe(drawObj);
-                        }
-                    }
-                    
-                }
-                puzzle_objects.Add(drawObj);
-            }
-            listTempLine.Clear();
-            Debug.WriteLine("Count: " + puzzle_objects.Count);
-            this.Repaint();
+            
         }
+
+
     }
 }
 

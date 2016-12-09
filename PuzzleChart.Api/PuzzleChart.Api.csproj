@@ -72,7 +72,6 @@
     <Compile Include="State\EditState.cs" />
     <Compile Include="State\PreviewState.cs" />
     <Compile Include="State\StaticState.cs" />
-    <Compile Include="TranslateMemory.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <ItemGroup />

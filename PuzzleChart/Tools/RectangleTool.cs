@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using PuzzleChart.Api.Shapes;
 using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart.Tools
 {
@@ -50,7 +51,8 @@ namespace PuzzleChart.Tools
                 rectangle = new Rectangle(e.X, e.Y);
                 rectangle.width = 0;
                 rectangle.height = 0;
-                canvas.AddPuzzleObject(rectangle);
+                InsertCommand cmd = new InsertCommand(canvas, rectangle);
+                cmd.Execute();
             }
         }
 

@@ -52,7 +52,12 @@ namespace PuzzleChart
 
         public void RemoveCanvas(ICanvas canvas)
         {
-            
+            TabPage tabPage = new TabPage(canvas.Name);
+            this.Controls.Remove(tabPage);
+            this.canvases.Remove(canvas);
+            tabPage = new TabPage(canvases[0].Name);
+            this.SelectedTab = tabPage;
+            this.selectedCanvas = canvases[0];
         }
 
         public void RemoveSelectedCanvas()
@@ -67,8 +72,17 @@ namespace PuzzleChart
 
         private void DefaultEditor_Selected(object sender, TabControlEventArgs e)
         {
-            this.selectedCanvas = (ICanvas)e.TabPage.Controls[0];
-            Debug.WriteLine("Canvas: " + selectedCanvas.Name + " is selected");
+            try
+            {
+                this.selectedCanvas = (ICanvas)e.TabPage.Controls[0];
+                Debug.WriteLine("Canvas: " + selectedCanvas.Name + " is selected");
+            }
+
+            catch (Exception ex)
+            {
+                
+            }
+
         }
 
     }

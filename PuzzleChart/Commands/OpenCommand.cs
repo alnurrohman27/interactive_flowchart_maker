@@ -1,4 +1,5 @@
-﻿using PuzzleChart.Api.Interfaces;
+﻿using System;
+using PuzzleChart.Api.Interfaces;
 
 namespace PuzzleChart.Commands
 {
@@ -17,6 +18,11 @@ namespace PuzzleChart.Commands
             this.canvas.Open();
             DefaultEditor defEditor = (DefaultEditor)editor;
             defEditor.SelectedTab.Text = this.canvas.Name;
+        }
+
+        public void Unexecute()
+        {
+            throw new NotImplementedException();
         }
     }
 

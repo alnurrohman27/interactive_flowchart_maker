@@ -69,11 +69,6 @@ namespace PuzzleChart.Api.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            transMem.xBefore = this.x;
-            transMem.yBefore = this.y;
-            transMem.xAmount += xAmount;
-            transMem.yAmount += yAmount;
-
             this.x += xAmount;
             this.y += yAmount;
 
@@ -314,60 +309,6 @@ namespace PuzzleChart.Api.Shapes
             }
             reader.Close();
             return listObj;
-        }
-
-        public override void TranslateUndoRedo(bool undoRedo)
-        {
-            if (undoRedo)
-            {
-                if (!transMem.flag)
-                {
-                    int xAmount = transMem.xAmount;
-                    int yAmount = transMem.yAmount;
-
-                    //transMem.xBefore = this.x;
-                    //transMem.yBefore = this.y;
-
-                    this.x -= xAmount;
-                    this.y -= yAmount;
-
-                    transMem.xAmountRedo = xAmount;
-                    transMem.yAmountRedo = yAmount;
-                    transMem.xAmount -= xAmount;
-                    transMem.yAmount -= yAmount;
-
-                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
-                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
-
-                    BroadcastUpdate(-transMem.xAmountRedo, -transMem.yAmountRedo);
-
-                    transMem.flag = true;
-                }
-            }
-            else
-            {
-                if (transMem.flag)
-                {
-                    int xAmount = transMem.xAmountRedo;
-                    int yAmount = transMem.yAmountRedo;
-
-                    this.x += xAmount;
-                    this.y += yAmount;
-
-                    transMem.xAmount = xAmount;
-                    transMem.yAmount = yAmount;
-                    transMem.xAmountRedo -= xAmount;
-                    transMem.yAmountRedo -= yAmount;
-
-                    Debug.WriteLine("xNow: " + this.x + " yNow: " + this.y + " xAmount: " + transMem.xAmount + " yAmount: " + transMem.yAmount);
-                    Debug.WriteLine("xAmountRedo: " + transMem.xAmountRedo + " yAmountRedo: " + transMem.yAmountRedo);
-
-                    BroadcastUpdate(transMem.xAmount, transMem.yAmount);
-
-                    transMem.flag = false;
-                }
-            }
-
         }
     }
 }

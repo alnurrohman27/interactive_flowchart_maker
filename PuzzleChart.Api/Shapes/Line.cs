@@ -376,9 +376,5 @@ namespace PuzzleChart.Api.Shapes
             return this.end_point_vertex;
         }
 
-        public override void TranslateUndoRedo(bool undoRedo)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

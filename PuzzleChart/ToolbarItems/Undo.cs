@@ -26,7 +26,7 @@ namespace PuzzleChart.ToolbarItems
         {
             if (command != null)
             {
-                this.command.Execute();
+                this.command.Unexecute();
             }
         }
 

@@ -9,8 +9,6 @@ namespace PuzzleChart.Api
     public abstract class PuzzleObject
     {
         public Guid ID { get; set; }
-        public TranslateMemory transMem { get; set; }
-        public List<TranslateMemory> translate = new List<TranslateMemory>();
         public int translate_count = 0;
 
         public PuzzleState State
@@ -27,7 +25,6 @@ namespace PuzzleChart.Api
         public PuzzleObject()
         {
             ID = Guid.NewGuid();
-            transMem = new TranslateMemory();
             this.ChangeState(PreviewState.GetInstance()); //default initial state
         }
 
@@ -39,7 +36,6 @@ namespace PuzzleChart.Api
         public abstract void RenderOnPreview();
         public abstract void RenderOnEditingView();
         public abstract void RenderOnStaticView();
-        public abstract void TranslateUndoRedo(bool undoRedo);
 
         public void ChangeState(PuzzleState state)
         {

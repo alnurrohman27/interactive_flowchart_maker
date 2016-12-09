@@ -69,26 +69,6 @@ namespace PuzzleChart.SelectionTool
                 canvas.DeselectAllObjects();
                 canvas.SelectObjectAt(e.X, e.Y);
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
-
-                if (selected_object != null)
-                {
-                    selected_object.transMem = new TranslateMemory();
-                    selected_object.translate.Add(selected_object.transMem);
-                    selected_object.translate_count++;
-                }
-
-            }
-            else if (e.Button == MouseButtons.Left && canvas != null && Control.ModifierKeys == Keys.Control)
-            {
-                canvas.SelectObjectAt(e.X, e.Y);
-                selected_object = canvas.SelectObjectAt(e.X, e.Y);
-
-                if (selected_object != null)
-                {
-                    selected_object.transMem = new TranslateMemory();
-                    selected_object.translate.Add(selected_object.transMem);
-                    selected_object.translate_count++;
-                }
             }
 
         }
@@ -166,7 +146,11 @@ namespace PuzzleChart.SelectionTool
 
         public void ToolMouseDownAndKeys(object sender, MouseEventArgs e)
         {
-
+            if (e.Button == MouseButtons.Left && canvas != null && Control.ModifierKeys == Keys.Control)
+            {
+                canvas.SelectObjectAt(e.X, e.Y);
+                selected_object = canvas.SelectObjectAt(e.X, e.Y);
+            }
         }
     }
 }

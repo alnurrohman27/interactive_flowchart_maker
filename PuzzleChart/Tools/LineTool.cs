@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api.Shapes;
 using PuzzleChart.Api;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart.Tools
 {
@@ -58,7 +59,8 @@ namespace PuzzleChart.Tools
                 end_object = null;
                 line_segment = new Line(new System.Drawing.Point(e.X, e.Y));
                 line_segment.end_point = new System.Drawing.Point(e.X, e.Y);
-                canvas.AddPuzzleObject(line_segment);
+                InsertCommand cmd = new InsertCommand(canvas, line_segment);
+                cmd.Execute();
                 if (canvas.GetObjectAt(e.X,e.Y) is Vertex && canvas.GetObjectAt(e.X, e.Y) != null && !(canvas.GetObjectAt(e.X,e.Y) is Line))
                 {
                     start_object = (Vertex)canvas.GetObjectAt(e.X, e.Y);

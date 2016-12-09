@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using PuzzleChart.Api.Shapes;
 using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart.Tools
 {
@@ -50,7 +51,8 @@ namespace PuzzleChart.Tools
                 diamond = new Diamond(e.X, e.Y);
                 diamond.width = 0;
                 diamond.height = 0;
-                canvas.AddPuzzleObject(diamond);
+                InsertCommand cmd = new InsertCommand(canvas, diamond);
+                cmd.Execute();
             }
         }
 
@@ -79,6 +81,7 @@ namespace PuzzleChart.Tools
                 diamond.width = e.X - this.diamond.x;
                 diamond.height = e.Y - this.diamond.y;
                 diamond.Select();
+
                 //diamond.Deselect();
             }
         }

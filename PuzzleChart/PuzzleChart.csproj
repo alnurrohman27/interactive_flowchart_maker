@@ -46,12 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CloseFileCommand.cs" />
     <Compile Include="Commands\CopyCommand.cs" />
+    <Compile Include="Commands\DeleteCommand.cs" />
+    <Compile Include="Commands\InsertCommand.cs" />
+    <Compile Include="Commands\NewFileCommand.cs" />
     <Compile Include="Commands\OpenCommand.cs" />
     <Compile Include="Commands\PasteCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
-    <Compile Include="Commands\UndoCommand.cs" />
-    <Compile Include="Commands\RedoCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommand.cs" />
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
     </Compile>

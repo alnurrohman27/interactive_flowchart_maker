@@ -6,8 +6,8 @@ using PuzzleChart.Tools;
 using PuzzleChart.Commands;
 using System.IO;
 using System.Reflection;
-using PuzzleChart.Api;
 using PuzzleChart.Api.Interfaces;
+using PuzzleChart.Api;
 
 namespace PuzzleChart
 {
@@ -106,17 +106,20 @@ namespace PuzzleChart
 
             DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
             fileMenuItem.AddMenuItem(newMenuItem);
-            newMenuItem.Click += new System.EventHandler(this.OnNewMenuItemClick);
+            newMenuItem.Click += new EventHandler(this.OnNewMenuItemClick);
+            DefaultMenuItem closeMenuItem = new DefaultMenuItem("Close");
+            fileMenuItem.AddMenuItem(closeMenuItem);
+            newMenuItem.Click += new EventHandler(this.OnCloseMenuItemClick);
             DefaultMenuItem openMenuItem = new DefaultMenuItem("Open");
             fileMenuItem.AddMenuItem(openMenuItem);
-            openMenuItem.Click += new System.EventHandler(this.OnOpenMenuItemClick);
+            openMenuItem.Click += new EventHandler(this.OnOpenMenuItemClick);
             DefaultMenuItem saveMenuItem = new DefaultMenuItem("Save");
             fileMenuItem.AddMenuItem(saveMenuItem);
-            saveMenuItem.Click += new System.EventHandler(this.OnSaveMenuItemClick);
+            saveMenuItem.Click += new EventHandler(this.OnSaveMenuItemClick);
             fileMenuItem.AddSeparator();
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
-            exitMenuItem.Click += new System.EventHandler(this.OnExitMenuItemClick);
+            exitMenuItem.Click += new EventHandler(OnExitMenuItemClick);
 
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
@@ -196,23 +199,22 @@ namespace PuzzleChart
             {
                 OpenCommand openCmd = new OpenCommand(editor.GetSelectedCanvas(), editor);
                 SaveCommand saveCmd = new SaveCommand(editor.GetSelectedCanvas(),editor);
-                UndoCommand undoCmd = new UndoCommand(editor.GetSelectedCanvas());
-                RedoCommand redoCmd = new RedoCommand(editor.GetSelectedCanvas());
                 CopyCommand copyCmd = new CopyCommand(editor.GetSelectedCanvas());
                 PasteCommand pasteCmd = new PasteCommand(editor.GetSelectedCanvas());
+                UndoRedoCommand undoRedoCmd = new UndoRedoCommand(editor.GetSelectedCanvas());
 
                 Open toolItemOpen = new Open();
                 toolItemOpen.SetCommand(openCmd);
                 Save toolItemSave = new Save();
                 toolItemSave.SetCommand(saveCmd);
-                Undo toolItemUndo = new Undo();
-                toolItemUndo.SetCommand(undoCmd);
-                Redo toolItemRedo = new Redo();
-                toolItemRedo.SetCommand(redoCmd);
                 Copy toolItemCopy = new Copy();
                 toolItemCopy.SetCommand(copyCmd);
                 Paste toolItemPaste = new Paste();
                 toolItemPaste.SetCommand(pasteCmd);
+                Undo toolItemUndo = new Undo();
+                toolItemUndo.SetCommand(undoRedoCmd);
+                Redo toolItemRedo = new Redo();
+                toolItemRedo.SetCommand(undoRedoCmd);
 
                 this.toolbar.AddToolbarItem(toolItemOpen);
                 this.toolbar.AddToolbarItem(toolItemSave);
@@ -223,6 +225,13 @@ namespace PuzzleChart
                 this.toolbar.AddToolbarItem(toolItemRedo);
             }
             #endregion
+        }
+
+        private void OnCloseMenuItemClick(object sender, EventArgs e)
+        {
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            CloseFileCommand closeCmd = new CloseFileCommand(canvas, this.editor);
+            closeCmd.Execute();
         }
 
         #region Method
@@ -255,10 +264,8 @@ namespace PuzzleChart
 
         private void OnNewMenuItemClick(object sender, EventArgs e)
         {
-            ICanvas canvas = new DefaultCanvas();
-            DefaultEditor edit = (DefaultEditor)editor;
-            canvas.Name = "Untitled - " + (edit.newTabCount);
-            this.editor.AddCanvas(canvas);
+            NewFileCommand newFile = new NewFileCommand(this.editor);
+            newFile.Execute();
         }
 
         private void OnExitMenuItemClick(object sender, EventArgs e)
@@ -278,14 +285,14 @@ namespace PuzzleChart
             if (e.Control && e.KeyCode == Keys.Z && this.editor != null)
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
-                UndoCommand undoCmd = new UndoCommand(canvas);
-                undoCmd.Execute();
+                UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
+                undoRedoCmd.Unexecute();
             }
             else if (e.Control && e.KeyCode == Keys.Y && this.editor != null)
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
-                RedoCommand redoCmd = new RedoCommand(canvas);
-                redoCmd.Execute();
+                UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
+                undoRedoCmd.Unexecute();
             }
             else if (e.Control && e.KeyCode == Keys.S && this.editor != null)
             {
@@ -311,10 +318,11 @@ namespace PuzzleChart
                 PasteCommand pasteCmd = new PasteCommand(canvas);
                 pasteCmd.Execute();
             }
-            else if (e.KeyCode == Keys.Delete)
+            else if(e.KeyCode == Keys.Delete)
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
-                canvas.DeleteObject();
+                DeleteCommand deleteCmd = new DeleteCommand(canvas);
+                deleteCmd.Execute();
             }
         }
 
@@ -323,8 +331,8 @@ namespace PuzzleChart
             if (this.editor != null)
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
-                UndoCommand undoCmd = new UndoCommand(canvas);
-                undoCmd.Execute();
+                UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
+                undoRedoCmd.Unexecute();
             }
 
         }
@@ -334,8 +342,8 @@ namespace PuzzleChart
             if (this.editor != null)
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
-                RedoCommand redoCmd = new RedoCommand(canvas);
-                redoCmd.Execute();
+                UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
+                undoRedoCmd.Unexecute();
             }
         }
 

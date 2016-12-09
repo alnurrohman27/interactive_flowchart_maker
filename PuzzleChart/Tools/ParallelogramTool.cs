@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api.Shapes;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart.Tools
 {
@@ -50,7 +51,8 @@ namespace PuzzleChart.Tools
                 parallelogram = new Parallelogram(e.X, e.Y);
                 parallelogram.width = 0;
                 parallelogram.height = 0;
-                canvas.AddPuzzleObject(parallelogram);
+                InsertCommand cmd = new InsertCommand(canvas, parallelogram);
+                cmd.Execute();
             }
         }
 

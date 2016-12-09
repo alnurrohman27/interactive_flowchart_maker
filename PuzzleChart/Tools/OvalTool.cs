@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api.Shapes;
+using PuzzleChart.Commands;
 
 namespace PuzzleChart.Tools
 {
@@ -51,7 +52,8 @@ namespace PuzzleChart.Tools
                 oval = new Oval(e.X, e.Y);
                 oval.width = 0;
                 oval.height = 0;
-                canvas.AddPuzzleObject(oval);
+                InsertCommand cmd = new InsertCommand(canvas, oval);
+                cmd.Execute();
             }
         }
 
