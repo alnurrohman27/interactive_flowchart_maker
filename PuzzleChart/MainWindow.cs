@@ -292,7 +292,7 @@ namespace PuzzleChart
             {
                 ICanvas canvas = this.editor.GetSelectedCanvas();
                 UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
-                undoRedoCmd.Unexecute();
+                undoRedoCmd.Execute();
             }
             else if (e.Control && e.KeyCode == Keys.S && this.editor != null)
             {

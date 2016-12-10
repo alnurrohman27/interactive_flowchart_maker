@@ -22,7 +22,11 @@ namespace PuzzleChart.Commands
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
             ICommand command = defCanvas.PopUndoStack();
             if(command != null)
+            {
+                Debug.WriteLine("Undo Command is executed");
                 command.Unexecute();
+                defCanvas.PushRedoStack(this);
+            }
         }
 
         public void Redo()
@@ -30,18 +34,20 @@ namespace PuzzleChart.Commands
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
             ICommand command = defCanvas.PopRedoStack();
             if(command != null)
+            {
+                Debug.WriteLine("Redo Command is executed");
                 command.Execute();
+                defCanvas.PushUndoStack(this);
+            }
         }
 
         public void Execute()
         {
-            Debug.WriteLine("Redo Command is executed");
             Redo();
         }
 
         public void Unexecute()
         {
-            Debug.WriteLine("Undo Command is executed");
             Undo();
         }
     }

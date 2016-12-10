@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Xml;
@@ -51,8 +50,7 @@ namespace PuzzleChart
         {
             if (undoStack.Count > 0)
             {
-                ICommand command = undoStack.Pop();
-                redoStack.Push(command);
+                ICommand command = this.undoStack.Pop();
                 return command;
             }
             else
@@ -62,15 +60,14 @@ namespace PuzzleChart
 
         public void PushUndoStack(ICommand command)
         {
-            undoStack.Push(command);
+            this.undoStack.Push(command);
         }
 
         public ICommand PopRedoStack()
         {
             if (redoStack.Count > 0)
             {
-                ICommand command = redoStack.Pop();
-                undoStack.Push(command);
+                ICommand command = this.redoStack.Pop();
                 return command;
             }
             else
@@ -79,17 +76,25 @@ namespace PuzzleChart
 
         public void PushRedoStack(ICommand command)
         {
-            redoStack.Push(command);
+            this.redoStack.Push(command);
+        }
+
+        public void ClearStack()
+        {
+            this.undoStack.Clear();
+            this.redoStack.Clear();
         }
 
         public void RemovePuzzleObject(PuzzleObject puzzle_object)
         {
             this.puzzle_objects.Remove(puzzle_object);
         }
+
         public ITool GetActiveTool()
         {
             return this.activeTool;
         }
+
         private void DefaultCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (this.activeTool != null)

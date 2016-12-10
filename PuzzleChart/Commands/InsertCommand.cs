@@ -20,6 +20,8 @@ namespace PuzzleChart.Commands
         {
             Debug.WriteLine("Insert Command is Executed");
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
+            if (defCanvas.GetAllObjects().Count == 0)
+                defCanvas.ClearStack();
             defCanvas.AddPuzzleObject(obj);
             defCanvas.Repaint();
             defCanvas.PushUndoStack(this);
