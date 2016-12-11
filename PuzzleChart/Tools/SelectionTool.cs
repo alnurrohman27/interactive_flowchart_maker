@@ -64,6 +64,8 @@ namespace PuzzleChart.Tools
         {
             this.xInitial = e.X;
             this.yInitial = e.Y;
+            xTranslation = 0;
+            yTranslation = 0;
 
             if (e.Button == MouseButtons.Left && canvas != null)
             {
