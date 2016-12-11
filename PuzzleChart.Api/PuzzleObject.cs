@@ -33,6 +33,7 @@ namespace PuzzleChart.Api
         public abstract Point LineIntersect(Point start_point, Point end_point);
         public abstract bool Intersect(int xTest, int yTest);
         public abstract void Translate(int x, int y, int xAmount, int yAmount);
+        public abstract void Untranslate(int x, int y, int xAmount, int yAmount);
         public abstract void RenderOnPreview();
         public abstract void RenderOnEditingView();
         public abstract void RenderOnStaticView();

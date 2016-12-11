@@ -1,5 +1,5 @@
-﻿using System;
-using PuzzleChart.Api.Interfaces;
+﻿using PuzzleChart.Api.Interfaces;
+using System.Diagnostics;
 
 namespace PuzzleChart.Commands
 {
@@ -20,7 +20,7 @@ namespace PuzzleChart.Commands
 
         public void Unexecute()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

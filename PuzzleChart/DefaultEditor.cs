@@ -52,17 +52,19 @@ namespace PuzzleChart
 
         public void RemoveCanvas(ICanvas canvas)
         {
-            TabPage tabPage = new TabPage(canvas.Name);
-            this.Controls.Remove(tabPage);
-            this.canvases.Remove(canvas);
-            tabPage = new TabPage(canvases[0].Name);
-            this.SelectedTab = tabPage;
-            this.selectedCanvas = canvases[0];
+            if(this.canvases.Count > 1)
+            {
+                Debug.WriteLine("Close Canvas: " + canvas.Name);
+                this.Controls.Remove(this.SelectedTab);
+                this.canvases.Remove(canvas);
+                this.SelectedTab = (TabPage)this.Controls[0];
+                this.selectedCanvas = canvases[0];
+            }
         }
 
         public void RemoveSelectedCanvas()
         {
-            
+
         }
 
         public void SelectCanvas(ICanvas canvas)

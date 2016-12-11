@@ -111,6 +111,14 @@ namespace PuzzleChart.Api.Shapes
             BroadcastUpdate(xAmount, yAmount);
         }
 
+        public override void Untranslate(int x, int y, int xAmount, int yAmount)
+        {
+            this.x -= xAmount;
+            this.y -= yAmount;
+
+            BroadcastUpdate(-xAmount, -yAmount);
+        }
+
         public bool Contains(Point location)
         {
             Point center = new Point(x + width/2, y + height/2);

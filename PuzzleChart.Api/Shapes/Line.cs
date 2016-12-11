@@ -44,6 +44,12 @@ namespace PuzzleChart.Api.Shapes
             this.end_point = new Point(this.end_point.X + xAmount, this.end_point.Y + yAmount);
         }
 
+        public override void Untranslate(int x, int y, int xAmount, int yAmount)
+        {
+            this.start_point = new Point(this.start_point.X - xAmount, this.start_point.Y - yAmount);
+            this.end_point = new Point(this.end_point.X - xAmount, this.end_point.Y - yAmount);
+        }
+
         public override void RenderOnStaticView()
         {
             this.pen = new Pen(Color.Black);
@@ -126,7 +132,6 @@ namespace PuzzleChart.Api.Shapes
 
         public void RemoveVertex(bool start_or_end)
         {
-            Debug.WriteLine("Masuk Remove Vertex");
             if (start_or_end)
             {
                 start_point_vertex = null;

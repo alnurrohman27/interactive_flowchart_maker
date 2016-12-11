@@ -75,6 +75,14 @@ namespace PuzzleChart.Api.Shapes
             BroadcastUpdate(xAmount, yAmount);
         }
 
+        public override void Untranslate(int x, int y, int xAmount, int yAmount)
+        {
+            this.x -= xAmount;
+            this.y -= yAmount;
+
+            BroadcastUpdate(-xAmount, -yAmount);
+        }
+
         public override void RenderOnStaticView()
         {
             this.pen = new Pen(Color.Black);

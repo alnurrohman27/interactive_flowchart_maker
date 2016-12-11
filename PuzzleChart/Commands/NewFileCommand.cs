@@ -1,9 +1,4 @@
 ﻿using PuzzleChart.Api.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PuzzleChart.Commands
 {
@@ -27,7 +22,7 @@ namespace PuzzleChart.Commands
 
         public void Unexecute()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

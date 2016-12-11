@@ -15,6 +15,7 @@ namespace PuzzleChart.Commands
         private List<Vertex> vertexMemory;
         private List<CopyMemory> listCopyMemory;
         private List<Line> listTempLine;
+        private List<Line> listNewLine;
 
         public PasteCommand(ICanvas canvas)
         {
@@ -23,6 +24,7 @@ namespace PuzzleChart.Commands
             this.vertexMemory = new List<Vertex>();
             this.listCopyMemory = new List<CopyMemory>();
             this.listTempLine = new List<Line>();
+            this.listNewLine = new List<Line>();
         }
         public void Execute()
         {
@@ -53,6 +55,7 @@ namespace PuzzleChart.Commands
                     defCanvas.AddPuzzleObject(drawObj);
                     vertexMemory.Add(drawObj);
                     listCopyMemory.Add(copyMemory);
+                    drawObj.ChangeState(staticState);
                 }
                 else if (obj is Oval)
                 {
@@ -65,6 +68,7 @@ namespace PuzzleChart.Commands
                     defCanvas.AddPuzzleObject(drawObj);
                     vertexMemory.Add(drawObj);
                     listCopyMemory.Add(copyMemory);
+                    drawObj.ChangeState(staticState);
                 }
                 else if (obj is Parallelogram)
                 {
@@ -77,6 +81,7 @@ namespace PuzzleChart.Commands
                     defCanvas.AddPuzzleObject(drawObj);
                     vertexMemory.Add(drawObj);
                     listCopyMemory.Add(copyMemory);
+                    drawObj.ChangeState(staticState);
                 }
                 else if (obj is Api.Shapes.Rectangle)
                 {
@@ -89,13 +94,12 @@ namespace PuzzleChart.Commands
                     defCanvas.AddPuzzleObject(drawObj);
                     vertexMemory.Add(drawObj);
                     listCopyMemory.Add(copyMemory);
+                    drawObj.ChangeState(staticState);
                 }
-                obj.ChangeState(staticState);
             }
             foreach (Line obj in listTempLine)
             {
                 Line drawObj = new Line(obj.start_point, obj.end_point);
-
                 foreach (Vertex obj2 in vertexMemory)
                 {
                     Debug.WriteLine("Copy Mem: " + listCopyMemory.Count);
@@ -122,8 +126,9 @@ namespace PuzzleChart.Commands
                                 obj2.Subscribe(drawObj);
                         }
                     }
-
                 }
+                listNewLine.Add(drawObj);
+                drawObj.ChangeState(staticState);
                 defCanvas.AddPuzzleObject(drawObj);
             }
             defCanvas.Repaint();
@@ -135,6 +140,22 @@ namespace PuzzleChart.Commands
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
             for (int i = 0; i < vertexMemory.Count; i++)
             {
+                for (int j = 0; j < listNewLine.Count; j++)
+                {
+                    if (listNewLine[j].id_start_point_vertex == vertexMemory[i].ID)
+                    {
+                        Debug.WriteLine("Undo Copying Edge, id: " + listNewLine[j].ID);
+                        listNewLine[j].RemoveVertex(true);
+                        vertexMemory[i].Unsubscribe(listNewLine[j]);
+                    }
+                    else if (listNewLine[j].id_end_point_vertex == vertexMemory[i].ID)
+                    {
+                        Debug.WriteLine("Undo Copying Edge, id: " + listNewLine[j].ID);
+                        listNewLine[j].RemoveVertex(false);
+                        vertexMemory[i].Unsubscribe(listNewLine[j]);
+                    }
+                    defCanvas.RemovePuzzleObject(listNewLine[j]);
+                }
                 foreach (CopyMemory copymem in listCopyMemory)
                 {
                     if (copymem.ID == vertexMemory[i].ID)
@@ -144,23 +165,9 @@ namespace PuzzleChart.Commands
                     }
 
                 }
-                for (int j = 0; j < listTempLine.Count; j++)
-                {
-                    if(listTempLine[j].id_start_point_vertex == vertexMemory[i].ID)
-                    {
-                        Debug.WriteLine("Undo Copying Edge, id: " + listTempLine[j].ID);
-                        vertexMemory[j].Unsubscribe(listTempLine[j]);
-                        defCanvas.RemovePuzzleObject(listTempLine[j]);
-                    }
-                    else if (listTempLine[j].id_end_point_vertex == vertexMemory[i].ID)
-                    {
-                        Debug.WriteLine("Undo Copying Edge, id: " + listTempLine[j].ID);
-                        vertexMemory[j].Unsubscribe(listTempLine[j]);
-                        defCanvas.RemovePuzzleObject(listTempLine[j]);
-                    }
-                }
             }
             listTempLine.Clear();
+            listNewLine.Clear();
             vertexMemory.Clear();
             defCanvas.Repaint();
             defCanvas.PushRedoStack(this);

@@ -54,6 +54,7 @@
     <Compile Include="Commands\OpenCommand.cs" />
     <Compile Include="Commands\PasteCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Commands\TranslationCommand.cs" />
     <Compile Include="Commands\UndoRedoCommand.cs" />
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
@@ -117,6 +118,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\RectangleTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="MainWindow.resx">

@@ -64,7 +64,7 @@ namespace PuzzleChart
         }
 
         public ICommand PopRedoStack()
-        {
+        { 
             if (redoStack.Count > 0)
             {
                 ICommand command = this.redoStack.Pop();

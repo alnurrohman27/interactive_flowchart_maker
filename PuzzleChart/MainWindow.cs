@@ -109,7 +109,7 @@ namespace PuzzleChart
             newMenuItem.Click += new EventHandler(this.OnNewMenuItemClick);
             DefaultMenuItem closeMenuItem = new DefaultMenuItem("Close");
             fileMenuItem.AddMenuItem(closeMenuItem);
-            newMenuItem.Click += new EventHandler(this.OnCloseMenuItemClick);
+            closeMenuItem.Click += new EventHandler(this.OnCloseMenuItemClick);
             DefaultMenuItem openMenuItem = new DefaultMenuItem("Open");
             fileMenuItem.AddMenuItem(openMenuItem);
             openMenuItem.Click += new EventHandler(this.OnOpenMenuItemClick);
@@ -183,6 +183,7 @@ namespace PuzzleChart
                     this.tool_box.Register(plugins[i]);
                 }
             }
+            this.tool_box.AddTool(new SelectionTool());
 
             this.tool_box.tool_selected += Toolbox_ToolSelected;
 
@@ -227,13 +228,6 @@ namespace PuzzleChart
             #endregion
         }
 
-        private void OnCloseMenuItemClick(object sender, EventArgs e)
-        {
-            ICanvas canvas = this.editor.GetSelectedCanvas();
-            CloseFileCommand closeCmd = new CloseFileCommand(canvas, this.editor);
-            closeCmd.Execute();
-        }
-
         #region Method
         private void Toolbox_ToolSelected(ITool tool)
         {
@@ -268,6 +262,13 @@ namespace PuzzleChart
             newFile.Execute();
         }
 
+        private void OnCloseMenuItemClick(object sender, EventArgs e)
+        {
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            CloseFileCommand closeCmd = new CloseFileCommand(canvas, this.editor);
+            closeCmd.Execute();
+        }
+
         private void OnExitMenuItemClick(object sender, EventArgs e)
         {
             Application.Exit();
@@ -293,6 +294,12 @@ namespace PuzzleChart
                 ICanvas canvas = this.editor.GetSelectedCanvas();
                 UndoRedoCommand undoRedoCmd = new UndoRedoCommand(canvas);
                 undoRedoCmd.Execute();
+            }
+            else if (e.Control && e.KeyCode == Keys.N && this.editor != null)
+            {
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                NewFileCommand newCmd = new NewFileCommand(this.editor);
+                newCmd.Execute();
             }
             else if (e.Control && e.KeyCode == Keys.S && this.editor != null)
             {
