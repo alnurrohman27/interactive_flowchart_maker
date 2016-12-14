@@ -36,7 +36,7 @@ namespace PuzzleChart.Api.Shapes
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
 
-            myBrush = new SolidBrush(Color.Yellow);
+            myBrush = new SolidBrush(Color.Red);
             fontColor = new SolidBrush(Color.Black);
 
             table = new DataTable("Object");

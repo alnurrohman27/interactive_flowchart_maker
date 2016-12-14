@@ -123,6 +123,9 @@
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools\TerminatorTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,6 +208,9 @@
       <Project>{f8a0bbfa-8cb3-4ad6-8857-9be67f9ed1c5}</Project>
       <Name>PuzzleChart.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start_end.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

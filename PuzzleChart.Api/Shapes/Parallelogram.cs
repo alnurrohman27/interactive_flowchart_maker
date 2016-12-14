@@ -30,7 +30,7 @@ namespace PuzzleChart.Api.Shapes
 
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
-            myBrush = new SolidBrush(Color.Purple);
+            myBrush = new SolidBrush(Color.Orange);
             stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;

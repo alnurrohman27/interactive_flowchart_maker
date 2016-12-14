@@ -34,7 +34,7 @@ namespace PuzzleChart.Api.Shapes
             stringFormat.LineAlignment = StringAlignment.Center;
             font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
 
-            myBrush = new SolidBrush(Color.Brown);
+            myBrush = new SolidBrush(Color.Yellow);
             fontColor = new SolidBrush(Color.Black);
 
             text = "Start/End";

@@ -173,6 +173,7 @@ namespace PuzzleChart
             this.tool_box.AddTool(new RectangleTool());
             this.tool_box.AddTool(new ParallelogramTool());
             this.tool_box.AddTool(new OvalTool());
+            this.tool_box.AddTool(new TerminatorTool());
             //this.tool_box.AddTool(new StatefulLineTool());
             //this.tool_box.AddTool(new RectangleTool());
 

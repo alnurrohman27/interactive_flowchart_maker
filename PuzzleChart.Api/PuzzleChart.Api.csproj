@@ -69,12 +69,12 @@
     <Compile Include="Shapes\Oval.cs" />
     <Compile Include="Shapes\Parallelogram.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Shapes\Terminator.cs" />
     <Compile Include="State\EditState.cs" />
     <Compile Include="State\PreviewState.cs" />
     <Compile Include="State\StaticState.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
