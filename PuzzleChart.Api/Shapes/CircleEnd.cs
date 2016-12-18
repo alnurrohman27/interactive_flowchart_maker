@@ -9,7 +9,7 @@ using PuzzleChart.Api.Interfaces;
 
 namespace PuzzleChart.Api.Shapes
 {
-    public class Oval : Vertex, IOpenSave
+    public class CircleStart : Vertex, IOpenSave
     {
 
         public int x { get; set; }
@@ -24,7 +24,7 @@ namespace PuzzleChart.Api.Shapes
         public Font font;
         public SolidBrush myBrush;
 
-        public Oval()
+        public CircleStart()
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
@@ -34,31 +34,22 @@ namespace PuzzleChart.Api.Shapes
             stringFormat.LineAlignment = StringAlignment.Center;
             font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
 
-            myBrush = new SolidBrush(Color.Yellow);
+            myBrush = new SolidBrush(Color.Brown);
             fontColor = new SolidBrush(Color.Black);
 
             text = "Start/End";
         }
 
-        public Oval(int x, int y) : this()
+        public CircleStart(int x, int y) : this()
         {
             this.x = x;
             this.y = y;
         }
 
-        public Oval(int x, int y, int width, int Height) : this(x, y)
+        public CircleStart(int x, int y, int width, int Height) : this(x, y)
         {
-            if(width >= Height)
-            {
-                this.width = width;
-                this.height = width;
-            }
-            else
-            {
-                this.width = Height;
-                this.height = Height;
-            }
-            
+            this.width = width;
+            this.height = Height;
         }
 
         public override void RenderOnStaticView()
@@ -163,55 +154,9 @@ namespace PuzzleChart.Api.Shapes
             return false;
         }
 
-        // Find the points of intersection.
-        private int FindLineCircleIntersections(float cx, float cy, float radius, PointF point1, PointF point2,out PointF intersection1, out PointF intersection2)
-        {
-            float dx, dy, A, B, C, det, t;
-
-            dx = point2.X - point1.X;
-            dy = point2.Y - point1.Y;
-
-            A = dx * dx + dy * dy;
-            B = 2 * (dx * (point1.X - cx) + dy * (point1.Y - cy));
-            C = (point1.X - cx) * (point1.X - cx) +
-                (point1.Y - cy) * (point1.Y - cy) -
-                radius * radius;
-
-            det = B * B - 4 * A * C;
-            if ((A <= 0.0000001) || (det < 0))
-            {
-                // No real solutions.
-                intersection1 = new PointF(float.NaN, float.NaN);
-                intersection2 = new PointF(float.NaN, float.NaN);
-                return 0;
-            }
-            else if (det == 0)
-            {
-                // One solution.
-                t = -B / (2 * A);
-                intersection1 =
-                    new PointF(point1.X + t * dx, point1.Y + t * dy);
-                intersection2 = new PointF(float.NaN, float.NaN);
-                return 1;
-            }
-            else
-            {
-                // Two solutions.
-                t = (float)((-B + Math.Sqrt(det)) / (2 * A));
-                intersection1 =
-                    new PointF(point1.X + t * dx, point1.Y + t * dy);
-                t = (float)((-B - Math.Sqrt(det)) / (2 * A));
-                intersection2 =
-                    new PointF(point1.X + t * dx, point1.Y + t * dy);
-                return 2;
-            }
-        }
-
         public override Point LineIntersect(Point start_point, Point end_point)
         {
-            PointF intersection1,intersection2;
-            FindLineCircleIntersections(this.x+width/2, this.y+height/2, width/2, start_point, end_point, out intersection1, out intersection2);
-            return new Point((int)intersection1.X,(int)intersection1.Y) ;
+            throw new NotImplementedException();
         }
 
         public void Serialize(string path)
@@ -263,7 +208,7 @@ namespace PuzzleChart.Api.Shapes
         public List<PuzzleObject> Unserialize(string path)
         {
             List<PuzzleObject> listObj = new List<PuzzleObject>();
-            Oval ovalObj = null;
+            CircleStart ovalObj = null;
             int x = 0, y = 0, width = 0, height = 0, flag = 0;
             bool loopFlag = true;
             string id = null;
@@ -337,7 +282,7 @@ namespace PuzzleChart.Api.Shapes
                                     if (x > 0 && y > 0 && width > 0 && height > 0)
                                     {
                                         Console.WriteLine("Data x: " + x + ", y: " + y + ", width: " + width + ", height: " + height);
-                                        ovalObj = new Oval(x, y, width, height);
+                                        ovalObj = new CircleStart(x, y, width, height);
                                         ovalObj.ID = new Guid(id);
                                         listObj.Add(ovalObj);
                                     }

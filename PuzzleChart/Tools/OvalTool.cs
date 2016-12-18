@@ -68,8 +68,16 @@ namespace PuzzleChart.Tools
 
                     if (width > 0 && height > 0)
                     {
-                        this.oval.width = width;
-                        this.oval.height = height;
+                        if (width >= height)
+                        {
+                            this.oval.width = width;
+                            this.oval.height = width;
+                        }
+                        else
+                        {
+                            this.oval.width = height;
+                            this.oval.height = height;
+                        }
                     }
                 }
             }
@@ -79,8 +87,22 @@ namespace PuzzleChart.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                oval.width = e.X - this.oval.x;
-                oval.height = e.Y - this.oval.y;
+                int width = e.X - this.oval.x;
+                int height = e.Y - this.oval.y;
+
+                if (width > 0 && height > 0)
+                {
+                    if (width >= height)
+                    {
+                        this.oval.width = width;
+                        this.oval.height = width;
+                    }
+                    else
+                    {
+                        this.oval.width = height;
+                        this.oval.height = height;
+                    }
+                }
                 oval.Select();
                 //oval.Deselect();
             }

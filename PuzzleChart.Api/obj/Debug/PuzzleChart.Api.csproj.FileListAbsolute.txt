@@ -3,3 +3,8 @@ D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.dll
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.pdb
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.csprojResolveAssemblyReference.cache
+C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart.Api\bin\Debug\PuzzleChart.Api.dll
+C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart.Api\bin\Debug\PuzzleChart.Api.pdb
+C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.csprojResolveAssemblyReference.cache
+C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.dll
+C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.pdb
