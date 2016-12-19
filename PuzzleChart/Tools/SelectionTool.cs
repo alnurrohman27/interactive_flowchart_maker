@@ -7,6 +7,7 @@ using PuzzleChart.Api.Forms;
 using PuzzleChart.Commands;
 using System.Drawing;
 using System.Diagnostics;
+using PuzzleChart.Api.State;
 
 namespace PuzzleChart.Tools
 {
@@ -22,7 +23,7 @@ namespace PuzzleChart.Tools
         {
             get
             {
-                return Cursors.Arrow;
+                return Cursors.Hand;
             }
         }
 
@@ -62,6 +63,7 @@ namespace PuzzleChart.Tools
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
+            Cursor.Current = cursor;
             this.xInitial = e.X;
             this.yInitial = e.Y;
             xTranslation = 0;
@@ -70,8 +72,7 @@ namespace PuzzleChart.Tools
             if (e.Button == MouseButtons.Left && canvas != null)
             {
                 canvas.DeselectAllObjects();
-                canvas.SelectObjectAt(e.X, e.Y);
-                selected_object = canvas.SelectObjectAt(e.X, e.Y);
+                selected_object = canvas.SelectObjectAt(e.X, e.Y);   
             }
 
         }
@@ -91,7 +92,12 @@ namespace PuzzleChart.Tools
                     xTranslation += xAmount;
                     yTranslation += yAmount;
 
-                    selected_object.Translate(xInitial, yInitial, xAmount, yAmount);
+                    foreach (PuzzleObject obj in canvas.GetAllObjects())
+                    {
+                        if (obj.State is EditState)
+                            obj.Translate(xInitial, yInitial, xAmount, yAmount);
+                    }
+                    
 
                 }
             }
@@ -101,10 +107,12 @@ namespace PuzzleChart.Tools
         {
             if(this.selected_object != null)
             {
-
-                Debug.WriteLine("Translation Done");
-                TranslationCommand translateCmd = new TranslationCommand(this.canvas, this.selected_object, this.xInitial, this.yInitial, this.xTranslation, this.yTranslation);
-                translateCmd.Execute();
+                if(xTranslation != 0 && yTranslation != 0)
+                {
+                    Debug.WriteLine("Translation Done");
+                    TranslationCommand translateCmd = new TranslationCommand(this.canvas, this.selected_object, this.xInitial, this.yInitial, this.xTranslation, this.yTranslation);
+                    translateCmd.Execute();
+                }
             }
         }
 
@@ -164,6 +172,7 @@ namespace PuzzleChart.Tools
             if (e.Button == MouseButtons.Left && canvas != null && Control.ModifierKeys == Keys.Control)
             {
                 canvas.SelectObjectAt(e.X, e.Y);
+                
                 selected_object = canvas.SelectObjectAt(e.X, e.Y);
             }
         }

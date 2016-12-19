@@ -29,7 +29,7 @@ namespace PuzzleChart.Commands
         public void Execute()
         {
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
-            List<PuzzleObject> memoryCopy = defCanvas.GetCopiedItems();
+            List<PuzzleObject> memoryCopy = defCanvas.GetCopyItem();
             foreach (PuzzleObject obj in memoryCopy)
             {
                 Console.WriteLine("Paste object(s) to canvas: " + obj.ID);

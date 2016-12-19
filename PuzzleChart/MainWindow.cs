@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api;
+using PuzzleChart.Api.State;
 
 namespace PuzzleChart
 {
@@ -325,6 +326,11 @@ namespace PuzzleChart
                 ICanvas canvas = this.editor.GetSelectedCanvas();
                 PasteCommand pasteCmd = new PasteCommand(canvas);
                 pasteCmd.Execute();
+            }
+            else if (e.Control && e.KeyCode == Keys.A && this.editor != null)
+            {
+                ICanvas canvas = this.editor.GetSelectedCanvas();
+                canvas.SelectAllObject();
             }
             else if(e.KeyCode == Keys.Delete)
             {

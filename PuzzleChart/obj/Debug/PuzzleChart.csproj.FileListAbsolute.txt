@@ -72,3 +72,5 @@ D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\github (New)\PuzzleChart\obj\Debug\PuzzleChart.pdb
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.Api.dll
 C:\Users\Lenovo\Code\Repo_Github\PuzzleChart\interactive_flowchart_maker\PuzzleChart\bin\Debug\PuzzleChart.Api.pdb
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\bin\Debug\PuzzleChart.Api.dll
+D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart\bin\Debug\PuzzleChart.Api.pdb

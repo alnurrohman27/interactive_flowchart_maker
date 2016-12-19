@@ -18,21 +18,36 @@ namespace PuzzleChart
         private List<PuzzleObject> puzzle_objects;
         private Stack<ICommand> undoStack;
         private Stack<ICommand> redoStack;
-        private List<PuzzleObject> listCopiedItems;
-        public bool saved;
+        private List<PuzzleObject> listCopyItem;
+        private bool saveFlag;
 
         public bool KeyPreview { get; private set; }
+
+        public Boolean Saved
+        {
+            get
+            {
+                return this.saveFlag;
+            }
+
+            set
+            {
+                this.saveFlag = value;
+            }
+        }
 
         public DefaultCanvas()
         {
             this.puzzle_objects = new List<PuzzleObject>();
-            this.listCopiedItems = new List<PuzzleObject>();
 
             this.redoStack = new Stack<ICommand>();
-            this.undoStack = new Stack<ICommand>(); 
+            this.undoStack = new Stack<ICommand>();
+
+            this.listCopyItem = new List<PuzzleObject>();
+
+            this.Saved = false;
 
             this.DoubleBuffered = true;
-            this.saved = false;
 
             this.BackColor = Color.White;
             this.Dock = DockStyle.Fill;
@@ -143,11 +158,11 @@ namespace PuzzleChart
         {
             if(e.Control && e.KeyCode == Keys.A)
             {
-                SelectAllObj();
+                SelectAllObject();
             }
         }
 
-        private void SelectAllObj ()
+        public void SelectAllObject()
         {
             foreach (PuzzleObject obj in puzzle_objects)
             {
@@ -228,206 +243,15 @@ namespace PuzzleChart
             return listObj;
         }
 
-        public void SetCopiedItems(List<PuzzleObject> listCopiedItems)
+        public void SetCopyItem(List<PuzzleObject> listObj)
         {
-            this.listCopiedItems = listCopiedItems;
+            this.listCopyItem = listObj;
         }
 
-        public List<PuzzleObject> GetCopiedItems()
+        public List<PuzzleObject> GetCopyItem()
         {
-            return this.listCopiedItems;
+            return this.listCopyItem;
         }
-
-        public void Save()
-        {
-            Debug.WriteLine("Save File is selected");
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.ipd";
-            saveFileDialog1.Title = "Save an Document";
-            saveFileDialog1.ShowDialog();
-            try
-            {
-                if (saveFileDialog1.FileName != "")
-                {
-                    string name = saveFileDialog1.FileName;
-
-                    XmlWriterSettings settings = new XmlWriterSettings();
-                    settings.Indent = true;
-                    settings.NewLineOnAttributes = true;
-                    XmlWriter writer = XmlWriter.Create(name, settings);
-                    writer.WriteStartDocument();
-                    writer.WriteStartElement("puzzle_object");
-                    writer.WriteEndElement();
-                    writer.WriteEndDocument();
-                    writer.Close();
-                    
-                    foreach (PuzzleObject obj in puzzle_objects)
-                    {
-                        if (obj is IOpenSave)
-                        {
-                            if (obj is Diamond)
-                            {
-                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Diamond");
-                                Diamond diamondObj = (Diamond)obj;
-                                diamondObj.Serialize(name);
-                            }
-                            else if (obj is Api.Shapes.Rectangle)
-                            {
-                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Rectangle");
-                                Api.Shapes.Rectangle rectangleObj = (Api.Shapes.Rectangle)obj;
-                                rectangleObj.Serialize(name);
-                            }
-                            else if (obj is Oval)
-                            {
-                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Oval");
-                                Oval ovalObj = (Oval)obj;
-                                ovalObj.Serialize(name);
-                            }
-                            else if (obj is Parallelogram)
-                            {
-                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Parallelogram");
-                                Parallelogram parallelogramObj = (Parallelogram)obj;
-                                parallelogramObj.Serialize(name);
-                            }
-                            else if (obj is Line)
-                            {
-                                Debug.WriteLine("ID: " + obj.ID.ToString() + " Type: Line");
-                                Line lineObj = (Line)obj;
-                                lineObj.Serialize(name);
-                            }
-
-                        }
-                    }
-                    this.saved = true;
-                    this.Name = Path.GetFileNameWithoutExtension(saveFileDialog1.FileName);
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Error: File being used by another process or corrupt");
-                Debug.WriteLine("Error Message: " + ex);
-            }
-            
-
-        }
-
-        public void Open()
-        {
-            Debug.WriteLine("Open File is selected");
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-            openFileDialog1.Filter = "Interactive Puzzle Document (*.ipd)|*.ipd";
-            openFileDialog1.RestoreDirectory = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    this.puzzle_objects.Clear();
-                    List<PuzzleObject> listObj = new List<PuzzleObject>();
-
-                    Diamond diamondObj = new Diamond();
-                    listObj = diamondObj.Unserialize(openFileDialog1.FileName);
-                    foreach(PuzzleObject obj in listObj)
-                    {
-                        puzzle_objects.Add(obj);
-                        obj.Select();
-                        obj.Deselect();
-                    }
-                    listObj.Clear();
-
-                    Oval ovalObj = new Oval();
-                    listObj = ovalObj.Unserialize(openFileDialog1.FileName);
-                    foreach (PuzzleObject obj in listObj)
-                    {
-                        puzzle_objects.Add(obj);
-                        obj.Select();
-                        obj.Deselect();
-                    }
-                    listObj.Clear();
-
-                    Parallelogram parallelogramObj = new Parallelogram();
-                    listObj = parallelogramObj.Unserialize(openFileDialog1.FileName);
-                    foreach (PuzzleObject obj in listObj)
-                    {
-                        puzzle_objects.Add(obj);
-                        obj.Select();
-                        obj.Deselect();
-                    }
-                    listObj.Clear();
-
-                    Api.Shapes.Rectangle rectangleObj = new Api.Shapes.Rectangle();
-                    listObj = rectangleObj.Unserialize(openFileDialog1.FileName);
-                    foreach (PuzzleObject obj in listObj)
-                    {
-                        puzzle_objects.Add(obj);
-                        obj.Select();
-                        obj.Deselect();
-                    }
-                    listObj.Clear();
-
-                    Line lineObj = new Line();
-                    listObj = lineObj.Unserialize(openFileDialog1.FileName);
-
-                    for (int i = 0; i < listObj.Count; i++)
-                    {
-                        Line temp1 = (Line)listObj[i];
-                        for (int j = 1; j < listObj.Count; j++)
-                        {
-                            Line temp2 = (Line)listObj[j];
-                            if (temp1.ID == temp2.ID && i != j)
-                            {
-                                listObj.RemoveAt(j);
-                            }
-                        }
-                    }
-
-                    foreach (Line obj in listObj)
-                    {
-                        Line tempObj = new Line(obj.start_point, obj.end_point);
-                        tempObj.ID = obj.ID;
-
-                        foreach (PuzzleObject obj2 in puzzle_objects)
-                        {
-                            Vertex allObj;
-                            if (obj2 is Vertex)
-                            {
-                                allObj = (Vertex)obj2;
-                                if (allObj.ID == obj.id_start_point_vertex)
-                                {
-                                    tempObj.AddVertex(allObj, true);
-                                }
-                                if (allObj.ID == obj.id_end_point_vertex)
-                                {
-                                    tempObj.AddVertex(allObj, false);
-                                }
-                                allObj.Subscribe(tempObj);
-                            }
-                        }
-                        puzzle_objects.Add(tempObj);
-                        tempObj.Select();
-                        tempObj.Deselect();
-                    }
-                    listObj.Clear();
-                    this.saved = true;
-                    this.Name = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
-                    this.Repaint();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: File being used by another process or corrupt");
-                    Debug.WriteLine("Error Message: " + ex);
-                }
-            }
-        }
-
-        public void PasteObject()
-        {
-            
-        }
-
-
     }
 }
 

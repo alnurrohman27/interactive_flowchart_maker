@@ -27,7 +27,7 @@ namespace PuzzleChart.Commands
                     listObj.Add(obj);
                 }
             }
-            defCanvas.SetCopiedItems(listObj);
+            defCanvas.SetCopyItem(listObj);
         }
 
         public void Unexecute()
