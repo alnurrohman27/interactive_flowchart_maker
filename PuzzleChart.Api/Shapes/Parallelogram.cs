@@ -12,6 +12,8 @@ namespace PuzzleChart.Api.Shapes
 {
     public class Parallelogram : Vertex, IOpenSave
     {
+        public int temp = 0;
+        public int flag;
         public int x { get; set; }
         public int y { get; set; }
         public int width { get; set; }
@@ -27,15 +29,13 @@ namespace PuzzleChart.Api.Shapes
 
         public Parallelogram()
         {
-
+            flag = 1;
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
             myBrush = new SolidBrush(Color.Orange);
             stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
-            font = new Font("Arial", 16, FontStyle.Bold, GraphicsUnit.Pixel);
-            text = "Data";
             fontColor = new SolidBrush(Color.Black);
             table = new DataTable("Object");
             table.Columns.Add("ID", typeof(int));
@@ -113,6 +113,25 @@ namespace PuzzleChart.Api.Shapes
 
             this.GetGraphics().DrawPolygon(pen, my_point_array);
             this.GetGraphics().FillPolygon(myBrush, my_point_array);
+
+            if (width > 0)
+            {
+                if (flag != 5)
+                {
+                    text = "Data";
+                    flag = 5;
+                }
+                else
+                {
+
+                    font = new Font("Arial", width / 10 + 1, FontStyle.Bold, GraphicsUnit.Pixel);
+                    if (text.Length > 14)
+                    {
+                        font = new Font("Arial", width / 20 + 1, FontStyle.Bold, GraphicsUnit.Pixel);
+                    }
+
+                }
+            }
         }
 
         public override void Translate(int x, int y, int xAmount, int yAmount)

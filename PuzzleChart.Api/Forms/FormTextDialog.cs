@@ -27,6 +27,11 @@ namespace PuzzleChart.Api.Forms
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         public FormTextDialog(PuzzleObject obj2)
         {
             this.obj = obj2;
@@ -112,6 +117,10 @@ namespace PuzzleChart.Api.Forms
                     this.Controls.Add(button1);
                     this.Controls.Add(boxName);
                     this.Controls.Add(myDataGrid);
+
+                    button1.Click += new System.EventHandler(button1_Click);
+
+
                 }
                 else if (obj is Diamond)
                 {
@@ -148,6 +157,9 @@ namespace PuzzleChart.Api.Forms
                     this.Controls.Add(button1);
                     this.Controls.Add(boxName);
                     this.Controls.Add(myDataGrid);
+
+                    button1.Click += new System.EventHandler(button1_Click);
+
                 }
 
                 else if (obj is Oval)
@@ -172,6 +184,9 @@ namespace PuzzleChart.Api.Forms
 
                     this.Controls.Add(button1);
                     this.Controls.Add(boxName);
+
+                    button1.Click += new System.EventHandler(button1_Click);
+
                 }
             }
         }

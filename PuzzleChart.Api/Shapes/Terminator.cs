@@ -12,6 +12,7 @@ namespace PuzzleChart.Api.Shapes
 {
     public class Terminator : Vertex, IOpenSave
     {
+
         public int x { get; set; }
         public int y { get; set; }
         public int width { get; set; }
@@ -93,6 +94,7 @@ namespace PuzzleChart.Api.Shapes
                 this.GetGraphics().DrawPath(pen, path);
                 this.GetGraphics().FillPath(myBrush, path);
             }
+
         }
 
         public override bool Add(PuzzleObject obj)

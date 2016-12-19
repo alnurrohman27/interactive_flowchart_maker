@@ -13,3 +13,8 @@ D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart.Api\bin\D
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.csprojResolveAssemblyReference.cache
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.dll
 D:\Document\Informatics Engineering - S1\Chapter 7\KPL\git\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.pdb
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart.Api\bin\Debug\PuzzleChart.Api.dll
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart.Api\bin\Debug\PuzzleChart.Api.pdb
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.csprojResolveAssemblyReference.cache
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.dll
+D:\Kuliah\KPL\Projek Flow Chart\interactive_flowchart_maker\PuzzleChart.Api\obj\Debug\PuzzleChart.Api.pdb
