@@ -19,9 +19,9 @@ namespace PuzzleChart.Commands
         public void Execute()
         {
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
-            foreach(PuzzleObject obj in defCanvas.GetAllObjects())
+            foreach (PuzzleObject obj in defCanvas.GetAllObjects())
             {
-                if(obj.State is EditState)
+                if (obj.State is EditState)
                 {
                     Console.WriteLine("Copy object to clipboard: " + obj.ID);
                     listObj.Add(obj);
@@ -32,7 +32,7 @@ namespace PuzzleChart.Commands
 
         public void Unexecute()
         {
-            
+
         }
     }
 }

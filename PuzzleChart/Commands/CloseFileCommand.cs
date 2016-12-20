@@ -20,7 +20,7 @@ namespace PuzzleChart.Commands
 
         public void Unexecute()
         {
-            
+
         }
     }
 }

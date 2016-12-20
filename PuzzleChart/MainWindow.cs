@@ -9,6 +9,7 @@ using System.Reflection;
 using PuzzleChart.Api.Interfaces;
 using PuzzleChart.Api;
 using PuzzleChart.Api.State;
+using System.Drawing;
 
 namespace PuzzleChart
 {
@@ -117,6 +118,9 @@ namespace PuzzleChart
             DefaultMenuItem saveMenuItem = new DefaultMenuItem("Save");
             fileMenuItem.AddMenuItem(saveMenuItem);
             saveMenuItem.Click += new EventHandler(this.OnSaveMenuItemClick);
+            DefaultMenuItem exportMenuItem = new DefaultMenuItem("Export");
+            fileMenuItem.AddMenuItem(exportMenuItem);
+            exportMenuItem.Click += new EventHandler(this.OnExportMenuItemClick);
             fileMenuItem.AddSeparator();
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             fileMenuItem.AddMenuItem(exitMenuItem);
@@ -387,6 +391,20 @@ namespace PuzzleChart
             ICanvas canvas = this.editor.GetSelectedCanvas();
             CopyCommand copyCmd = new CopyCommand(canvas);
             copyCmd.Execute();
+        }
+
+        private void OnExportMenuItemClick(object sender, EventArgs e)
+        {
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            int width = this.Width;
+            int height = this.Height;
+            int imageWidth = this.toolStripContainer1.ContentPanel.Size.Width - 26;
+            int imageHeight = this.toolStripContainer1.ContentPanel.Size.Height - 27;
+            Bitmap bmp = new Bitmap(width, height);
+            Rectangle rect = new Rectangle(0, 0, width, height);
+            DrawToBitmap(bmp, rect);
+            ExportCommand exportCmd = new ExportCommand(canvas, editor, width, height, imageWidth, imageHeight, bmp);
+            exportCmd.Execute();
         }
     }
 }

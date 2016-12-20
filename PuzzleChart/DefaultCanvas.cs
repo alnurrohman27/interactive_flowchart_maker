@@ -58,8 +58,7 @@ namespace PuzzleChart
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseDoubleClick += DefaultCanvas_MouseDoubleClick;
             this.KeyDown += DefaultCanvas_KeyDown;
-
-        }
+    }
 
         public ICommand PopUndoStack()
         {

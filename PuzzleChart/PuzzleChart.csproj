@@ -49,6 +49,7 @@
     <Compile Include="Commands\CloseFileCommand.cs" />
     <Compile Include="Commands\CopyCommand.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
+    <Compile Include="Commands\ExportCommand.cs" />
     <Compile Include="Commands\InsertCommand.cs" />
     <Compile Include="Commands\NewFileCommand.cs" />
     <Compile Include="Commands\OpenCommand.cs" />

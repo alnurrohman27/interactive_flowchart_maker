@@ -23,7 +23,7 @@ namespace PuzzleChart.Commands
         public void Execute()
         {
             DefaultCanvas defCanvas = (DefaultCanvas)canvas;
-            for(int i = 0; i < listObj.Count; i++)
+            for (int i = 0; i < listObj.Count; i++)
             {
                 this.removedObj.Add(listObj[i]);
                 defCanvas.RemovePuzzleObject(listObj[i]);

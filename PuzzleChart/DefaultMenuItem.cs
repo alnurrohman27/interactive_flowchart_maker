@@ -42,7 +42,7 @@ namespace PuzzleChart
         {
             this.command = command;
         }
-        
+
 
     }
 }
